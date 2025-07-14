@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "structivize"
+version = "0.1.0"
+description = "Rendering toolkit for generating structured visualizations from code in specific formal representation languages (FRL), comprising several tools in multiple domains."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Daniel Steinigen", email = "contact@steinigen.me" }
+]
+keywords = ["rendering", "structure", "visualization", "formal language", "code2image", "image"]
+
+dependencies = [
+
+]
+
+[project.urls]
+Homepage = "https://github.com/danielsteinigen/structivize"
+Documentation = "https://github.com/danielsteinigen/structivize#readme"
+Issues = "https://github.com/danielsteinigen/structivize/issues"
