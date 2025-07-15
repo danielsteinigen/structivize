@@ -4,7 +4,9 @@ from abc import ABC
 from pathlib import Path
 from typing import List, Literal
 
+import cairosvg
 import matplotlib.pyplot as plt
+import PyPDF2
 from pydantic import BaseModel
 
 from .utils import check_dirs, load_text, remove_files, save_text
@@ -74,6 +76,8 @@ class Renderer(ABC):
         self.output_format = output_format
         self._max_width = max_width  # 1024 # 2048
         self._max_height = max_height  # 768 # 1536
+        self.__save_svg = False
+        self.__save_pdf = False
         self._image_transparent = False
 
         self.tools = list(self.DEFAULT_TOOL_CONFIGS.keys())
@@ -103,6 +107,47 @@ class Renderer(ABC):
         if self.log is not None:
             self.log["log"] += f"# {' '.join(commands)}\n\n## STATUS: {status}\n\n## STDOUT\n```\n{out}\n```\n\n## STDERR\n```\n{err}\n```\n\n\n"
         return status, out, err
+
+    def _pdf_save(self, path: str):
+        pdf_path = f"{path}.pdf"
+        if path is None or not os.path.isfile(pdf_path):
+            if self.log is not None:
+                self.log["log"] += "# Converting PDF\n\n## STATUS: failed\n\n## Message\nPDF file not found\n\n\n"
+        else:
+            with open(pdf_path, "rb") as file:
+                pdfReader = PyPDF2.PdfReader(file)
+                if len(pdfReader.pages) == 1:
+                    self._execute_process(commands=["pdfcrop", "-margin", "10", pdf_path, f"{path}-tmp.pdf"])
+                    os.rename(f"{path}-tmp.pdf", pdf_path)
+
+                    self._execute_process(commands=["convert", "-density", "500", "-alpha", "off", pdf_path, f"PNG24:{path}.png"])
+                    # -alpha set/on/tansparent/off/remove
+                    if self.__save_svg:
+                        self._execute_process(commands=["pdf2svg", pdf_path, f"{path}.svg"])
+                    if not self.__save_pdf:
+                        remove_files(path, ["pdf"])
+
+    def _svg_save(self, path: str, svg_code: str = None, scale: float = 2.0):
+        svg_path = f"{path}.svg"
+        if svg_code is not None:
+            open(svg_path, "w").write(svg_code)
+            cairosvg.svg2png(bytestring=svg_code, write_to=f"{path}.png", scale=scale, dpi=300)
+            if self.__save_pdf:
+                cairosvg.svg2pdf(bytestring=svg_code, write_to=f"{path}.pdf")
+            if not self.__save_svg:
+                remove_files(path, ["svg"])
+        else:
+            if path is None or not os.path.isfile(svg_path):
+                if self.log is not None:
+                    self.log["log"] += "# Converting SVG\n\n## STATUS: failed\n\n## Message\nSVG file not found\n\n\n"
+            else:
+                # self._execute_process(commands=["convert", "-density", "500", "-alpha", "off", svg_path, f"PNG24:{path}.png"])
+                cairosvg.svg2png(url=svg_path, write_to=f"{path}.png", scale=scale, dpi=300)
+                if self.__save_pdf:
+                    # self._execute_process(commands=["convert", "-density", "500", svg_path, f"{path}.pdf"])
+                    cairosvg.svg2pdf(url=svg_path, write_to=f"{path}.pdf")
+                if not self.__save_svg:
+                    remove_files(svg_path)
 
 
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
