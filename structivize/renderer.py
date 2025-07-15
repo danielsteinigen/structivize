@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import PyPDF2
 from pydantic import BaseModel
 
+from .image_utils import is_image_mainly_black, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
 
 
@@ -149,12 +150,23 @@ class Renderer(ABC):
                 if not self.__save_svg:
                     remove_files(svg_path)
 
+    def _validate_image(self, path_img):
+        if not os.path.isfile(path_img):
+            return ""
+        elif not is_image_valid(path_img) or is_image_single_color(path_img):
+            os.remove(path_img)
+            return ""
+        elif type(self).__name__ == "RendererModelingPlantuml" and is_image_mainly_black(path_img):
+            os.remove(path_img)
+            return ""
+        resize_png_preserve_aspect(path_img, self._max_width, self._max_height, keep_transparency=self._image_transparent)
+        return path_img
 
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
         if self._logs[self._current_tool]["log"] != "":
             save_text(filename=f"{self._filepath_images[self._current_tool]}_log.md", data=self._logs[self._current_tool]["log"])
 
-        path_img = f"{self._filepath_images[self._current_tool]}.png"
+        path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
         return RenderResponse(
             tool=self._current_tool,
