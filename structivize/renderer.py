@@ -223,3 +223,21 @@ class Renderer(ABC):
     def log(self) -> str:
         return self._logs[self._current_tool]
 
+    # Code processing and checks
+
+    def _is_single_line(self):
+        return "\n" not in self._code and "\r" not in self._code
+
+    def _clean_code_lines(self, char: str):
+        lines = self._code.splitlines()
+        max_checks = 10
+
+        for _ in range(max_checks):
+            if not lines:
+                break
+            if char in lines[0]:
+                break
+            else:
+                lines.pop(0)
+
+        self._code = "\n".join(lines)
