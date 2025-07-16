@@ -54,7 +54,7 @@ class Renderer(ABC):
         self._tool_path = os.getenv("TOOL_PATH", ".")
 
         if output_base_path is None:
-            output_base_path = Path.cwd() / "rendered_image"
+            output_base_path = Path.cwd() / "output"
         elif len(str(output_base_path).split(".")) > 1:
             output_base_path = Path(str(output_base_path).split(".")[0])
         else:
@@ -101,19 +101,28 @@ class Renderer(ABC):
             merged_configs[tool] = {**default_config, **custom_configs.get(tool, {})}
         return merged_configs
 
+    def __write_log(self, command, status, stdout, stderr):
+        if self.log is not None:
+            self.log["log"] += "\n<<<<<< RENDERING STEP START >>>>>>\n"
+            self.log["log"] += f"$ {' '.join(command)}\n"
+            self.log["log"] += f"------ EXIT CODE: {status} ------\n"
+            self.log["log"] += "---- STDOUT ----\n"
+            self.log["log"] += stdout if stdout.strip() else "(no output)\n"
+            self.log["log"] += "---- STDERR ----\n"
+            self.log["log"] += stderr if stderr.strip() else "(no errors)\n"
+            self.log["log"] += "<<<<<< RENDERING STEP END >>>>>>\n"
+
     def _execute_process(self, commands: list):
         prog = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         out, err = prog.communicate()
         status = prog.wait()
-        if self.log is not None:
-            self.log["log"] += f"# {' '.join(commands)}\n\n## STATUS: {status}\n\n## STDOUT\n```\n{out}\n```\n\n## STDERR\n```\n{err}\n```\n\n\n"
+        self.__write_log(commands, status, out, err)
         return status, out, err
 
     def _pdf_save(self, path: str):
         pdf_path = f"{path}.pdf"
         if path is None or not os.path.isfile(pdf_path):
-            if self.log is not None:
-                self.log["log"] += "# Converting PDF\n\n## STATUS: failed\n\n## Message\nPDF file not found\n\n\n"
+            self.__write_log(["converting PDF"], "failed", "", "PDF was not generated")
         else:
             with open(pdf_path, "rb") as file:
                 pdfReader = PyPDF2.PdfReader(file)
@@ -139,8 +148,7 @@ class Renderer(ABC):
                 remove_files(path, ["svg"])
         else:
             if path is None or not os.path.isfile(svg_path):
-                if self.log is not None:
-                    self.log["log"] += "# Converting SVG\n\n## STATUS: failed\n\n## Message\nSVG file not found\n\n\n"
+                self.__write_log(["converting SVG"], "failed", "", "SVG was not generated")
             else:
                 # self._execute_process(commands=["convert", "-density", "500", "-alpha", "off", svg_path, f"PNG24:{path}.png"])
                 cairosvg.svg2png(url=svg_path, write_to=f"{path}.png", scale=scale, dpi=300)
@@ -164,7 +172,7 @@ class Renderer(ABC):
 
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
         if self._logs[self._current_tool]["log"] != "":
-            save_text(filename=f"{self._filepath_images[self._current_tool]}_log.md", data=self._logs[self._current_tool]["log"])
+            save_text(filename=f"{self._filepath_images[self._current_tool]}.log", data=self._logs[self._current_tool]["log"])
 
         path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
@@ -174,7 +182,7 @@ class Renderer(ABC):
             debug_message=message,
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",
-            path_log=f"{self._filepath_images[self._current_tool]}_log.md",
+            path_log=f"{self._filepath_images[self._current_tool]}.log",
         )
 
     def preprocess_code(self):
@@ -183,7 +191,7 @@ class Renderer(ABC):
     def verify_code(self):
         return self._code.strip() != ""
 
-    def render_all(self, tool: str) -> List[RenderResponse]:
+    def render_all(self) -> List[RenderResponse]:
         response = []
         for tool in self.tools:
             if tool not in self._tool_handlers:
@@ -215,6 +223,9 @@ class Renderer(ABC):
         plt.close()
         return self._write_response(success=False, message=message)
 
+    # def statistics(self) -> StatisticResponse:
+    #     return "Entropy"
+
     @property
     def filepath_image(self) -> str:
         return self._filepath_images[self._current_tool]
@@ -222,6 +233,10 @@ class Renderer(ABC):
     @property
     def log(self) -> str:
         return self._logs[self._current_tool]
+    
+    @property
+    def tool_config(self) -> str:
+        return self.tool_configs[self._current_tool]
 
     # Code processing and checks
 
