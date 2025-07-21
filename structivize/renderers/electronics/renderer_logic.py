@@ -1,0 +1,48 @@
+from pathlib import Path
+
+import schemdraw
+from schemdraw.parsing import logicparse
+
+from ...image_utils import images_are_similar
+from ...renderer import Renderer
+from ...utils import extract_part, remove_files
+
+
+@Renderer.register("logic")
+class RendererLogic(Renderer):
+    DEFAULT_TOOL_CONFIGS = {
+        "schemdraw": {},
+    }
+
+    def preprocess_code(self) -> str:
+        self._code = self._code.strip()
+        self._code = extract_part(self._code, "=", "", False)
+        code = ""
+        for line in self._code.split("\n"):
+            line_str = line.strip()
+            if not line_str.startswith("//") and not line_str.startswith("#"):
+                code += f"{line}\n"
+        self._code = (
+            code.strip()
+            .replace("NAND", "nand")
+            .replace("XNOR", "xnor")
+            .replace("NOR", "nor")
+            .replace("XOR", "xor")
+            .replace("AND", "and")
+            .replace("OR", "or")
+            .replace("NOT", "not")
+        )
+
+    def verify_code(self):
+        return self._is_single_line()
+
+    def _render_schemdraw(self):
+        with schemdraw.Drawing(file=f"{self.filepath_image}.svg", show=False):
+            logicparse(self._code)
+        self._svg_save(self.filepath_image)
+
+        reference_path = Path(__file__).parent / "../../../examples/reference/false_ref_logic.png"
+        result = images_are_similar(f"{self.filepath_image}.png", f"{reference_path}", tolerance=5)
+        if result:
+            print("Remove Logic image")
+            remove_files(self.filepath_image, ["png", "pdf", "svg"])
