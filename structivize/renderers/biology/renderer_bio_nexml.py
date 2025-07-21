@@ -1,7 +1,6 @@
-
 import matplotlib.pyplot as plt
 from Bio import Phylo
-from ete3 import Tree, Nexml
+from ete3 import Nexml, Tree
 
 from ...renderer import Renderer
 
@@ -20,7 +19,7 @@ class RendererBioNexml(Renderer):
         plt.close()
 
     def _render_ete3(self):
-        nexml_project = Nexml() # TODO: not working
+        nexml_project = Nexml()  # TODO: not working
         nexml_project.build_from_file("trees.xml")
         tree_collections = nexml_project.get_trees()
         collection_1 = tree_collections[0]

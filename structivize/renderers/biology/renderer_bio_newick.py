@@ -1,9 +1,9 @@
-
 import matplotlib.pyplot as plt
 from Bio import Phylo
 from ete3 import Tree
 
 from ...renderer import Renderer
+
 
 # Phylogenetic Tree
 @Renderer.register("bio_newick")
@@ -18,8 +18,8 @@ class RendererBioNewick(Renderer):
         self._code = self._code.strip()
 
     def verify_code(self):
-        return self._code[0]=="(" and (self._is_single_line() or self._code.split("\n")[-1].strip()[0]==")")
-    
+        return self._code[0] == "(" and (self._is_single_line() or self._code.split("\n")[-1].strip()[0] == ")")
+
     def _render_biopython(self):
         tree = Phylo.read(self._filepath_code, "newick")
         Phylo.draw(tree)

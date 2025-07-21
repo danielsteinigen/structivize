@@ -1,8 +1,8 @@
+import re
 
 import logomaker
 import matplotlib.pyplot as plt
-from Bio import motifs, SeqIO
-import re
+from Bio import SeqIO, motifs
 
 from ...renderer import Renderer
 
@@ -21,12 +21,12 @@ class RendererBioFasta(Renderer):
             stripped = line.strip()
             if not stripped:
                 continue  # skip empty lines
-            if stripped.startswith((';', '!', '#')):
+            if stripped.startswith((";", "!", "#")):
                 continue  # skip comment lines
             cleaned_lines.append(stripped)
-        self._code = '\n'.join(cleaned_lines)
+        self._code = "\n".join(cleaned_lines)
         self._code = self._code.strip()
-        if '>' == self._code[0] and len(self._code.splitlines()) == 1:
+        if ">" == self._code[0] and len(self._code.splitlines()) == 1:
             self._code = self._code[1:]
         if len(self._code) > 1 and ">" not in self._code.splitlines()[0]:
             self._code = f">Sequence0\n{self._code}"
@@ -36,17 +36,17 @@ class RendererBioFasta(Renderer):
         i = 0
         while i < len(lines):
             line = lines[i].strip()
-            if not line or line.startswith(';'):
+            if not line or line.startswith(";"):
                 i += 1
                 continue
-            if not line.startswith('>'):
+            if not line.startswith(">"):
                 return False  # Expected header line
             i += 1
 
             # Skip comments and blank lines
             while i < len(lines):
                 next_line = lines[i].strip()
-                if not next_line or next_line.startswith(';'):
+                if not next_line or next_line.startswith(";"):
                     i += 1
                     continue
                 break
@@ -55,17 +55,17 @@ class RendererBioFasta(Renderer):
                 return False  # No sequence line found after header
 
             sequence_line = lines[i].strip()
-            if not re.fullmatch(r'[A-Za-z*-]+', sequence_line):
+            if not re.fullmatch(r"[A-Za-z*-]+", sequence_line):
                 return False  # Sequence line is invalid (must be letters only)
             i += 1
 
             # Ensure next lines (if any) are either blank, comments, or a new '>'
             while i < len(lines):
                 peek = lines[i].strip()
-                if not peek or peek.startswith(';'):
+                if not peek or peek.startswith(";"):
                     i += 1
                     continue
-                if peek.startswith('>'):
+                if peek.startswith(">"):
                     break  # next entry
                 else:
                     return False  # Invalid: second sequence line found
@@ -75,7 +75,11 @@ class RendererBioFasta(Renderer):
         seqs = []
         with open(self._filepath_code) as f:
             raw_seqs = f.readlines()
-            seqs = [seq.strip() for seq in raw_seqs if ('#' not in seq) and ('>' not in seq) and ('!' not in seq) and (';' not in seq) and (seq.strip() != "")]
+            seqs = [
+                seq.strip()
+                for seq in raw_seqs
+                if ("#" not in seq) and (">" not in seq) and ("!" not in seq) and (";" not in seq) and (seq.strip() != "")
+            ]
         return seqs
 
     def verify_code(self):
@@ -87,7 +91,9 @@ class RendererBioFasta(Renderer):
 
         # https://logomaker.readthedocs.io/en/latest/implementation.html
         mat_df = logomaker.alignment_to_matrix(self._read_fasta())
-        logo = logomaker.Logo(mat_df) #, color_scheme="base_pairing", show_spines=False), color_scheme='NajafabadiEtAl2017', stack_order="small_on_top’"
+        logo = logomaker.Logo(
+            mat_df
+        )  # , color_scheme="base_pairing", show_spines=False), color_scheme='NajafabadiEtAl2017', stack_order="small_on_top’"
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
 
@@ -96,6 +102,8 @@ class RendererBioFasta(Renderer):
         # sequences = [record.seq for record in SeqIO.parse(self._filepath_code, "fasta")]
         # motif = motifs.create(sequences)
         # motif.weblogo(f"{self.filepath_image}.png") # uses Berkeley weblogo service
-        
-        self._execute_process(commands=["weblogo", "--format", "PDF", "-s", "large", "-P", "", "-f", self._filepath_code, "-o", f"{self.filepath_image}.pdf"]) # https://weblogo.threeplusone.com/manual.html
+
+        self._execute_process(
+            commands=["weblogo", "--format", "PDF", "-s", "large", "-P", "", "-f", self._filepath_code, "-o", f"{self.filepath_image}.pdf"]
+        )  # https://weblogo.threeplusone.com/manual.html
         self._pdf_save(self.filepath_image)

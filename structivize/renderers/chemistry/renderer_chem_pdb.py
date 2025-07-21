@@ -3,6 +3,7 @@ from rdkit.Chem import Draw
 
 from ...renderer import Renderer
 
+
 @Renderer.register("chem_pdb")
 class RendererChemPdb(Renderer):
     DEFAULT_TOOL_CONFIGS = {
