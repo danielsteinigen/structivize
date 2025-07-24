@@ -9,7 +9,7 @@ from .renderer_tikz import RendererTikz
 class RendererTikzCircuit(RendererTikz):
     DEFAULT_TOOL_CONFIGS = {
         "circuitikz_eu": {"options": ["europeanresistors", "americaninductors", "europeancurrents", "europeanvoltages"]},
-        "circuitikz_us": {"options": ['americanresistors', 'cuteinductors', 'americancurrents', 'europeanvoltages']},
+        "circuitikz_us": {"options": ["americanresistors", "cuteinductors", "americancurrents", "europeanvoltages"]},
     }
 
     def _render_circuitikz(self):
