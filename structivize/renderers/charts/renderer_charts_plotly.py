@@ -1,0 +1,19 @@
+import plotly.io as pio
+
+from ...renderer import Renderer
+
+
+@Renderer.register("charts_plotly")
+class RendererChartsPlotly(Renderer):
+    DEFAULT_TOOL_CONFIGS = {
+        "plotly": {},
+    }
+
+    def preprocess_code(self) -> str:
+        self.clean_code_lines("{")
+        self._code = self._code.replace(": False", ": false").replace(": True", ": true")
+
+    def _render_plotly(self):
+        fig = pio.from_json(self._code)
+        fig.write_image(f"{self.filepath_image}.svg")
+        self._svg_save(self.filepath_image)
