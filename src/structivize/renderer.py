@@ -199,7 +199,10 @@ class Renderer(ABC):
             response.append(self._execute_tool(tool))
         return response
 
-    def render(self, tool: str) -> RenderResponse:
+    def render(self, tool: str = None) -> RenderResponse:
+        if not tool:
+            tool = self.tools[0]
+
         if tool not in self._tool_handlers:
             raise ValueError(f"Tool '{tool}' not supported by {type(self).__name__}")
         return self._execute_tool(tool)
@@ -233,7 +236,7 @@ class Renderer(ABC):
     @property
     def log(self) -> str:
         return self._logs[self._current_tool]
-    
+
     @property
     def tool_config(self) -> str:
         return self.tool_configs[self._current_tool]

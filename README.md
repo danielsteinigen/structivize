@@ -6,3 +6,4 @@ A modular Python rendering toolkit for generating structured visualizations from
 
 ```bash
 pip install structivize
+```

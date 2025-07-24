@@ -5,9 +5,9 @@ from .renderer_hdl_vhdl import RendererHdlVhdl
 from .renderer_hdl_yosys import RendererHdlYosys
 from .renderer_logic import RendererLogic
 from .renderer_plc_il import RendererPlcIl
-from .renderer_quantum_qcircuit import RendererQuantumQcircuit
 from .renderer_quantum_cirq import RendererQuantumCirq
 from .renderer_quantum_qasm import RendererQuantumQasm2, RendererQuantumQasm3
+from .renderer_quantum_qcircuit import RendererQuantumQcircuit
 from .renderer_quantum_quirk import RendererQuantumQuirk
 
 __all__ = [
