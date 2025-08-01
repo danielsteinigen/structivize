@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version2/core" level="3" version="2">
+    <model id="IronMetabolismModel" name="Iron Metabolism Pathway">
+        <listOfCompartments>
+            <compartment id="bloodstream" size="1" constant="true"/>
+            <compartment id="liver" size="1" constant="true"/>
+            <compartment id="intestine" size="1" constant="true"/>
+        </listOfCompartments>
+        <listOfSpecies>
+            <species id="Fe_intestine" compartment="intestine" initialAmount="100" boundaryCondition="false" constant="false"/>
+            <species id="Fe_blood" compartment="bloodstream" initialAmount="200" boundaryCondition="false" constant="false"/>
+            <species id="Fe_liver" compartment="liver" initialAmount="300" boundaryCondition="false" constant="false"/>
+            <species id="hepcidin" compartment="bloodstream" initialAmount="50" boundaryCondition="false" constant="false"/>
+        </listOfSpecies>
+        <listOfReactions>
+            <reaction id="absorption" reversible="false">
+                <listOfReactants>
+                    <speciesReference species="Fe_intestine"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference species="Fe_blood"/>
+                </listOfProducts>
+                <kineticLaw>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <times/>
+                            <ci> k_absorption </ci>
+                            <ci> Fe_intestine </ci>
+                        </apply>
+                    </math>
+                    <listOfLocalParameters>
+                        <localParameter id="k_absorption" value="0.1"/>
+                    </listOfLocalParameters>
+                </kineticLaw>
+            </reaction>
+            <reaction id="storage" reversible="false">
+                <listOfReactants>
+                    <speciesReference species="Fe_blood"/>
+                </listOfReactants>
+                <listOfProducts>
+                    <speciesReference species="Fe_liver"/>
+                </listOfProducts>
+                <kineticLaw>
+                    <math xmlns="http://www.w3.org/1998/Math/MathML">
+                        <apply>
+                            <times/>
+                            <ci> k_storage </ci>
+                            <ci> Fe_blood </ci>
+                            <ci> hepcidin </ci>
+                        </apply>
+                    </math>
+                    <listOfLocalParameters>
+                        <localParameter id="k_storage" value="0.05"/>
+                    </listOfLocalParameters>
+                </kineticLaw>
+            </reaction>
+        </listOfReactions>
+    </model>
+</sbml>

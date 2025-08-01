@@ -1,0 +1,25 @@
+24 DSSR-derived secondary structure in '355d'
+1 C     0     2    24     1 # name=A.DC1, pairedNt=B.DG24
+2 G     1     3    23     2 # name=A.DG2, pairedNt=B.DC23
+3 C     2     4    22     3 # name=A.DC3, pairedNt=B.DG22
+4 G     3     5    21     4 # name=A.DG4, pairedNt=B.DC21
+5 A     4     6    20     5 # name=A.DA5, pairedNt=B.DT20
+6 A     5     7    19     6 # name=A.DA6, pairedNt=B.DT19
+7 T     6     8    18     7 # name=A.DT7, pairedNt=B.DA18
+8 T     7     9    17     8 # name=A.DT8, pairedNt=B.DA17
+9 C     8    10    16     9 # name=A.DC9, pairedNt=B.DG16
+10 G     9    11    15    10 # name=A.DG10, pairedNt=B.DC15
+11 C    10    12    14    11 # name=A.DC11, pairedNt=B.DG14
+12 G    11     0    13    12 # name=A.DG12, pairedNt=B.DC13
+13 C     0    14    12    13 # name=B.DC13, pairedNt=A.DG12
+14 G    13    15    11    14 # name=B.DG14, pairedNt=A.DC11
+15 C    14    16    10    15 # name=B.DC15, pairedNt=A.DG10
+16 G    15    17     9    16 # name=B.DG16, pairedNt=A.DC9
+17 A    16    18     8    17 # name=B.DA17, pairedNt=A.DT8
+18 A    17    19     7    18 # name=B.DA18, pairedNt=A.DT7
+19 T    18    20     6    19 # name=B.DT19, pairedNt=A.DA6
+20 T    19    21     5    20 # name=B.DT20, pairedNt=A.DA5
+21 C    20    22     4    21 # name=B.DC21, pairedNt=A.DG4
+22 G    21    23     3    22 # name=B.DG22, pairedNt=A.DC3
+23 C    22    24     2    23 # name=B.DC23, pairedNt=A.DG2
+24 G    23     0     1    24 # name=B.DG24, pairedNt=A.DC1
