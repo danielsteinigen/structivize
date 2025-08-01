@@ -1,0 +1,1 @@
+((Theropoda:150,(Sauropodomorpha:135,((Stegosauria:100,Ankylosauria:95):80,(Ceratopsia:90,Hadrosauridae:85):75):70):120):160,((Pterosauria:200,((Crocodylomorpha:180,Ornithischia:140):110):100):170,((Ichthyosauria:250,Plesiosauria:245):220,Testudines:210):200):180):250;

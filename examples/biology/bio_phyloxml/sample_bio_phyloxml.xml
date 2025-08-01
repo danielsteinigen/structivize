@@ -1,0 +1,52 @@
+<phyloxml xmlns="http://www.phyloxml.org">
+  <phylogeny rooted="true">
+    <clade>
+      <name>Birds</name>
+      <clade>
+        <name>Passeriformes</name>
+        <clade>
+          <name>Passeridae</name>
+          <clade>
+            <name>House Sparrow</name>
+          </clade>
+          <clade>
+            <name>Tree Sparrow</name>
+          </clade>
+        </clade>
+        <clade>
+          <name>Corvidae</name>
+          <clade>
+            <name>Crow</name>
+          </clade>
+          <clade>
+            <name>Raven</name>
+          </clade>
+        </clade>
+      </clade>
+      <clade>
+        <name>Anseriformes</name>
+        <clade>
+          <name>Anatidae</name>
+          <clade>
+            <name>Mallard</name>
+          </clade>
+          <clade>
+            <name>Canada Goose</name>
+          </clade>
+        </clade>
+      </clade>
+      <clade>
+        <name>Accipitriformes</name>
+        <clade>
+          <name>Accipitridae</name>
+          <clade>
+            <name>Eagle</name>
+          </clade>
+          <clade>
+            <name>Hawk</name>
+          </clade>
+        </clade>
+      </clade>
+    </clade>
+  </phylogeny>
+</phyloxml>
