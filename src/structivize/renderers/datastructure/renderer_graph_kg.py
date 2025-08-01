@@ -65,8 +65,8 @@ class RendererKg(Renderer):
 @Renderer.register("kg_xml")
 class RendererKgXml(RendererKg):
     DEFAULT_TOOL_CONFIGS = {
-        "graphviz": {},
         "networkx": {},
+        "graphviz": {},
     }
 
     def _render_graphviz(self):
@@ -81,8 +81,8 @@ class RendererKgXml(RendererKg):
 @Renderer.register("kg_turtle")
 class RendererKgTurtle(RendererKg):
     DEFAULT_TOOL_CONFIGS = {
-        "graphviz": {},
         "networkx": {},
+        "graphviz": {},
     }
 
     def _render_graphviz(self):

@@ -1,25 +1,492 @@
-from structivize.renderers.chemistry import RendererChemMol
-
-# from structivize.renderers.music import RendererMusicAbc
+from src.structivize.renderers.biology import *
+from src.structivize.renderers.business import *
+from src.structivize.renderers.charts import *
+from src.structivize.renderers.chemistry import *
+from src.structivize.renderers.culture import *
+from src.structivize.renderers.datastructure import *
+from src.structivize.renderers.drawing import *
+from src.structivize.renderers.electronics import *
+from src.structivize.renderers.modeling import *
 
 RENDERER_REGISTRY = [
+    {
+        "renderer_cls": RendererBioCt,
+        "domain": "biology",
+        "renderer_name": "bio_ct",
+        "sample_filename": "sample_bio_ct.ct",
+    },
+    {
+        "renderer_cls": RendererBioFasta,
+        "domain": "biology",
+        "renderer_name": "bio_fasta",
+        "sample_filename": "sample_bio_fasta.txt",
+    },
+    {
+        "renderer_cls": RendererBioNewick,
+        "domain": "biology",
+        "renderer_name": "bio_newick",
+        "sample_filename": "sample_bio_newick.txt",
+    },
+    {
+        "renderer_cls": RendererBioNexml,
+        "domain": "biology",
+        "renderer_name": "bio_nexml",
+        "sample_filename": "sample_bio_nexml.xml",
+    },
+    {
+        "renderer_cls": RendererBioPhyloxml,
+        "domain": "biology",
+        "renderer_name": "bio_phyloxml",
+        "sample_filename": "sample_bio_phyloxml.xml",
+    },
+    {
+        "renderer_cls": RendererBioSbml,
+        "domain": "biology",
+        "renderer_name": "bio_sbml",
+        "sample_filename": "sample_bio_sbml.xml",
+    },
+    {
+        "renderer_cls": RendererBioScadnano,
+        "domain": "biology",
+        "renderer_name": "bio_scadnano",
+        "sample_filename": "sample_bio_scadnano.json",
+    },
+    {
+        "renderer_cls": RendererBioVienna,
+        "domain": "biology",
+        "renderer_name": "bio_vienna",
+        "sample_filename": "sample_bio_vienna.txt",
+    },
+    {
+        "renderer_cls": RendererKgXml,
+        "domain": "biology",
+        "renderer_name": "bio_biopax",
+        "sample_filename": "sample_bio_biopax.owl",
+    },
+    {
+        "renderer_cls": RendererBizBpmn,
+        "domain": "business",
+        "renderer_name": "biz_bpmn",
+        "sample_filename": "sample_biz_bpmn.xml",
+    },
+    {
+        "renderer_cls": RendererChartsPlotly,
+        "domain": "charts",
+        "renderer_name": "charts_plotly",
+        "sample_filename": "sample_charts_plotly.json",
+    },
+    {
+        "renderer_cls": RendererChartsVega,
+        "domain": "charts",
+        "renderer_name": "charts_vega",
+        "sample_filename": "sample_charts_vega.json",
+    },
+    {
+        "renderer_cls": RendererChemCml,
+        "domain": "chemistry",
+        "renderer_name": "chem_cml",
+        "sample_filename": "sample_chem_cml.xml",
+    },
+    {
+        "renderer_cls": RendererChemCt,
+        "domain": "chemistry",
+        "renderer_name": "chem_ct",
+        "sample_filename": "sample_chem_ct.ct",
+    },
+    {
+        "renderer_cls": RendererChemInchi,
+        "domain": "chemistry",
+        "renderer_name": "chem_inchi",
+        "sample_filename": "sample_chem_inchi.txt",
+    },
     {
         "renderer_cls": RendererChemMol,
         "domain": "chemistry",
         "renderer_name": "chem_mol",
-        "sample_filename": "sample.mol"
+        "sample_filename": "sample_chem_mol.mol",
     },
-    # {
-    #     "renderer_cls": RendererChemInchi,
-    #     "domain": "chemistry",
-    #     "renderer_name": "chem_inchi",
-    #     "sample_filename": "sample.inchi"
-    # },
-    # {
-    #     "renderer_cls": RendererMusicAbc,
-    #     "domain": "music",
-    #     "renderer_name": "music_abc",
-    #     "sample_filename": "sample.abc"
-    # },
-    # Add more renderers here
+    {
+        "renderer_cls": RendererChemPdb,
+        "domain": "chemistry",
+        "renderer_name": "chem_pdb",
+        "sample_filename": "sample_chem_pdb.txt",
+    },
+    {
+        "renderer_cls": RendererChemSmarts,
+        "domain": "chemistry",
+        "renderer_name": "chem_smarts",
+        "sample_filename": "sample_chem_smarts.txt",
+    },
+    {
+        "renderer_cls": RendererChemSmartsReaction,
+        "domain": "chemistry",
+        "renderer_name": "chem_smarts",
+        "sample_filename": "sample_chem_smarts_react.txt",
+    },
+    {
+        "renderer_cls": RendererChemSmiles,
+        "domain": "chemistry",
+        "renderer_name": "chem_smiles",
+        "sample_filename": "sample_chem_smiles.txt",
+    },
+    {
+        "renderer_cls": RendererChessFen,
+        "domain": "culture",
+        "renderer_name": "chess_fen",
+        "sample_filename": "sample_chess_fen.txt",
+    },
+    {
+        "renderer_cls": RendererChessPgn,
+        "domain": "culture",
+        "renderer_name": "chess_pgn",
+        "sample_filename": "sample_chess_pgn.txt",
+    },
+    {
+        "renderer_cls": RendererMusicAbc,
+        "domain": "music",
+        "renderer_name": "music_abc",
+        "sample_filename": "sample_music_abc.abc",
+    },
+    {
+        "renderer_cls": RendererMusicLy,
+        "domain": "music",
+        "renderer_name": "music_lilypond",
+        "sample_filename": "sample_music_lilypond.ly",
+    },
+    {
+        "renderer_cls": RendererMusicXml,
+        "domain": "music",
+        "renderer_name": "music_musicxml",
+        "sample_filename": "sample_music_musicxml.xml",
+    },
+    {
+        "renderer_cls": RendererDbDbml,
+        "domain": "datastructure",
+        "renderer_name": "db_dbml",
+        "sample_filename": "sample_db_dbml.dbml",
+    },
+    {
+        "renderer_cls": RendererDbMysql,
+        "domain": "datastructure",
+        "renderer_name": "db_mysql",
+        "sample_filename": "sample_db_mysql.sql",
+    },
+    {
+        "renderer_cls": RendererDbPostgres,
+        "domain": "datastructure",
+        "renderer_name": "db_postgres",
+        "sample_filename": "sample_db_postgres.sql",
+    },
+    {
+        "renderer_cls": RendererDbPrisma,
+        "domain": "datastructure",
+        "renderer_name": "db_prisma",
+        "sample_filename": "sample_db_prisma.prisma",
+    },
+    {
+        "renderer_cls": RendererGraphGml,
+        "domain": "datastructure",
+        "renderer_name": "graph_gml",
+        "sample_filename": "sample_graph_gml.xml",
+    },
+    {
+        "renderer_cls": RendererGraphMl,
+        "domain": "datastructure",
+        "renderer_name": "graph_graphml",
+        "sample_filename": "sample_graph_graphml.xml",
+    },
+    {
+        "renderer_cls": RendererKgTurtle,
+        "domain": "datastructure",
+        "renderer_name": "graph_kg",
+        "sample_filename": "sample_kg_owl_ttl.ttl",
+    },
+    {
+        "renderer_cls": RendererKgTurtle,
+        "domain": "datastructure",
+        "renderer_name": "graph_kg",
+        "sample_filename": "sample_kg_rdf_ttl.ttl",
+    },
+    {
+        "renderer_cls": RendererKgXml,
+        "domain": "datastructure",
+        "renderer_name": "graph_kg",
+        "sample_filename": "sample_kg_owl_xml.xml",
+    },
+    {
+        "renderer_cls": RendererKgXml,
+        "domain": "datastructure",
+        "renderer_name": "graph_kg",
+        "sample_filename": "sample_kg_rdf_xml.xml",
+    },
+    {
+        "renderer_cls": RendererDrawDitaa,
+        "domain": "drawing",
+        "renderer_name": "draw_ditaa",
+        "sample_filename": "sample_draw_ditaa.txt",
+    },
+    {
+        "renderer_cls": RendererAsymptote,
+        "domain": "drawing",
+        "renderer_name": "draw_asymptote",
+        "sample_filename": "sample_draw_asymptote.asy",
+    },
+    {
+        "renderer_cls": RendererTikzCircuit,
+        "domain": "drawing",
+        "renderer_name": "tikz",
+        "sample_filename": "sample_tikz_circuit.tikz",
+    },
+    {
+        "renderer_cls": RendererTikzPidCircuit,
+        "domain": "drawing",
+        "renderer_name": "tikz",
+        "sample_filename": "sample_tikz_pid.tikz",
+    },
+    {
+        "renderer_cls": RendererTikzChemplants,
+        "domain": "drawing",
+        "renderer_name": "tikz",
+        "sample_filename": "sample_tikz_chemplants.tikz",
+    },
+    {
+        "renderer_cls": RendererTikzPlc,
+        "domain": "drawing",
+        "renderer_name": "tikz",
+        "sample_filename": "sample_tikz_plc.tikz",
+    },
+    {
+        "renderer_cls": RendererCircuitKicad,
+        "domain": "electronics",
+        "renderer_name": "circuit_kicad",
+        "sample_filename": "sample_circuit_kicad.net",
+    },
+    {
+        "renderer_cls": RendererCircuitLcapy,
+        "domain": "electronics",
+        "renderer_name": "circuit_lcapy",
+        "sample_filename": "sample_circuit_lcapy.net",
+    },
+    {
+        "renderer_cls": RendererHdlVerilog,
+        "domain": "electronics",
+        "renderer_name": "hdl_verilog",
+        "sample_filename": "sample_hdl_verilog.v",
+    },
+    {
+        "renderer_cls": RendererHdlVhdl,
+        "domain": "electronics",
+        "renderer_name": "hdl_vhdl",
+        "sample_filename": "sample_hdl_vhdl.vhd",
+    },
+    {
+        "renderer_cls": RendererHdlYosys,
+        "domain": "electronics",
+        "renderer_name": "hdl_yosys",
+        "sample_filename": "sample_hdl_yosys.json",
+    },
+    {
+        "renderer_cls": RendererLogic,
+        "domain": "electronics",
+        "renderer_name": "logic",
+        "sample_filename": "sample_logic_bool.txt",
+    },
+    {
+        "renderer_cls": RendererLogic,
+        "domain": "electronics",
+        "renderer_name": "logic",
+        "sample_filename": "sample_logic_symb.txt",
+    },
+    {
+        "renderer_cls": RendererPlcIl,
+        "domain": "electronics",
+        "renderer_name": "plc_il",
+        "sample_filename": "sample_plc_il.txt",
+    },
+    {
+        "renderer_cls": RendererQuantumCirq,
+        "domain": "electronics",
+        "renderer_name": "quantum_cirq",
+        "sample_filename": "sample_quantum_cirq.json",
+    },
+    {
+        "renderer_cls": RendererQuantumQasm2,
+        "domain": "electronics",
+        "renderer_name": "quantum_qasm",
+        "sample_filename": "sample_quantum_qasm_2.qasm",
+    },
+    {
+        "renderer_cls": RendererQuantumQasm3,
+        "domain": "electronics",
+        "renderer_name": "quantum_qasm",
+        "sample_filename": "sample_quantum_qasm_3.qasm",
+    },
+    {
+        "renderer_cls": RendererQuantumQcircuit,
+        "domain": "electronics",
+        "renderer_name": "quantum_qcircuit",
+        "sample_filename": "sample_quantum_qcircuit.tex",
+    },
+    {
+        "renderer_cls": RendererQuantumQuirk,
+        "domain": "electronics",
+        "renderer_name": "quantum_quirk",
+        "sample_filename": "sample_quantum_quirk.json",
+    },
+    {
+        "renderer_cls": RendererModelD2,
+        "domain": "modeling",
+        "renderer_name": "model_d2",
+        "sample_filename": "sample_model_d2.txt",
+    },
+    {
+        "renderer_cls": RendererModelDot,
+        "domain": "modeling",
+        "renderer_name": "model_dot",
+        "sample_filename": "sample_model_dot.dot",
+    },
+    {
+        "renderer_cls": RendererModelMarkmap,
+        "domain": "modeling",
+        "renderer_name": "model_markmap",
+        "sample_filename": "sample_model_markmap.md",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_activity.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_class.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_er.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_gantt.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_mindmap.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_requirement.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_sequence.mmd",
+    },
+    {
+        "renderer_cls": RendererModelMermaid,
+        "domain": "modeling",
+        "renderer_name": "model_mermaid",
+        "sample_filename": "sample_mermaid_state.mmd",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_activity.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_class.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_component.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_er.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_gantt.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_mindmap.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_sequence.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_state.puml",
+    },
+    {
+        "renderer_cls": RendererModelPlantuml,
+        "domain": "modeling",
+        "renderer_name": "model_plantuml",
+        "sample_filename": "sample_plantuml_usecase.puml",
+    },
+    {
+        "renderer_cls": RendererNnKeras,
+        "domain": "modeling",
+        "renderer_name": "nn_keras",
+        "sample_filename": "sample_nn_keras.json",
+    },
+    {
+        "renderer_cls": RendererNnOnnx,
+        "domain": "modeling",
+        "renderer_name": "nn_onnx",
+        "sample_filename": "sample_nn_onnx.onnx",
+    },
+    {
+        "renderer_cls": RendererNnProtobuf,
+        "domain": "modeling",
+        "renderer_name": "nn_protobuf",
+        "sample_filename": "sample_nn_protobuf.pbtxt",
+    },
+    {
+        "renderer_cls": RendererStateScxml,
+        "domain": "modeling",
+        "renderer_name": "state_scxml",
+        "sample_filename": "sample_state_scxml.xml",
+    },
+    {
+        "renderer_cls": RendererStateSismic,
+        "domain": "modeling",
+        "renderer_name": "state_sismic",
+        "sample_filename": "sample_state_sismic.txt",
+    },
+    {
+        "renderer_cls": RendererStateSmcat,
+        "domain": "modeling",
+        "renderer_name": "state_smcat",
+        "sample_filename": "sample_state_smcat.txt",
+    },
 ]
