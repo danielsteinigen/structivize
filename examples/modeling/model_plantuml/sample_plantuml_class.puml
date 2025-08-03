@@ -1,0 +1,32 @@
+@startuml class_44_4_1
+
+class Patient {
+    +patientId: String
+    +name: String
+    +dateOfBirth: Date
+}
+
+class Doctor {
+    +doctorId: String
+    +name: String
+    +specialty: String
+}
+
+class Appointment {
+    +appointmentId: String
+    +date: Date
+    +time: String
+}
+
+class Prescription {
+    +prescriptionId: String
+    +medication: String
+    +dosage: String
+    +instructions: String
+}
+
+Patient "1" -- "0..*" Appointment : books >
+Appointment "1" -- "1" Doctor : with >
+Appointment "1" *-- "0..*" Prescription : results in >
+
+@enduml

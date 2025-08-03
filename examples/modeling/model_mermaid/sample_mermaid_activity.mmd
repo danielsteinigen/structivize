@@ -1,0 +1,11 @@
+flowchart TD
+    A[Receive Customer Order] --> B[Check Inventory]
+    B -->|In Stock| C[Process Payment]
+    B -->|Out of Stock| D[Notify Customer & Backorder]
+    D --> E[Wait for Inventory]
+    E --> B
+    C --> F{Payment Successful?}
+    F -->|Yes| G[Prepare Order for Shipping]
+    F -->|No| H[Notify Customer of Payment Failure]
+    G --> I[Ship Order]
+    I --> J[Order Complete]

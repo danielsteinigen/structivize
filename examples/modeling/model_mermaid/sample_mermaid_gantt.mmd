@@ -1,0 +1,15 @@
+gantt
+    title Resource Allocation Software Implementation Schedule
+    dateFormat  YYYY-MM-DD
+    section Planning
+    Requirements Gathering      :done,    req, 2024-07-01, 7d
+    Process Mapping             :done,    map, after req, 4d
+    section Design
+    System Design               :active,  des, after map, 6d
+    Resource Plan Development   :         rpd, after des, 5d
+    section Implementation
+    Software Development        :         dev, after rpd, 10d
+    User Training               :         train, after dev, 4d
+    section Testing & Launch
+    System Testing              :         test, after dev, 5d
+    Go-Live                     :         golive, after test, 2d

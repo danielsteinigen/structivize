@@ -1,0 +1,28 @@
+digraph PurchaseOrderApproval {
+    node [shape=box, style=filled, fillcolor=lightgray, fontname="Arial"];
+    Start [shape=ellipse, fillcolor=lightgreen, label="Start\n(Purchase Order Created)"];
+    Submit [label="Submit Purchase Order"];
+    DeptReview [label="Department Review"];
+    DeptDecision [shape=diamond, fillcolor=lightblue, label="Department Approved?"];
+    ManagerReview [label="Manager Review"];
+    ManagerDecision [shape=diamond, fillcolor=lightblue, label="Manager Approved?"];
+    FinanceReview [label="Finance Review"];
+    FinanceDecision [shape=diamond, fillcolor=lightblue, label="Finance Approved?"];
+    Approved [shape=ellipse, fillcolor=green, label="Order Approved"];
+    Rejected [shape=ellipse, fillcolor=red, label="Order Rejected"];
+    Escalate [label="Escalate to Management"];
+    End [shape=ellipse, fillcolor=yellow, label="End"];
+    
+    Start -> Submit -> DeptReview -> DeptDecision;
+    DeptDecision -> ManagerReview [label="Yes"];
+    DeptDecision -> Rejected [label="No"];
+    ManagerReview -> ManagerDecision;
+    ManagerDecision -> FinanceReview [label="Yes"];
+    ManagerDecision -> Escalate [label="No"];
+    Escalate -> ManagerDecision;
+    FinanceReview -> FinanceDecision;
+    FinanceDecision -> Approved [label="Yes"];
+    FinanceDecision -> Rejected [label="No"];
+    Approved -> End;
+    Rejected -> End;
+}

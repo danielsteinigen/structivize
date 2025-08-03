@@ -1,0 +1,22 @@
+@startuml component_1823_4_1
+skinparam dpi 300
+package "Healthcare Management System" {
+  [Patient Management] as PM
+  [Appointment Scheduling] as AS
+  [Authentication Service] as Auth
+  [Medical Record Service] as MRS
+  [Database] as DB
+
+  PM --> Auth : "Verify Identity"
+  PM --> MRS : "Request Medical Records"
+  PM --> AS : "Schedule Appointment"
+
+  AS --> Auth : "Validate User"
+  AS --> DB : "Store Appointment Data"
+
+  MRS --> Auth : "Check Access Rights"
+  MRS --> DB : "Read/Write Medical Records"
+
+  Auth --> DB : "User Credentials"
+}
+@enduml

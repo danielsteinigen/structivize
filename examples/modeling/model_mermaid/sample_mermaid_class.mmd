@@ -1,0 +1,25 @@
+classDiagram
+    class Library {
+        +String name
+        +List~Book~ books
+        +addBook(Book book)
+        +getBooks() List~Book~
+    }
+    class Book {
+        +String title
+        +String isbn
+        +List~Author~ authors
+        +addAuthor(Author author)
+        +getAuthors() List~Author~
+    }
+    class Author {
+        +String name
+        +String bio
+        +List~Book~ books
+        +addBook(Book book)
+        +getBooks() List~Book~
+    }
+
+    Library "1" --> "many" Book : contains
+    Book "many" --> "many" Author : has
+    Author "many" --> "many" Book : writes

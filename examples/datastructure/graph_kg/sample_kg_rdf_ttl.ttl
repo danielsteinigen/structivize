@@ -1,0 +1,26 @@
+@prefix ex: <http://example.org/ecology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:Species a rdfs:Class .
+ex:Habitat a rdfs:Class .
+ex:livesIn a rdf:Property ;
+    rdfs:domain ex:Species ;
+    rdfs:range ex:Habitat .
+ex:isEndangered a rdf:Property ;
+    rdfs:domain ex:Species ;
+    rdfs:range rdf:boolean .
+
+ex:PolarBear a ex:Species ;
+    ex:livesIn ex:Arctic ;
+    ex:isEndangered true .
+
+ex:Arctic a ex:Habitat ;
+    rdfs:label "Arctic Region" .
+
+ex:RedFox a ex:Species ;
+    ex:livesIn ex:TemperateForest ;
+    ex:isEndangered false .
+
+ex:TemperateForest a ex:Habitat ;
+    rdfs:label "Temperate Forest" .

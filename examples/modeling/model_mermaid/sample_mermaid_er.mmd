@@ -1,0 +1,43 @@
+erDiagram
+    USER {
+        int user_id PK
+        string username
+        string email
+    }
+    ACTIVITY {
+        int activity_id PK
+        string name
+        date event_date
+        int organizer_id FK
+        int location_id FK
+    }
+    LOCATION {
+        int location_id PK
+        string name
+        string type
+        string address
+    }
+    EQUIPMENT {
+        int equipment_id PK
+        string name
+        string category
+    }
+    PARTICIPATION {
+        int participation_id PK
+        int user_id FK
+        int activity_id FK
+        string role
+    }
+    ACTIVITY_EQUIPMENT {
+        int activity_equipment_id PK
+        int activity_id FK
+        int equipment_id FK
+        int quantity
+    }
+
+    USER ||--o{ ACTIVITY : organizes
+    USER ||--o{ PARTICIPATION : joins
+    ACTIVITY }o--|| LOCATION : held_at
+    ACTIVITY ||--o{ PARTICIPATION : has
+    ACTIVITY ||--o{ ACTIVITY_EQUIPMENT : requires
+    EQUIPMENT ||--o{ ACTIVITY_EQUIPMENT : used_in

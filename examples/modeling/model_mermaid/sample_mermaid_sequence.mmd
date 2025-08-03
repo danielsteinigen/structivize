@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant Student
+    participant CourseSystem
+    participant Teacher
+    participant Admin
+
+    Student->>CourseSystem: Submit Assignment
+    CourseSystem->>Teacher: Notify Assignment Submission
+    Teacher->>CourseSystem: Review Assignment
+    Teacher->>CourseSystem: Provide Feedback
+    CourseSystem->>Student: Notify Feedback Received
+    CourseSystem->>Admin: Log Submission and Feedback
+    Admin->>CourseSystem: Acknowledge Oversight

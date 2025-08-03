@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> Scheduling
+    Scheduling --> Confirmed : appointment confirmed
+    Scheduling --> Cancelled : appointment cancelled
+    Scheduling --> Rescheduled : reschedule requested
+    Confirmed --> CheckedIn : patient checked in
+    Confirmed --> Cancelled : appointment cancelled
+    Confirmed --> NoShow : patient did not arrive
+    CheckedIn --> InTreatment : treatment started
+    InTreatment --> Discharged : treatment completed
+    InTreatment --> Cancelled : treatment cancelled
+    Discharged --> [*]
+    Rescheduled --> Scheduling : new appointment scheduled
+    Cancelled --> [*]
+    NoShow --> [*]
