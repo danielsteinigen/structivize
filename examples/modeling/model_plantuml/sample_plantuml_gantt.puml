@@ -1,0 +1,57 @@
+@startgantt gantt_5133_2_1
+skinparam dpi 300
+Project starts the 2024-07-01
+
+[Requirements Gathering] lasts 5 days
+[Requirements Review & Approval] lasts 2 days
+[Data Pipeline Design] lasts 4 days
+[Data Pipeline Implementation] lasts 8 days
+[UX Wireframes] lasts 5 days
+[UX Design Approval] lasts 2 days
+[Dashboard Frontend Development] lasts 10 days
+[Dashboard Integration] lasts 5 days
+[QA Planning] lasts 3 days
+[QA Testing] lasts 7 days
+[Bug Fixing & Polishing] lasts 4 days
+[Deployment Preparation] lasts 3 days
+[Deployment & Go-Live] lasts 2 days
+[User Training Material Preparation] lasts 5 days
+[User Training Sessions] lasts 4 days
+
+[Requirements Gathering] is colored in DeepSkyBlue
+[Requirements Review & Approval] is colored in DeepSkyBlue
+[Data Pipeline Design] is colored in Orange
+[Data Pipeline Implementation] is colored in Orange
+[UX Wireframes] is colored in MediumSeaGreen
+[UX Design Approval] is colored in MediumSeaGreen
+[Dashboard Frontend Development] is colored in MediumSeaGreen
+[Dashboard Integration] is colored in MediumSeaGreen
+[QA Planning] is colored in Violet
+[QA Testing] is colored in Violet
+[Bug Fixing & Polishing] is colored in Violet
+[Deployment Preparation] is colored in Tomato
+[Deployment & Go-Live] is colored in Tomato
+[User Training Material Preparation] is colored in Gold
+[User Training Sessions] is colored in Gold
+
+[Requirements Review & Approval] starts at [Requirements Gathering]'s end
+[Data Pipeline Design] starts at [Requirements Review & Approval]'s end
+[UX Wireframes] starts at [Requirements Review & Approval]'s end
+[Data Pipeline Implementation] starts at [Data Pipeline Design]'s end
+[UX Design Approval] starts at [UX Wireframes]'s end
+[Dashboard Frontend Development] starts at [UX Design Approval]'s end
+[Dashboard Frontend Development] starts at [Data Pipeline Implementation]'s end
+[Dashboard Integration] starts at [Dashboard Frontend Development]'s end
+[QA Planning] starts at [Dashboard Integration]'s end
+[QA Testing] starts at [QA Planning]'s end
+[Bug Fixing & Polishing] starts at [QA Testing]'s end
+[Deployment Preparation] starts at [Bug Fixing & Polishing]'s end
+[Deployment & Go-Live] starts at [Deployment Preparation]'s end
+[User Training Material Preparation] starts at [Dashboard Integration]'s end
+[User Training Sessions] starts at [Deployment & Go-Live]'s end
+
+[Requirements Approved] happens at [Requirements Review & Approval]'s end
+[MVP Ready] happens at [Dashboard Integration]'s end
+[Go-Live] happens at [Deployment & Go-Live]'s end
+
+@endgantt

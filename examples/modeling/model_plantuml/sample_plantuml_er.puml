@@ -1,0 +1,51 @@
+@startuml db_2910_2_1
+skinparam dpi 300
+entity Member {
+    *MemberID: integer
+    Name: string
+    ContactInformation: string
+    Role: string
+}
+
+entity Event {
+    *EventID: integer
+    Date: date
+    Time: time
+    Location: string
+    Type: string
+}
+
+entity Donation {
+    *DonationID: integer
+    MemberID: integer
+    EventID: integer
+    DonationDate: date
+    Amount/Details: string
+}
+
+entity Volunteer {
+    *VolunteerID: integer
+    Name: string
+    ContactInformation: string
+    Role: string
+}
+
+entity Attendance {
+    *MemberID: integer
+    *EventID: integer
+    Date: date
+}
+
+entity VolunteerEvent {
+    *VolunteerID: integer
+    *EventID: integer
+    Date: date
+}
+
+Member --o{ Donation
+Donation }o-- Event
+Volunteer --o{ VolunteerEvent
+VolunteerEvent }o-- Event
+Member }o-- Attendance
+Attendance }o-- Event
+@enduml

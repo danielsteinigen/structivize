@@ -1,0 +1,30 @@
+Table SensorType {
+    id int [pk, increment]
+    name varchar(100)
+    unit varchar(50)
+    description varchar(255)
+}
+
+Table Location {
+    id int [pk, increment]
+    name varchar(100)
+    latitude decimal(9,6)
+    longitude decimal(9,6)
+    description varchar(255)
+}
+
+Table Sensor {
+    id int [pk, increment]
+    sensor_type_id int [ref: > SensorType.id]
+    location_id int [ref: > Location.id]
+    serial_number varchar(100)
+    install_date date
+    status varchar(50)
+}
+
+Table Measurement {
+    id int [pk, increment]
+    sensor_id int [ref: > Sensor.id]
+    measured_at datetime
+    value decimal(12,4)
+}

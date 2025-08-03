@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:med="http://example.org/medicine#">
+
+  <med:Plant rdf:about="http://example.org/medicine/Willow">
+    <rdfs:label>Willow</rdfs:label>
+    <med:hasActiveCompound rdf:resource="http://example.org/medicine/Salicin"/>
+    <med:usedInPeriod rdf:resource="http://example.org/medicine/AncientGreece"/>
+    <med:usedToTreat rdf:resource="http://example.org/medicine/Fever"/>
+  </med:Plant>
+
+  <med:Plant rdf:about="http://example.org/medicine/Foxglove">
+    <rdfs:label>Foxglove</rdfs:label>
+    <med:hasActiveCompound rdf:resource="http://example.org/medicine/Digoxin"/>
+    <med:usedInPeriod rdf:resource="http://example.org/medicine/18thCentury"/>
+    <med:usedToTreat rdf:resource="http://example.org/medicine/HeartDisease"/>
+  </med:Plant>
+
+  <med:ActiveCompound rdf:about="http://example.org/medicine/Salicin">
+    <rdfs:label>Salicin</rdfs:label>
+  </med:ActiveCompound>
+
+  <med:ActiveCompound rdf:about="http://example.org/medicine/Digoxin">
+    <rdfs:label>Digoxin</rdfs:label>
+  </med:ActiveCompound>
+
+  <med:HistoricalPeriod rdf:about="http://example.org/medicine/AncientGreece">
+    <rdfs:label>Ancient Greece</rdfs:label>
+  </med:HistoricalPeriod>
+
+  <med:HistoricalPeriod rdf:about="http://example.org/medicine/18thCentury">
+    <rdfs:label>18th Century</rdfs:label>
+  </med:HistoricalPeriod>
+
+  <med:Disease rdf:about="http://example.org/medicine/Fever">
+    <rdfs:label>Fever</rdfs:label>
+  </med:Disease>
+
+  <med:Disease rdf:about="http://example.org/medicine/HeartDisease">
+    <rdfs:label>Heart Disease</rdfs:label>
+  </med:Disease>
+
+</rdf:RDF>

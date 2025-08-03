@@ -1,0 +1,20 @@
+@startuml model_4084_2_1
+skinparam dpi 300
+start
+:Conduct Market Research;
+if (Is there sufficient market potential?) then (yes)
+  :Analyze Costs (fixed, variable, incremental);
+  :Forecast Demand and Revenue;
+  :Estimate Profitability (Revenue - Costs);
+  if (Is projected profitability satisfactory?) then (yes)
+    :Make Go Decision;
+    stop
+  else (no)
+    :Make No-Go Decision;
+    stop
+  endif
+else (no)
+  :Make No-Go Decision;
+  stop
+endif
+@enduml

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" initial="document_submission">
+  <state id="document_submission">
+    <transition event="submit_documents" target="verification"/>
+  </state>
+  <state id="verification">
+    <transition event="verification_passed" target="orientation_scheduling"/>
+    <transition event="verification_failed" target="verification_failed"/>
+  </state>
+  <state id="verification_failed">
+    <transition event="resubmit_documents" target="document_submission"/>
+    <transition event="reject_candidate" target="rejected"/>
+  </state>
+  <state id="orientation_scheduling">
+    <transition event="schedule_orientation" target="orientation"/>
+  </state>
+  <state id="orientation">
+    <transition event="attend_orientation" target="confirmation"/>
+  </state>
+  <state id="confirmation">
+    <transition event="confirm_onboarding" target="onboarded"/>
+  </state>
+  <final id="onboarded"/>
+  <final id="rejected"/>
+</scxml>

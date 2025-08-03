@@ -1,0 +1,14 @@
+@startuml sequence_602_4_1
+skinparam dpi 300
+actor Ecologist
+participant SensorDevice
+participant MonitoringSystem
+participant DataRepository
+
+SensorDevice -> MonitoringSystem: detectChange(event)
+MonitoringSystem -> DataRepository: storeEvent(event)
+DataRepository --> MonitoringSystem: eventStored(confirmation)
+MonitoringSystem -> Ecologist: sendAlert(event)
+Ecologist --> MonitoringSystem: acknowledgeAlert()
+
+@enduml

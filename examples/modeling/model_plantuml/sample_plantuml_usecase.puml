@@ -1,0 +1,24 @@
+@startuml usecase_2159_4_1
+skinparam dpi 300
+left to right direction
+
+actor Architect
+actor Client
+actor Contractor
+
+usecase "Create Blueprint" as CB
+usecase "Review Design" as RD
+usecase "Approve Project" as AP
+usecase "Request Revision" as RR
+
+Architect --> CB
+Architect --> RD
+Client --> RD
+Client --> RR
+Contractor --> RD
+
+RD <|-- AP : include
+RD <|.. RR : extend
+
+Client --> AP
+@enduml

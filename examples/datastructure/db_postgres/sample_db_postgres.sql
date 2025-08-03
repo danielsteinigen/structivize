@@ -1,0 +1,34 @@
+CREATE TABLE Authors (
+    AuthorID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Books (
+    BookID SERIAL PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    ISBN VARCHAR(13) UNIQUE NOT NULL
+);
+
+CREATE TABLE BooksAuthors (
+    BookID INT NOT NULL,
+    AuthorID INT NOT NULL,
+    PRIMARY KEY (BookID, AuthorID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID),
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+CREATE TABLE Members (
+    MemberID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE Loans (
+    LoanID SERIAL PRIMARY KEY,
+    MemberID INT NOT NULL,
+    BookID INT NOT NULL,
+    BorrowDate DATE NOT NULL,
+    DueDate DATE NOT NULL,
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID),
+    FOREIGN KEY (BookID) REFERENCES Books(BookID)
+);

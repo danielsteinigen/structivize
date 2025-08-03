@@ -1,0 +1,22 @@
+@startuml state_2456_4_1
+skinparam dpi 300
+[*] --> Initialization
+
+Initialization --> Registration : initializeSession
+Registration --> Registration : registerVoter
+Registration --> Voting : startVoting
+Registration --> Cancelled : cancelSession
+
+Voting --> Voting : castVote
+Voting --> Tallying : endVoting
+Voting --> Cancelled : cancelSession
+
+Tallying --> Published : tallyVotes
+Tallying --> Error : tallyError
+
+Published --> [*]
+
+Cancelled --> [*]
+
+Error --> [*]
+@enduml
