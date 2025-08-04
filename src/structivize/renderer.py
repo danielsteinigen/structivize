@@ -35,11 +35,11 @@ class Renderer(ABC):
         return decorator
 
     @classmethod
-    def from_dict(cls, renderer: str, code: str, filepath_code: str, filepath_image: str):
+    def from_dict(cls, renderer: str, code: str, code_path: str, output_base_path: str):
         renderer_cls = cls.registry.get(renderer)
         if renderer_cls is None:
             raise ValueError(f"Unknown renderer: {renderer}")
-        return renderer_cls(code=code, filepath_code=filepath_code, filepath_image=filepath_image)
+        return renderer_cls(code=code, code_path=code_path, output_base_path=output_base_path)
 
     def __init__(
         self,
