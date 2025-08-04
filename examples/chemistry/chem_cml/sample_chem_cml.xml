@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<molecule id="Caffeine" xmlns="http://www.xml-cml.org/schema">
+ <atomArray>
+  <atom id="a1" elementType="C"/>
+  <atom id="a2" elementType="N"/>
+  <atom id="a3" elementType="C"/>
+  <atom id="a4" elementType="N"/>
+  <atom id="a5" elementType="C"/>
+  <atom id="a6" elementType="C"/>
+  <atom id="a7" elementType="C"/>
+  <atom id="a8" elementType="O"/>
+  <atom id="a9" elementType="N"/>
+  <atom id="a10" elementType="C"/>
+  <atom id="a11" elementType="O"/>
+  <atom id="a12" elementType="N"/>
+  <atom id="a13" elementType="C"/>
+  <atom id="a14" elementType="C"/>
+ </atomArray>
+ <bondArray>
+  <bond atomRefs2="a1 a2" order="1"/>
+  <bond atomRefs2="a2 a3" order="1"/>
+  <bond atomRefs2="a3 a4" order="2"/>
+  <bond atomRefs2="a4 a5" order="1"/>
+  <bond atomRefs2="a5 a6" order="2"/>
+  <bond atomRefs2="a2 a6" order="1"/>
+  <bond atomRefs2="a6 a7" order="1"/>
+  <bond atomRefs2="a7 a8" order="2"/>
+  <bond atomRefs2="a7 a9" order="1"/>
+  <bond atomRefs2="a9 a10" order="1"/>
+  <bond atomRefs2="a10 a11" order="2"/>
+  <bond atomRefs2="a10 a12" order="1"/>
+  <bond atomRefs2="a5 a12" order="1"/>
+  <bond atomRefs2="a12 a13" order="1"/>
+  <bond atomRefs2="a9 a14" order="1"/>
+ </bondArray>
+</molecule>

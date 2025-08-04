@@ -1,0 +1,17 @@
+VAR
+    Level_Sensor : BOOL
+    Pressure_Sensor : BOOL
+    Manual_Stop : BOOL
+    Emergency_Stop : BOOL
+    Pump : BOOL
+END_VAR
+
+LD Level_Sensor
+AND Pressure_Sensor
+ANDN Manual_Stop
+ANDN Emergency_Stop
+S Pump
+
+LD Manual_Stop
+OR Emergency_Stop
+R Pump

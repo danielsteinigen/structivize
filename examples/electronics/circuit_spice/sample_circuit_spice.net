@@ -1,0 +1,6 @@
+* Bandpass Filter
+
+Vin 1 0 AC 1
+C1 1 2 0.0001m
+L1 2 3 1
+R1 3 0 100

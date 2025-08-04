@@ -1,0 +1,102 @@
+{
+  "modules": {
+    "up_down_counter_4bit": {
+      "ports": {
+        "clk": {"direction": "input", "bits": [1]},
+        "reset": {"direction": "input", "bits": [2]},
+        "en": {"direction": "input", "bits": [3]},
+        "up": {"direction": "input", "bits": [4]},
+        "q": {"direction": "output", "bits": [5,6,7,8]}
+      },
+      "cells": {
+        "mux_en": {
+          "type": "$mux",
+          "parameters": {"WIDTH": 4},
+          "port_directions": {"A": "input", "B": "input", "S": "input", "Y": "output"},
+          "connections": {
+            "A": [9,10,11,12],
+            "B": [13,14,15,16],
+            "S": [3],
+            "Y": [17,18,19,20]
+          }
+        },
+        "add_sub": {
+          "type": "$add",
+          "parameters": {"A_SIGNED": 0, "B_SIGNED": 0, "Y_WIDTH": 4, "A_WIDTH": 4, "B_WIDTH": 4},
+          "port_directions": {"A": "input", "B": "input", "Y": "output"},
+          "connections": {
+            "A": [5,6,7,8],
+            "B": [21,22,23,24],
+            "Y": [13,14,15,16]
+          }
+        },
+        "sub": {
+          "type": "$sub",
+          "parameters": {"A_SIGNED": 0, "B_SIGNED": 0, "Y_WIDTH": 4, "A_WIDTH": 4, "B_WIDTH": 4},
+          "port_directions": {"A": "input", "B": "input", "Y": "output"},
+          "connections": {
+            "A": [5,6,7,8],
+            "B": [25,26,27,28],
+            "Y": [29,30,31,32]
+          }
+        },
+        "mux_up": {
+          "type": "$mux",
+          "parameters": {"WIDTH": 4},
+          "port_directions": {"A": "input", "B": "input", "S": "input", "Y": "output"},
+          "connections": {
+            "A": [29,30,31,32],
+            "B": [13,14,15,16],
+            "S": [4],
+            "Y": [9,10,11,12]
+          }
+        },
+        "mux_reset": {
+          "type": "$mux",
+          "parameters": {"WIDTH": 4},
+          "port_directions": {"A": "input", "B": "input", "S": "input", "Y": "output"},
+          "connections": {
+            "A": [33,34,35,36],
+            "B": [17,18,19,20],
+            "S": [2],
+            "Y": [37,38,39,40]
+          }
+        },
+        "const_one": {
+          "type": "$const",
+          "parameters": {"WIDTH": 4, "VALUE": 1},
+          "port_directions": {"Y": "output"},
+          "connections": {
+            "Y": [21,22,23,24]
+          }
+        },
+        "const_one_sub": {
+          "type": "$const",
+          "parameters": {"WIDTH": 4, "VALUE": 1},
+          "port_directions": {"Y": "output"},
+          "connections": {
+            "Y": [25,26,27,28]
+          }
+        },
+        "const_zero": {
+          "type": "$const",
+          "parameters": {"WIDTH": 4, "VALUE": 0},
+          "port_directions": {"Y": "output"},
+          "connections": {
+            "Y": [33,34,35,36]
+          }
+        },
+        "reg_counter": {
+          "type": "$dff",
+          "parameters": {"WIDTH": 4, "CLK_POLARITY": 1},
+          "port_directions": {"CLK": "input", "D": "input", "Q": "output"},
+          "connections": {
+            "CLK": [1],
+            "D": [37,38,39,40],
+            "Q": [5,6,7,8]
+          }
+        }
+      }
+    }
+  }
+}

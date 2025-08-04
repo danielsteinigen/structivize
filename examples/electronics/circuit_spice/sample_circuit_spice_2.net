@@ -1,0 +1,9 @@
+* Transistor Amplifier
+
+VCC 1 0 DC 12
+VIN 2 0 AC 1
+RB 2 3 47k
+CIN 2 3 10u
+RE 4 0 1k
+RC 1 5 2k
+Q1 5 3 4 QNPN

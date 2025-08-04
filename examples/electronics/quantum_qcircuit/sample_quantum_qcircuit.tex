@@ -1,0 +1,10 @@
+\Qcircuit @C=1em @R=.7em {
+    & \ctrl{2} & \ctrlo{1} & \ctrl{1}
+    & \qw & \multigate{1}{U} & \qw \\
+    & \qw & \targ & \ctrlo{2} \qw
+    & \ctrl{1} & \ghost{U} & \qw \\
+    & \control \qw & \ctrl{1} & \qw
+    & \meter & \cctrlo{-1} \\
+    & \qw & \control \qw & \gate{H}
+    & \meter & \cctrl{-1}
+}
