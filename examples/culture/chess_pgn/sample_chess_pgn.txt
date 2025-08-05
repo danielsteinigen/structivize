@@ -1,0 +1,8 @@
+[Event "Example Game"]
+[Site "Structivize"]
+[Date "2025.07.07"]
+[White "Alice"]
+[Black "Bob"]
+[Result "1-0"]
+
+1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Bb7 10. d4 Re8 11. Ng5 Rf8 12. Nxf7 Rxf7 13. Bxf7+ Kxf7 14. d5 Nb8 15. a4 c6 16. axb5 axb5 17. Rxa8 Bxa8 18. dxc6 Bxc6 19. f3 Nbd7 20. Be3 h6 21. Nd2 Kg8 22. Qb3+ Kh7 23. Qe6 Bf8 24. Nf1 Qe7 25. Qf5+ Kg8 26. Ng3 Qf7 27. Ra1 Qb3 28. Bc1 Qc2 29. Be3 Qd3 30. Bf2 Be7 31. Nh5 Kf7 32. Ra7 Qd1+ 33. Kh2 g6 34. Nxf6 gxf5 35. Nxd7 Ke6 36. exf5+ Kxf5 37. Nb8 Bg5 38. g4+ Ke6 39. Nxc6 Qe2 40. Kg2 Bh4 41. Nd4+ exd4 42. cxd4 Qxf2+ 43. Kh1 Qxf3+ 44. Kg1 Bf2+ 45. Kf1 Be3+ 46. Ke1 Qf2+ 47. Kd1 Qd2# 0-1
