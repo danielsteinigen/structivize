@@ -1,0 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A line chart comparing sales trends of different product categories over time.",
+  "data": {
+    "values": [
+      {"month": "January", "category": "Electronics", "sales": 300},
+      {"month": "February", "category": "Electronics", "sales": 320},
+      {"month": "March", "category": "Electronics", "sales": 310},
+      {"month": "April", "category": "Electronics", "sales": 350},
+      {"month": "May", "category": "Electronics", "sales": 360},
+      {"month": "June", "category": "Electronics", "sales": 380},
+      {"month": "July", "category": "Electronics", "sales": 390},
+      {"month": "August", "category": "Electronics", "sales": 410},
+      {"month": "September", "category": "Electronics", "sales": 400},
+      {"month": "October", "category": "Electronics", "sales": 420},
+      {"month": "November", "category": "Electronics", "sales": 430},
+      {"month": "December", "category": "Electronics", "sales": 440},
+      {"month": "January", "category": "Clothing", "sales": 200},
+      {"month": "February", "category": "Clothing", "sales": 220},
+      {"month": "March", "category": "Clothing", "sales": 210},
+      {"month": "April", "category": "Clothing", "sales": 230},
+      {"month": "May", "category": "Clothing", "sales": 240},
+      {"month": "June", "category": "Clothing", "sales": 260},
+      {"month": "July", "category": "Clothing", "sales": 270},
+      {"month": "August", "category": "Clothing", "sales": 290},
+      {"month": "September", "category": "Clothing", "sales": 280},
+      {"month": "October", "category": "Clothing", "sales": 300},
+      {"month": "November", "category": "Clothing", "sales": 310},
+      {"month": "December", "category": "Clothing", "sales": 320}
+    ]
+  },
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "month", "type": "ordinal", "axis": {"labelAngle": 0}},
+    "y": {"field": "sales", "type": "quantitative"},
+    "color": {"field": "category", "type": "nominal", "legend": {"title": "Product Category"}}
+  }
+}

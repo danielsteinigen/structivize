@@ -1,0 +1,32 @@
+{
+    "data": [
+        {
+            "type": "treemap",
+            "labels": ["World", "Asia", "Europe", "North America", "China", "India", "Germany", "United States", "Canada"],
+            "parents": ["", "World", "World", "World", "Asia", "Asia", "Europe", "North America", "North America"],
+            "values": [0, 4500, 2500, 2300, 3000, 1500, 500, 1300, 1000],
+            "textinfo": "label+value+percent parent+percent entry",
+            "hoverinfo": "label+value+percent parent+percent entry",
+            "marker": {
+                "colors": [
+                    "#636EFA", "#EF553B", "#00CC96", "#AB63FA", 
+                    "#19D3F3", "#E763FA", "#FECB52", "#FFA15A", "#FF6692"
+                ]
+            }
+        }
+    ],
+    "layout": {
+        "title": {
+            "text": "Global Hierarchical Data Treemap",
+            "x": 0.5
+        },
+        "margin": {
+            "l": 10,
+            "r": 10,
+            "b": 10,
+            "t": 50
+        },
+        "treemapcolorway": ["#636EFA", "#EF553B", "#00CC96", "#AB63FA"],
+        "extendsunburstcolors": true
+    }
+}
