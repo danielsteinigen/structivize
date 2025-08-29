@@ -1,16 +1,14 @@
 # ==========================================================
-# ⚠️  WARNING: Always review setup scripts before executing
+# ℹ️  Note: Please review this script before running
 # ==========================================================
 #
-# This script modifies your system by installing packages,
-# changing system files, and setting environment variables.
+# This script will install system packages, configure tools,
+# and modify your environment (e.g. ~/.bashrc).
 #
-# Do **not** run scripts from the internet without examining them.
-# Improper use may lead to unexpected behavior, data loss,
-# security issues, or system instability.
+# It's recommended to examine setup scripts before executing them,
+# particularly when working in sensitive or production setups.
 #
-# You are responsible for ensuring this script is safe to run
-# in your environment.
+# Use responsibly and adjust commands as needed for your system.
 #
 # ==========================================================
 

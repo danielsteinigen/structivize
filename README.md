@@ -5,8 +5,9 @@ A modular Python rendering toolkit for generating structured visualizations from
 # Usage
 
 ## Installation with Setup Script
-⚠️ **Always review setup scripts before executing** 
-This script modifies your system by installing packages, changing system files, and setting environment variables. Please ensure this script is safe to run in your environment.
+ℹ️ **Note: Please review the setup script before running** 
+
+This script will install system packages, configure tools, and modify your environment. It's recommended to examine setup scripts before executing them, particularly when working in sensitive or production setups. Use responsibly and adjust commands as needed for your system.
 
 ```bash
 chmod +x setup.sh && ./setup.sh
