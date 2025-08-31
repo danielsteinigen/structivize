@@ -34,8 +34,14 @@ build-backend = "uv_build"
 [tool.black]
 line-length = 140
 target-version = ["py311"]
+extend-exclude = '''
+(
+  ^\.venv
+  |tools_rendering
+)
+'''
 
 [tool.isort]
 profile = "black"
 line_length = 140
-
+skip = [".venv", "tools_rendering"]
