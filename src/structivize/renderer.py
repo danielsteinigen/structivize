@@ -1,16 +1,20 @@
+import contextlib
+import io
 import os
 import subprocess
+import traceback
 from abc import ABC
 from pathlib import Path
-from typing import List, Literal
+from typing import List, Literal, Optional, Union
 
-import cairosvg
 import matplotlib.pyplot as plt
-import PyPDF2
+
 from pydantic import BaseModel
 
 from .image_utils import is_image_mainly_black, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
+
+TIMEOUT = 60
 
 
 class RenderResponse(BaseModel):
@@ -77,15 +81,15 @@ class Renderer(ABC):
         self.output_format = output_format
         self._max_width = max_width  # 1024 # 2048
         self._max_height = max_height  # 768 # 1536
-        self.__save_svg = False
-        self.__save_pdf = False
+        self.__save_svg = True
+        self.__save_pdf = True
         self._image_transparent = False
 
         self.tools = list(self.DEFAULT_TOOL_CONFIGS.keys())
 
         self._filepath_images = {tool: f"{output_base_path}_{tool}" for tool in self.tools}
         self._log_files = {tool: f"{output_base_path}_{tool}.log" for tool in self.tools}
-        self._logs = {tool: {"log": ""} for tool in self.tools}
+        self._logs = {tool: {"cli": "", "py": io.StringIO()} for tool in self.tools}
         self._tool_handlers = {tool: getattr(self, f"_render_{tool}") for tool in self.tools}
         for tool in self.tools:
             if not hasattr(self, f"_render_{tool}"):
@@ -103,19 +107,22 @@ class Renderer(ABC):
 
     def __write_log(self, command, status, stdout, stderr):
         if self.log is not None:
-            self.log["log"] += "\n<<<<<< RENDERING STEP START >>>>>>\n"
-            self.log["log"] += f"$ {' '.join(command)}\n"
-            self.log["log"] += f"------ EXIT CODE: {status} ------\n"
-            self.log["log"] += "---- STDOUT ----\n"
-            self.log["log"] += stdout if stdout.strip() else "(no output)\n"
-            self.log["log"] += "---- STDERR ----\n"
-            self.log["log"] += stderr if stderr.strip() else "(no errors)\n"
-            self.log["log"] += "<<<<<< RENDERING STEP END >>>>>>\n"
+            self.log["cli"] += "\n<<<<<< RENDERING STEP START >>>>>>\n"
+            self.log["cli"] += f"$ {' '.join(command)}\n"
+            self.log["cli"] += f"------ EXIT CODE: {status} ------\n"
+            self.log["cli"] += "---- STDOUT ----\n"
+            self.log["cli"] += stdout if stdout.strip() else "(no output)\n"
+            self.log["cli"] += "---- STDERR ----\n"
+            self.log["cli"] += stderr if stderr.strip() else "(no errors)\n"
+            self.log["cli"] += "<<<<<< RENDERING STEP END >>>>>>\n"
 
-    def _execute_process(self, commands: list):
-        prog = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        out, err = prog.communicate()
-        status = prog.wait()
+    def _execute_process(self, commands: list, input_data: Optional[Union[str, bytes]] = None, text: bool = True):
+        prog = subprocess.Popen(
+            commands, stdin=subprocess.PIPE if input_data is not None else None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=text
+        )
+        out, err = prog.communicate(input=input_data, timeout=TIMEOUT)
+        # status = prog.wait()
+        status = prog.returncode
         self.__write_log(commands, status, out, err)
         return status, out, err
 
@@ -125,36 +132,49 @@ class Renderer(ABC):
             self.__write_log(["converting PDF"], "failed", "", "PDF was not generated")
         else:
             with open(pdf_path, "rb") as file:
-                pdfReader = PyPDF2.PdfReader(file)
-                if len(pdfReader.pages) == 1:
-                    self._execute_process(commands=["pdfcrop", "-margin", "10", pdf_path, f"{path}-tmp.pdf"])
-                    os.rename(f"{path}-tmp.pdf", pdf_path)
+                self._execute_process(commands=["pdfcrop", "-margin", "10", pdf_path, f"{path}-tmp.pdf"])
+                os.rename(f"{path}-tmp.pdf", pdf_path)
 
-                    self._execute_process(commands=["convert", "-density", "500", "-alpha", "off", pdf_path, f"PNG24:{path}.png"])
-                    # -alpha set/on/tansparent/off/remove
-                    if self.__save_svg:
-                        self._execute_process(commands=["pdf2svg", pdf_path, f"{path}.svg"])
-                    if not self.__save_pdf:
-                        remove_files(path, ["pdf"])
+                self._execute_process(
+                    commands=[
+                        "inkscape",
+                        pdf_path,
+                        "--pdf-page=1",
+                        "--export-type=png",
+                        f"--export-filename={path}.png",
+                        "--export-dpi=300",
+                    ]
+                )
+                if self.__save_svg:
+                    self._execute_process(
+                        commands=["inkscape", pdf_path, "--pdf-page=1", "--export-type=svg", f"--export-filename={path}.svg"]
+                    )
+                if not self.__save_pdf:
+                    remove_files(path, ["pdf"])
 
     def _svg_save(self, path: str, svg_code: str = None, scale: float = 2.0):
         svg_path = f"{path}.svg"
         if svg_code is not None:
             open(svg_path, "w").write(svg_code)
-            cairosvg.svg2png(bytestring=svg_code, write_to=f"{path}.png", scale=scale, dpi=300)
+            self._execute_process(
+                commands=["inkscape", "--pipe", "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"],
+                input_data=svg_code,
+            )
             if self.__save_pdf:
-                cairosvg.svg2pdf(bytestring=svg_code, write_to=f"{path}.pdf")
+                self._execute_process(
+                    commands=["inkscape", "--pipe", "--export-type=pdf", f"--export-filename={path}.pdf"], input_data=svg_code
+                )
             if not self.__save_svg:
                 remove_files(path, ["svg"])
         else:
             if path is None or not os.path.isfile(svg_path):
                 self.__write_log(["converting SVG"], "failed", "", "SVG was not generated")
             else:
-                # self._execute_process(commands=["convert", "-density", "500", "-alpha", "off", svg_path, f"PNG24:{path}.png"])
-                cairosvg.svg2png(url=svg_path, write_to=f"{path}.png", scale=scale, dpi=300)
+                self._execute_process(
+                    commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"]
+                )  # , "--export-background=red", "--export-background-opacity=0"])
                 if self.__save_pdf:
-                    # self._execute_process(commands=["convert", "-density", "500", svg_path, f"{path}.pdf"])
-                    cairosvg.svg2pdf(url=svg_path, write_to=f"{path}.pdf")
+                    self._execute_process(commands=["inkscape", svg_path, "--export-type=pdf", f"--export-filename={path}.pdf"])
                 if not self.__save_svg:
                     remove_files(svg_path)
 
@@ -164,18 +184,18 @@ class Renderer(ABC):
         elif not is_image_valid(path_img) or is_image_single_color(path_img):
             os.remove(path_img)
             return ""
-        elif type(self).__name__ == "RendererModelingPlantuml" and is_image_mainly_black(path_img):
+        elif type(self).__name__ == "RendererModelPlantuml" and is_image_mainly_black(path_img):
             os.remove(path_img)
             return ""
         resize_png_preserve_aspect(path_img, self._max_width, self._max_height, keep_transparency=self._image_transparent)
         return path_img
 
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
-        if self._logs[self._current_tool]["log"] != "":
-            save_text(filename=f"{self._filepath_images[self._current_tool]}.log", data=self._logs[self._current_tool]["log"])
-
         path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
+
+        log_output = f"** CLI OUTPUT **\n{self._logs[self._current_tool]['cli']}\n\n** PYTHON OUTPUT **\n{self._logs[self._current_tool]['py'].getvalue()}"
+        save_text(filename=f"{self._filepath_images[self._current_tool]}.log", data=log_output)
         return RenderResponse(
             tool=self._current_tool,
             success=success,
@@ -210,21 +230,24 @@ class Renderer(ABC):
     def _execute_tool(self, tool: str) -> RenderResponse:
         self._current_tool = tool
 
-        try:
-            if self._code.strip() == "":
-                return self._write_response(success=False, message="No Code provided.")
-            elif not self.verify_code:
-                return self._write_response(success=False, message="Provided code is not valid.")
-            else:
-                self._tool_handlers[tool]()
-                return self._write_response()
+        with contextlib.redirect_stdout(self.log["py"]), contextlib.redirect_stderr(self.log["py"]):
+            try:
+                if self._code.strip() == "":
+                    return self._write_response(success=False, message="No Code provided.")
+                elif not self.verify_code:
+                    return self._write_response(success=False, message="Provided code is not valid.")
+                else:
+                    self._tool_handlers[tool]()
+                    return self._write_response()
 
-        except Exception as e:
-            message = f"An exception occurred for {type(self).__name__} with tool {tool}:\n{e}"
+            except Exception as e:
+                message = f"An exception occurred for {type(self).__name__} with tool {tool}:\n{e}"
+                self.log["py"].write("=== Exception occurred ===\n")
+                self.log["py"].write(message)
+                self.log["py"].write(f"\n{traceback.format_exc()}\n")
 
-        print(f"\n{message}")
-        plt.close()
-        return self._write_response(success=False, message=message)
+            plt.close()
+            return self._write_response(success=False, message=message)
 
     # def statistics(self) -> StatisticResponse:
     #     return "Entropy"

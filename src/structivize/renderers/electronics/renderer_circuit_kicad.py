@@ -29,8 +29,8 @@ class RendererCircuitKicad(Renderer):
         skidl_code += f"\n    generate_schematic(filepath='{os.path.dirname(self.filepath_image)}', top_name='{self.filepath_image.split('/')[-1]}', title='{self.filepath_image.split('/')[-1]}', flatness=0.0, retries=5)"
 
         # command that can be executed within the generated Python script:
-        # generate_netlist(file_=f'{self._filepath_image_1}', tool=KICAD8)
-        # generate_svg(file_=f'{self._filepath_image_1}') # layout_options for netlistsvg
+        # generate_netlist(file_=f'{self._filepath_image}', tool=KICAD8)
+        # generate_svg(file_=f'{self._filepath_image}') # layout_options for netlistsvg
         # generate_schematic(
         #     filepath=".",
         #     top_name="skidl_circuit_options",
