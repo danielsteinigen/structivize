@@ -12,7 +12,7 @@ class RendererModelPlantuml(Renderer):
     def preprocess_code(self):
         self.clean_code_lines("@")
         for x in ["@startuml", "@startmindmap", "@startchen", "@startgantt"]:
-            self._code = self._code.strip().replace(x, f"{x} {self._filepath_image_1.split('/')[-1]}\nskinparam dpi 300")
+            self._code = self._code.strip().replace(x, f"{x} {self._filepath_image.split('/')[-1]}\nskinparam dpi 300")
 
     def _render_plantuml(self):
         self._execute_process(

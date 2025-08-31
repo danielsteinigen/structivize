@@ -35,11 +35,11 @@ class RendererHdlVhdl(RendererHdlYosys):
             .replace("use ieee.std_logic_signed;", "use ieee.std_logic_signed.all;")
             .replace("use ieee.numeric_std;", "use ieee.numeric_std.all;")
         )
-        if "STD_LOGIC" in self._code and "use IEEE.STD_LOGIC" not in self._code:
+        if "STD_LOGIC" in self._code and "use IEEE.STD_LOGIC" not in self._code and "use ieee.std_logic" not in self._code:
             self._code = f"use IEEE.STD_LOGIC_1164.ALL;\n\n{self._code}"
             if "library IEEE;" not in self._code:
                 self._code = f"library IEEE;\n{self._code}"
-        if "std_logic" in self._code and "use ieee.std_logic" not in self._code:
+        if "std_logic" in self._code and "use ieee.std_logic" not in self._code and "use IEEE.STD_LOGIC" not in self._code:
             self._code = f"use ieee.std_logic_1164.all;\n\n{self._code}"
             if "library ieee;" not in self._code:
                 self._code = f"library ieee;\n{self._code}"
