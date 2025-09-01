@@ -17,6 +17,10 @@ from .utils import check_dirs, load_text, remove_files, save_text
 TIMEOUT = 60
 
 
+class StatisticResponse(BaseModel):
+    node_types: dict = {}
+    edges: List[dict] = None
+
 class RenderResponse(BaseModel):
     tool: str
     success: bool
@@ -24,6 +28,7 @@ class RenderResponse(BaseModel):
     path_code: str
     path_image: str
     path_log: str
+    statistics: StatisticResponse
 
 
 class Renderer(ABC):
@@ -194,7 +199,7 @@ class Renderer(ABC):
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
 
         log_output = f"** CLI OUTPUT **\n{self._logs[self._current_tool]['cli']}\n\n** PYTHON OUTPUT **\n{self._logs[self._current_tool]['py'].getvalue()}"
-        save_text(filename=f"{self._filepath_images[self._current_tool]}.log", data=log_output)
+        save_text(filename=self._log_files[self._current_tool], data=log_output)
         return RenderResponse(
             tool=self._current_tool,
             success=success if path_img != '' else False,
@@ -202,6 +207,7 @@ class Renderer(ABC):
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",
             path_log=f"{self._filepath_images[self._current_tool]}.log",
+            statistics=self.statistics()
         )
 
     def preprocess_code(self):
@@ -248,8 +254,8 @@ class Renderer(ABC):
             plt.close()
             return self._write_response(success=False, message=message)
 
-    # def statistics(self) -> StatisticResponse:
-    #     return "Entropy"
+    def statistics(self) -> StatisticResponse:
+        return StatisticResponse()
 
     @property
     def filepath_image(self) -> str:

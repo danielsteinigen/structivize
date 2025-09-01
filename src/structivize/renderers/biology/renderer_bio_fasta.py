@@ -1,10 +1,11 @@
 import re
+from collections import defaultdict
 
 import logomaker
 import matplotlib.pyplot as plt
 from Bio import SeqIO, motifs
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 # Sequence Logo
@@ -107,3 +108,27 @@ class RendererBioFasta(Renderer):
             commands=["weblogo", "--format", "PDF", "-s", "large", "-P", "", "-f", self._filepath_code, "-o", f"{self.filepath_image}.pdf"]
         )  # https://weblogo.threeplusone.com/manual.html
         self._pdf_save(self.filepath_image)
+
+    def _cnt_sequences(self, code):
+        cnt = 0
+        lines = code.strip().splitlines()
+        for i, line in enumerate(lines):
+            if line.startswith(">"):
+                cnt += 1
+        return cnt
+
+    def statistics(self) -> StatisticResponse:
+        counts = defaultdict(int)
+        counts["sequences"] = self._cnt_sequences(self._code)
+        sequence = ''
+        lines = self._code.strip().splitlines()
+        for line in lines:
+            if line.startswith(">"):
+                continue
+            if re.fullmatch(r"[().]+", line.strip()):
+                continue
+            sequence += line.strip()
+        for char in sequence:
+            if char.isalpha():
+                counts[char.upper()] += 1
+        return StatisticResponse(node_types=dict(counts))

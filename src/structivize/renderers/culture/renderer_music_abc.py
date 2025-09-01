@@ -1,6 +1,8 @@
 import os
+import re
+from collections import defaultdict
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 from ...utils import remove_files
 from .renderer_music import RendererMusic
 
@@ -37,3 +39,18 @@ class RendererMusicAbc(RendererMusic):
         )
         os.rename(f"{self.filepath_image}001.svg", f"{self.filepath_image}.svg")
         self._svg_save(self.filepath_image)
+
+    def statistics(self) -> StatisticResponse:
+        counts = defaultdict(int)
+        code = re.sub(r'\[.*?\]', '', self._code)      # remove anything in square brackets
+        code = re.sub(r'".*?"', '', code)        # remove anything in double quotes
+        lines = code.strip().splitlines()
+        for line in lines:
+            if re.match(r'^[A-Za-z]:', line):  # metadata line like T:, X:, M:, etc.
+                continue
+            if line.strip().startswith("%"):
+                continue
+            notes = re.findall(r"[A-Ga-g]", line)
+            for note in notes:
+                counts[note.upper()] += 1
+        return StatisticResponse(node_types=dict(counts))

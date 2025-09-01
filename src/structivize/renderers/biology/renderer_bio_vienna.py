@@ -1,12 +1,14 @@
 import glob
 import os
 import shutil
+import re
+from collections import defaultdict
 
 import forgi
 import forgi.visual.mplotlib as fvm
 import matplotlib.pyplot as plt
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 # Vienna format generates RNA secondary structure diagrams
@@ -101,3 +103,29 @@ class RendererBioVienna(Renderer):
         shutil.copyfile(svg_files[0], f"{self.filepath_image}.svg")
         self._execute_process(commands=["sudo", "rm", "-r", f"{path_temp}/test"])
         self._svg_save(path=self.filepath_image)
+
+    def _has_second_gt(self, s):
+        first_index = s.find('>')
+        if first_index == -1:
+            return False
+        second_index = s.find('>', first_index + 1)
+        if second_index == -1:
+            return False
+        return True
+
+    def statistics(self) -> StatisticResponse:
+        if self._has_second_gt(self._code):
+            return StatisticResponse()
+        counts = defaultdict(int)
+        sequence = ''
+        lines = self._code.strip().splitlines()
+        for line in lines:
+            if line.startswith(">"):
+                continue
+            if re.fullmatch(r"[().]+", line.strip()):
+                continue
+            sequence += line.strip()
+        for char in sequence:
+            if char.isalpha():
+                counts[char.upper()] += 1
+        return StatisticResponse(node_types=dict(counts))

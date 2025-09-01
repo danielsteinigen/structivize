@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from Bio import Phylo
 from ete3 import Tree
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 # Phylogenetic Tree
@@ -29,3 +29,7 @@ class RendererBioNewick(Renderer):
     def _render_ete3(self):
         tree = Tree(self._filepath_code, format=1)
         tree.render(f"{self.filepath_image}.png", w=800, dpi=300)
+
+
+    def statistics(self) -> StatisticResponse:
+        return StatisticResponse(node_types={"leaf nodes": len(self._code.split(","))})

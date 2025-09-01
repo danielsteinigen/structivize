@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import rdflib
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 class RendererKg(Renderer):
@@ -77,6 +77,24 @@ class RendererKgXml(RendererKg):
     def _render_networkx(self):
         graph = self._parse_kg("xml")
         self._create_graph_networkx(graph)
+    
+
+    def statistics(self) -> StatisticResponse:
+        g = self._parse_kg("xml")
+        nodes = set()
+        for s, p, o in g:
+            nodes.update([s, p, o])
+        resources = set()
+        for s, p, o in g:
+            resources.update([s, o])
+        # G = nx.DiGraph()
+        # for subj, pred, obj in g:
+        #     G.add_edge(str(subj), str(obj), label=str(pred))
+        # nodes_nx = G.number_of_nodes()
+        # return {"nodes": len(nodes), "resources": len(resources), "triples": len(g)}
+
+        return StatisticResponse(node_types={"nodes": len(resources)})
+
 
 
 @Renderer.register("kg_turtle")

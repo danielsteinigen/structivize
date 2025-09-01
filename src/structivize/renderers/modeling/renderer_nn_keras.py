@@ -1,9 +1,10 @@
 import json
+from collections import defaultdict
 
 import keras
 from keras.utils import plot_model
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 from ...utils import load_json
 
 
@@ -55,3 +56,17 @@ class RendererNnKeras(Renderer):
                 show_trainable=True,
                 dpi=200,
             )
+
+
+    def statistics(self) -> StatisticResponse:
+        counts = defaultdict(int)
+        try:
+            model = json.loads(self._code)
+            config = model.get("config", {})
+            layers = config.get("layers", []) if isinstance(config, dict) else config
+            for layer in layers:
+                layer_type = layer.get("class_name", "Unknown")
+                counts[layer_type] += 1
+        except Exception as e:
+            return StatisticResponse()
+        return StatisticResponse(node_types={k: v for k, v in dict(counts).items() if "input" not in k.lower()})

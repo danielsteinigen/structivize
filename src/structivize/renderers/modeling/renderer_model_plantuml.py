@@ -1,6 +1,8 @@
 import os
+import re
+from collections import defaultdict
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 @Renderer.register("model_plantuml")
@@ -29,6 +31,34 @@ class RendererModelPlantuml(Renderer):
         )
         # -theme xxx "-xmlstats", "-tsvg",
         # self._svg_save(path=self.filepath_image)
+
+    def statistics(self) -> StatisticResponse:
+        def parse_class(code):
+            counts = defaultdict(int)
+            lines = self._code.strip().splitlines()
+            in_class_block = False
+
+            for line in lines:
+                line = line.strip()
+                if re.match(r'^(abstract\s+)?class\s+', line) or line.startswith('interface'):
+                    counts['classes'] += 1
+                    in_class_block = True
+                elif in_class_block and line.startswith('}'):
+                    in_class_block = False
+                # elif in_class_block and re.match(r'^[+#-]?[A-Za-z_]+\s+[A-Za-z_<>]+', line):
+                #     counts['attributes'] += 1
+            return StatisticResponse(node_types=dict(counts))
+
+        def parse_component(code):
+            counts = defaultdict(int)
+            lines = self._code.strip().splitlines()
+            for line in lines:
+                line = line.strip()
+                if '[' in line and ']' in line and '>' not in line:
+                    matches = re.findall(r'\[.*?\]', line)
+                    counts['components'] += len(matches)
+            return StatisticResponse(node_types=dict(counts))
+
 
     # def _render_api(self):
     #     output = render(
