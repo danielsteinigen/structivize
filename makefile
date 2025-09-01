@@ -15,13 +15,13 @@
 TOOLS_DIR := $(CURDIR)/tools_rendering
 
 .PHONY: all setup node-tools system-deps imagemagick-policy rendering-tools \
-        abcm2ps oss-cad ditaa kicad r2dt varna plantuml openbabel d2lang \
+        abcm2ps oss-cad ditaa asymptote kicad r2dt varna plantuml openbabel d2lang \
         bpmn-python python-package clean
 
 all: setup
 
 setup: system-deps node-tools imagemagick-policy rendering-tools abcm2ps \
-       oss-cad ditaa kicad r2dt varna plantuml openbabel d2lang \
+       oss-cad ditaa asymptote kicad r2dt varna plantuml openbabel d2lang \
        python-package bpmn-python
 	@echo "✅ All done! Restart your terminal or run 'source ~/.bashrc'"
 
@@ -29,8 +29,10 @@ node-tools:
 	@echo "🔧 Installing Node.js CLI tools"
 	npm install -g netlistsvg@1.0.2 state-machine-cat@12.0.22 \
 		@mermaid-js/mermaid-cli markmap-cli@0.18.11 \
-		@softwaretechnik/dbml-renderer@1.0.30 @dbml/cli@3.13.0-alpha.1
-	npm install -g prisma@6.6.0 prisma-dbml-generator@0.12.0
+		@softwaretechnik/dbml-renderer@1.0.30 @dbml/cli@3.13.0-alpha.1 \
+		prisma@6.6.0 prisma-dbml-generator@0.12.0
+	npm install prisma@6.6.0 -D
+	npm install @prisma/client@6.6.0
 	cd $(TOOLS_DIR) && git clone https://github.com/nturley/netlistsvg.git
 
 system-deps:
@@ -46,6 +48,7 @@ system-deps:
 		build-essential cmake git libcairo2-dev libeigen3-dev libffi-dev \
 		libfreetype6-dev libpng-dev libpython3-dev libxml2-dev zlib1g-dev unzip inkscape
 	@echo 'export PATH=/usr/local/texlive/2024/bin/x86_64-linux:$$PATH' >> ~/.bashrc
+	@echo 'export QT_QPA_PLATFORM=offscreen' >> ~/.bashrc
 
 imagemagick-policy:
 	@echo "🔧 Modifying ImageMagick policy.xml"
@@ -74,7 +77,15 @@ oss-cad:
 
 ditaa:
 	@echo "🔧 Downloading Ditaa"
-	cd $(TOOLS_DIR) && wget -q https://sourceforge.net/projects/ditaa/files/ditaa/0.9/ditaa0_9.zip
+	mkdir -p $(TOOLS_DIR)/ditaa
+	cd $(TOOLS_DIR)/ditaa && wget -q https://sourceforge.net/projects/ditaa/files/ditaa/0.9/ditaa0_9.zip
+	unzip ditaa0_9.zip
+
+asymptote:
+	@echo "🔧 Downloading Asymptote"
+	mkdir -p $(TOOLS_DIR)/asymptote
+	cd $(TOOLS_DIR)/asymptote && wget -q https://sourceforge.net/projects/asymptote/files/3.01/asymptote-3.01.x86_64.tgz
+	sudo tar -C / -zxf asymptote-3.01.x86_64.tgz 
 
 kicad:
 	@echo "🔧 Downloading KiCad symbols"
@@ -118,6 +129,8 @@ python-package:
 	uv venv --python 3.11
 	uv pip install --python .venv/bin/python --upgrade pip
 	uv pip install --python .venv/bin/python structivize
+	plotly_get_chrome
+	playwright install	
 
 clean:
 	rm -rf $(TOOLS_DIR)
