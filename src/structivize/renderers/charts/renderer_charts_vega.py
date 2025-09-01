@@ -12,7 +12,7 @@ class RendererChartsVega(Renderer):
     }
 
     def preprocess_code(self) -> str:
-        self.clean_code_lines("{")
+        self._clean_code_lines("{")
         self._code = self._code.replace(": False", ": false").replace(": True", ": true")
 
     def _render_vega(self):

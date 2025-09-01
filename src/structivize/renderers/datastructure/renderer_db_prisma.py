@@ -41,9 +41,9 @@ generator dbml {{
 
     def _render_prisma(self):
         self._add_metadata()
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = os.path.join(tmp_dir, os.path.basename(self._filepath_code))
-            shutil.copyfile(self._filepath_code, tmp_path)
+        # with tempfile.TemporaryDirectory() as tmp_dir:
+        #     tmp_path = os.path.join(tmp_dir, os.path.basename(self._filepath_code))
+        #     shutil.copyfile(self._filepath_code, tmp_path)
 
-            self._execute_process(commands=["prisma", "generate", "--schema", tmp_path])
-            self._render_dbml(f"{self.filepath_image}.dbml", self.filepath_image)
+        self._execute_process(commands=["prisma", "generate", "--schema", self._filepath_code])
+        self._render_dbml(f"{self.filepath_image}.dbml", self.filepath_image)
