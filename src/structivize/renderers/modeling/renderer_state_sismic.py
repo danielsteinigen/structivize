@@ -22,5 +22,5 @@ class RendererStateSismic(Renderer):
             transition_contracts=True,
             transition_action=True,
         )
-        renderer = RendererModelPlantuml(filepath_image=self.filepath_image, filepath_code=f"{self.filepath_image}.plantuml")
-        result = renderer.run()
+        renderer = RendererModelPlantuml(output_base_path=self.filepath_image, code_path=f"{self.filepath_image}.plantuml")
+        result = renderer.render()

@@ -116,7 +116,7 @@ class RendererHdlVhdl(RendererHdlYosys):
                 f"ghdl --std={std} --ieee=standard -fsynopsys {self._filepath_code} -e; proc; opt; viz -format svg -prefix {self.filepath_image}",
             ]
             self._execute_process(commands=command)
-            self._svg_save(self._filepath_image)
+            self._svg_save(self.filepath_image)
             break
 
     def _render_graphviz_detail(self):
@@ -129,7 +129,7 @@ class RendererHdlVhdl(RendererHdlYosys):
                 f"ghdl --std={std} --ieee=standard -fsynopsys {self._filepath_code} -e; proc; opt; show -format svg -prefix {self.filepath_image}",
             ]
             self._execute_process(commands=command)
-            self._svg_save(self._filepath_image)
+            self._svg_save(self.filepath_image)
             break
 
     def _render_graphviz_ast(self):

@@ -20,5 +20,5 @@ class RendererModelMermaid(Renderer):
     #     img_url = "https://mermaid.ink/img/" + base64_string
 
     #     img_data = requests.get(img_url).content
-    #     with open(f'{self._filepath_image}.png', 'wb') as handler:
+    #     with open(f'{self.filepath_image}.png', 'wb') as handler:
     #         handler.write(img_data)

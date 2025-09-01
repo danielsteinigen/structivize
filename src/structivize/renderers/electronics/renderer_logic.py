@@ -41,7 +41,7 @@ class RendererLogic(Renderer):
             logicparse(self._code)
         self._svg_save(self.filepath_image)
 
-        reference_path = Path(__file__).parent / "../../../examples/reference/false_ref_logic.png"
+        reference_path = Path(__file__).parent.parent.parent.parent.parent / "examples/reference/false_ref_logic.png"
         result = images_are_similar(f"{self.filepath_image}.png", f"{reference_path}", tolerance=5)
         if result:
             print("Remove Logic image")

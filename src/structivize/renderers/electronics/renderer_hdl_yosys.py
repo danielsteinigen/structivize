@@ -9,7 +9,7 @@ class RendererHdlYosys(Renderer):
     }
 
     def preprocess_code(self):
-        self.clean_code_lines("{")
+        self._clean_code_lines("{")
         self._code = self._code.strip()
 
     def _conv_netlist2svg(self, filepath_code, filepath_img, analog=False):
@@ -40,7 +40,7 @@ class RendererHdlYosys(Renderer):
         self._execute_process(commands=command)
         if "port_directions" in load_text(f"{self.filepath_image}.json"):
             self._conv_netlist2svg(f"{self.filepath_image}.json", f"{self.filepath_image}")
-            self._svg_save(self._filepath_image)
+            self._svg_save(self.filepath_image)
 
     def _get_entity_name(self, verilog: bool = False):
         searchword = "entity" if not verilog else "module"

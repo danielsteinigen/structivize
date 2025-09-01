@@ -22,7 +22,7 @@ class RendererChemSmarts(Renderer):
         Draw.MolToFile(mol, f"{self.filepath_image}.svg", size=self.tool_config["size"])
         self._svg_save(path=self.filepath_image)
 
-        reference_path = Path(__file__).parent / "../../../examples/reference/false_ref_smarts.png"
+        reference_path = Path(__file__).parent.parent.parent.parent.parent / "examples/reference/false_ref_smarts.png"
         result = images_are_similar(f"{self.filepath_image}.png", f"{reference_path}", tolerance=5)
         if result:
             print("Remove Smarts image")

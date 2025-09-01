@@ -54,9 +54,9 @@ class RendererHdlVerilog(RendererHdlYosys):
     def _render_graphviz(self):
         command = ["yosys", "-p", f"read_verilog -sv {self._filepath_code}; proc; opt; viz -format svg -prefix {self.filepath_image}"]
         self._execute_process(commands=command)
-        self._svg_save(self._filepath_image)
+        self._svg_save(self.filepath_image)
 
     def _render_graphviz_detail(self):
         command = ["yosys", "-p", f"read_verilog -sv {self._filepath_code}; proc; opt; show -format svg -prefix {self.filepath_image}"]
         self._execute_process(commands=command)
-        self._svg_save(self._filepath_image)
+        self._svg_save(self.filepath_image)

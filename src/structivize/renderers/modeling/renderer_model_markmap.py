@@ -30,7 +30,7 @@ class RendererModelMarkmap(Renderer):
         return re.sub(pattern, replacer, text)
 
     def preprocess_code(self):
-        self.clean_code_lines("#")
+        self._clean_code_lines("#")
         self._code = self.__replace_tags(self._code).strip().replace("- #", "#")
 
     def _render_markmap(self):
@@ -46,5 +46,5 @@ class RendererModelMarkmap(Renderer):
                 self._filepath_code,
             ]
         )
-        asyncio.run(export_markmap(self.filepath_image, self._image_width, self._image_height))
-        self._svg_save(path=self.filepath_image)
+        asyncio.run(export_markmap(self.filepath_image, self._max_width, self._max_height))
+        self._svg_save(path=f"{self.filepath_image}_2")

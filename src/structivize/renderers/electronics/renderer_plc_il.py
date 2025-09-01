@@ -148,5 +148,5 @@ class RendererPlcIl(Renderer):
 
     def _render_plc(self):
         # TODO: implement rendering
-        reference_path = Path(__file__).parent / "../../../examples/reference/sample_ladder.png"
+        reference_path = Path(__file__).parent.parent.parent.parent.parent / "examples/reference/sample_ladder.png"
         shutil.copyfile(f"{reference_path}", f"{self.filepath_image}.png")

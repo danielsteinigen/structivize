@@ -72,7 +72,7 @@ class RendererTikz(Renderer):
         return doc, pdf_kwargs
 
     def preprocess_code(self):
-        self.clean_code_lines("\\")
+        self._clean_code_lines("\\")
         self._code = self._clean_tikz(self._code.strip())
 
     def _render_pylatex(self):
@@ -85,6 +85,6 @@ class RendererTikz(Renderer):
         )
         doc.append(NoEscape("\\pagenumbering{gobble}"))
         doc.append(NoEscape(self._code))
-        doc.generate_pdf(f"{self._filepath_image}", **pdf_kwargs)
-        self._pdf_save(self._filepath_image)
-        remove_files(self._filepath_image, ["ps", "dvi"])
+        doc.generate_pdf(f"{self.filepath_image}", **pdf_kwargs)
+        self._pdf_save(self.filepath_image)
+        remove_files(self.filepath_image, ["ps", "dvi"])

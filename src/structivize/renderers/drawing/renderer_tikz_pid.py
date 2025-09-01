@@ -12,7 +12,7 @@ class RendererTikzPidCircuit(RendererTikz):
     }
 
     def preprocess_code(self):
-        self.clean_code_lines("\\")
+        self._clean_code_lines("\\")
         self._code = self._clean_tikz(self._code.strip())
         self._code = self._replace_tikz(self._code, r"\begin{tikzpicture}", r"\begin{tikzpicture}[circuit pid ISO14617]")
         self._code = self._replace_tikz(self._code, r"\begin{circuitikz}", r"\begin{tikzpicture}[circuit pid ISO14617]")

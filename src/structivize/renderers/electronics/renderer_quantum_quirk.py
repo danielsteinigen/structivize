@@ -15,7 +15,7 @@ class RendererQuantumQuirk(RendererQuantumQcircuit):
     }
 
     def preprocess_code(self):
-        self.clean_code_lines("{")
+        self._clean_code_lines("{")
         self._code = self._code.strip()
 
     def _render_cirq(self):

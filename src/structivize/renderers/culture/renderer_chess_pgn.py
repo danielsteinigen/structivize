@@ -26,7 +26,7 @@ class RendererChessPgn(Renderer):
         svg_code = chess.svg.board(board)
         self._svg_save(path=self.filepath_image, svg_code=svg_code)
 
-        reference_path = Path(__file__).parent / "../../../examples/reference/false_ref_chess.png"
+        reference_path = Path(__file__).parent.parent.parent.parent.parent / "examples/reference/false_ref_chess.png"
         result = images_are_similar(f"{self.filepath_image}.png", f"{reference_path}", tolerance=5)
         if result:
             print("Remove PGN image")
