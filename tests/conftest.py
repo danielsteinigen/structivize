@@ -21,8 +21,8 @@ def tmp_output_dir():
 def output_dir_factory(examples_dir):
     """Factory fixture to get paths to example files for different renderers."""
 
-    def _get_output_path(domain: str, renderer_name: str) -> Path:
-        path = Path(__file__).parent / "output" / domain / renderer_name
+    def _get_output_path(domain: str, renderer_name: str, filename: str) -> Path:
+        path = Path(__file__).parent / "output" / domain / renderer_name / filename.split(".")[0]
         return path
 
     return _get_output_path

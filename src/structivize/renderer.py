@@ -58,12 +58,12 @@ class Renderer(ABC):
         self._tool_path = os.getenv("TOOL_PATH", ".")
 
         if output_base_path is None:
-            output_base_path = Path.cwd() / "output"
+            self._output_base_path = Path.cwd() / "output"
         elif len(str(output_base_path).split(".")) > 1:
-            output_base_path = Path(str(output_base_path).split(".")[0])
+            self._output_base_path = Path(str(output_base_path).split(".")[0])
         else:
-            output_base_path = Path(output_base_path)
-        check_dirs(output_base_path)
+            self._output_base_path = Path(output_base_path)
+        check_dirs(self._output_base_path)
 
         if code is None:
             if code_path is None or not os.path.isfile(code_path):
@@ -73,7 +73,7 @@ class Renderer(ABC):
         else:
             self._code = code
 
-        self._filepath_code = f"{output_base_path}_code.txt"
+        self._filepath_code = f"{self._output_base_path}_code.txt"
         check_dirs(self._filepath_code)
         self.preprocess_code()
         save_text(filename=self._filepath_code, data=self._code)
@@ -82,13 +82,13 @@ class Renderer(ABC):
         self._max_width = max_width  # 1024 # 2048
         self._max_height = max_height  # 768 # 1536
         self.__save_svg = True
-        self.__save_pdf = True
+        self.__save_pdf = False
         self._image_transparent = False
 
         self.tools = list(self.DEFAULT_TOOL_CONFIGS.keys())
 
-        self._filepath_images = {tool: f"{output_base_path}_{tool}" for tool in self.tools}
-        self._log_files = {tool: f"{output_base_path}_{tool}.log" for tool in self.tools}
+        self._filepath_images = {tool: f"{self._output_base_path}_{tool}" for tool in self.tools}
+        self._log_files = {tool: f"{self._output_base_path}_{tool}.log" for tool in self.tools}
         self._logs = {tool: {"cli": "", "py": io.StringIO()} for tool in self.tools}
         self._tool_handlers = {tool: getattr(self, f"_render_{tool}") for tool in self.tools}
         for tool in self.tools:
@@ -129,7 +129,7 @@ class Renderer(ABC):
     def _pdf_save(self, path: str):
         pdf_path = f"{path}.pdf"
         if path is None or not os.path.isfile(pdf_path):
-            self.__write_log(["converting PDF"], "failed", "", "PDF was not generated")
+            self.__write_log(["converting PDF"], "failed", "", "PDF was not generated\n")
         else:
             with open(pdf_path, "rb") as file:
                 self._execute_process(commands=["pdfcrop", "-margin", "10", pdf_path, f"{path}-tmp.pdf"])
@@ -168,7 +168,7 @@ class Renderer(ABC):
                 remove_files(path, ["svg"])
         else:
             if path is None or not os.path.isfile(svg_path):
-                self.__write_log(["converting SVG"], "failed", "", "SVG was not generated")
+                self.__write_log(["converting SVG"], "failed", "", "SVG was not generated\n")
             else:
                 self._execute_process(
                     commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"]

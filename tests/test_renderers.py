@@ -29,7 +29,7 @@ def test_renderer_rendering(renderer_info, tool, sample_file_factory, output_dir
     sample_filename = renderer_info["sample_filename"]
 
     sample_path = sample_file_factory(domain, renderer_name, sample_filename)
-    output_base = output_dir_factory(domain, renderer_name)
+    output_base = output_dir_factory(domain, renderer_name, sample_filename)
     # output_base = tmp_output_dir / "output"
 
     renderer = renderer_cls(code_path=sample_path, output_base_path=output_base, output_format="png")
