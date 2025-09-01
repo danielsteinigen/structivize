@@ -8,6 +8,7 @@ class RendererBioScadnano(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "scadnano": {},
     }
+    FILE_EXT = "json"
 
     # https://github.com/UC-Davis-molecular-computing/scadnano/blob/main/tutorial/tutorial.md
     def _render_scadnano(self):

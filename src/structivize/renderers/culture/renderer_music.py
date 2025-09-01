@@ -18,7 +18,7 @@ class RendererMusic(Renderer):
     def _conv_xml2ly(self, filepath_code, filepath_img):
         self._execute_process(commands=["musicxml2ly", "-o", f"{filepath_img}", filepath_code])
 
-    def _conv_ly2pdf(self, filepath_code, filepath_img):
-        self._execute_process(commands=["lilypond", "-dresolution=300", "-f", "pdf", "-o", filepath_img, filepath_code])
-        self._pdf_save(filepath_img)
+    def _conv_ly2svg(self, filepath_code, filepath_img):
+        self._execute_process(commands=["lilypond", "-dno-point-and-click", "-dresolution=300", "-f", "svg", "-o", filepath_img, filepath_code])
+        self._svg_save(filepath_img)
         # other implementation for cropping: add '#(ly:set-option 'crop #t)' to .ly

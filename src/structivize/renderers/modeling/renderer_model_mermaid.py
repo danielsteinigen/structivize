@@ -6,6 +6,7 @@ class RendererModelMermaid(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "mermaid": {},
     }
+    FILE_EXT = "mmd"
 
     def _render_mermaid(self):
         self._execute_process(

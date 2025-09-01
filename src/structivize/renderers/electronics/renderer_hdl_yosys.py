@@ -7,6 +7,7 @@ class RendererHdlYosys(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "netlistsvg": {},
     }
+    FILE_EXT = "json"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

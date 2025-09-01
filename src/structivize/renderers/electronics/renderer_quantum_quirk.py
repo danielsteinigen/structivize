@@ -13,6 +13,7 @@ class RendererQuantumQuirk(RendererQuantumQcircuit):
     DEFAULT_TOOL_CONFIGS = {
         "cirq": {},
     }
+    FILE_EXT = "json"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

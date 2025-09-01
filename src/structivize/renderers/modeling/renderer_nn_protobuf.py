@@ -6,6 +6,7 @@ class RendererNnProtobuf(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "netron": {},
     }
+    FILE_EXT = "pbtxt"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

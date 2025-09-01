@@ -13,6 +13,7 @@ class RendererGraphGml(Renderer):
         "networkx": {},
         "graphviz": {},
     }
+    FILE_EXT = "gml"
 
     def preprocess_code(self):
         self._clean_code_lines("graph")

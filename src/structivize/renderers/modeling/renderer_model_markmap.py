@@ -10,6 +10,7 @@ class RendererModelMarkmap(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "markmap": {},
     }
+    FILE_EXT = "md"
 
     def __replace_tags(self, text):
         def replacer(match):

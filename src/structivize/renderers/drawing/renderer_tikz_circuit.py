@@ -11,6 +11,7 @@ class RendererTikzCircuit(RendererTikz):
         "circuitikz_eu": {"options": ["europeanresistors", "americaninductors", "europeancurrents", "europeanvoltages"]},
         "circuitikz_us": {"options": ["americanresistors", "cuteinductors", "americancurrents", "europeanvoltages"]},
     }
+    FILE_EXT = "tikz"
 
     def _render_circuitikz(self):
         doc, pdf_kwargs = self._create_doc()

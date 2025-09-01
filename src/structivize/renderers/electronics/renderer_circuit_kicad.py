@@ -16,6 +16,7 @@ class RendererCircuitKicad(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "skidl": {},
     }
+    FILE_EXT = "net"
 
     def preprocess_code(self):
         self._clean_code_lines("(")

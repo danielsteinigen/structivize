@@ -10,6 +10,7 @@ class RendererCircuitLcapy(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "lcapy": {},
     }
+    FILE_EXT = "net"
 
     def _convert_units(self, text):
         unit_prefixes = {"p": "e-12", "n": "e-9", "u": "e-6", "m": "e-3", "k": "e+3", "M": "e+6", "G": "e+9"}

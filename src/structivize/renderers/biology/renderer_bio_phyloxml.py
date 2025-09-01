@@ -11,6 +11,7 @@ class RendererBioPhyloxml(Renderer):
         "biopython": {},
         "ete3": {},
     }
+    FILE_EXT = "xml"
 
     def verify_code(self):
         return "phyloxml.org" in self._code and "phylogeny" in self._code and self._code.find("phyloxml") < self._code.find("phylogeny")

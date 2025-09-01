@@ -6,6 +6,7 @@ class RendererBioCt(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "varna": {},
     }
+    FILE_EXT = "ct"
 
     def _render_varna(self):
         self._execute_process(

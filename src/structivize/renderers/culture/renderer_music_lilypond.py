@@ -7,6 +7,7 @@ class RendererMusicLy(RendererMusic):
     DEFAULT_TOOL_CONFIGS = {
         "lilypond": {},
     }
+    FILE_EXT = "ly"
 
     def preprocess_code(self):
         self._clean_code_lines("\\")
@@ -27,4 +28,4 @@ class RendererMusicLy(RendererMusic):
         self._code = code.strip()
 
     def _render_lilypond(self):
-        self._conv_ly2pdf(self._filepath_code, self.filepath_image)
+        self._conv_ly2svg(self._filepath_code, self.filepath_image)

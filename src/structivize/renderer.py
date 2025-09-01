@@ -29,6 +29,7 @@ class RenderResponse(BaseModel):
 class Renderer(ABC):
     registry = {}
     DEFAULT_TOOL_CONFIGS = {}
+    FILE_EXT = "txt"
 
     @classmethod
     def register(cls, name):
@@ -73,7 +74,7 @@ class Renderer(ABC):
         else:
             self._code = code
 
-        self._filepath_code = f"{self._output_base_path}_code.txt"
+        self._filepath_code = f"{self._output_base_path}_code.{self.FILE_EXT}"
         check_dirs(self._filepath_code)
         self.preprocess_code()
         save_text(filename=self._filepath_code, data=self._code)
@@ -155,28 +156,26 @@ class Renderer(ABC):
     def _svg_save(self, path: str, svg_code: str = None, scale: float = 2.0):
         svg_path = f"{path}.svg"
         if svg_code is not None:
-            open(svg_path, "w").write(svg_code)
-            self._execute_process(
-                commands=["inkscape", "--pipe", "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"],
-                input_data=svg_code,
-            )
-            if self.__save_pdf:
-                self._execute_process(
-                    commands=["inkscape", "--pipe", "--export-type=pdf", f"--export-filename={path}.pdf"], input_data=svg_code
-                )
-            if not self.__save_svg:
-                remove_files(path, ["svg"])
+            with open(svg_path, "w") as f:
+                f.write(svg_code)
+            # self._execute_process(
+            #     commands=["inkscape", "--pipe", "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"],
+            #     input_data=svg_code,
+            # )
+
+        if path is None or not os.path.isfile(svg_path):
+            self.__write_log(["converting SVG"], "failed", "", "SVG was not generated\n")
         else:
-            if path is None or not os.path.isfile(svg_path):
-                self.__write_log(["converting SVG"], "failed", "", "SVG was not generated\n")
-            else:
-                self._execute_process(
-                    commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"]
-                )  # , "--export-background=red", "--export-background-opacity=0"])
-                if self.__save_pdf:
-                    self._execute_process(commands=["inkscape", svg_path, "--export-type=pdf", f"--export-filename={path}.pdf"])
-                if not self.__save_svg:
-                    remove_files(svg_path)
+            self._execute_process(
+                commands=["inkscape", svg_path, "--export-area-drawing", "--export-margin=8", f"--export-filename={svg_path}"]
+            )
+            self._execute_process(
+                commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"]
+            )  # , "--export-background=red", "--export-background-opacity=0"])
+            if self.__save_pdf:
+                self._execute_process(commands=["inkscape", svg_path, "--export-type=pdf", f"--export-filename={path}.pdf"])
+            if not self.__save_svg:
+                remove_files(svg_path)
 
     def _validate_image(self, path_img):
         if not os.path.isfile(path_img):
@@ -198,7 +197,7 @@ class Renderer(ABC):
         save_text(filename=f"{self._filepath_images[self._current_tool]}.log", data=log_output)
         return RenderResponse(
             tool=self._current_tool,
-            success=success,
+            success=success if path_img != '' else False,
             debug_message=message,
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",

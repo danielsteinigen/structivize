@@ -11,6 +11,7 @@ class RendererBioNexml(Renderer):
         "biopython": {},
         "ete3": {},
     }
+    FILE_EXT = "xml"
 
     def _render_biopython(self):
         tree = Phylo.read(self._filepath_code, "nexml")

@@ -6,6 +6,7 @@ class RendererAsymptote(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "asymptote": {},
     }
+    FILE_EXT = "asy"
 
     def _render_asymptote(self):
         # https://asymptote.sourceforge.io/doc/index.html

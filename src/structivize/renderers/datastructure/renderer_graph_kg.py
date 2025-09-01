@@ -68,6 +68,7 @@ class RendererKgXml(RendererKg):
         "networkx": {},
         "graphviz": {},
     }
+    FILE_EXT = "xml"
 
     def _render_graphviz(self):
         graph = self._parse_kg("xml")
@@ -84,6 +85,7 @@ class RendererKgTurtle(RendererKg):
         "networkx": {},
         "graphviz": {},
     }
+    FILE_EXT = "ttl"
 
     def _render_graphviz(self):
         graph = self._parse_kg("turtle")

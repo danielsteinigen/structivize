@@ -12,6 +12,7 @@ class RendererTikz(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "pylatex": {},
     }
+    FILE_EXT = "tikz"
 
     def _clean_tikz(self, code_raw):
         code = ""

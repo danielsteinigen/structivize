@@ -6,6 +6,7 @@ class RendererDbDbml(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "dbml_renderer": {},
     }
+    FILE_EXT = "dbml"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

@@ -18,6 +18,7 @@ class RendererHdlVhdl(RendererHdlYosys):
         "graphviz_detail": {},
         "graphviz_ast": {},
     }
+    FILE_EXT = "vhd"
 
     def preprocess_code(self):
         self._code = self._code.strip()

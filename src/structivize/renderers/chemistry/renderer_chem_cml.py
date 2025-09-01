@@ -11,6 +11,7 @@ class RendererChemCml(Renderer):
         "obabel": {},
         "rdkit": {"size": (500, 500)},
     }
+    FILE_EXT = "xml"
 
     def preprocess_code(self):
         self._clean_code_lines("<")

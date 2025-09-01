@@ -13,6 +13,7 @@ class RendererQuantumQasm2(RendererQuantumQcircuit):
         "qiskit": {},
         "cirq": {},
     }
+    FILE_EXT = "qasm"
 
     def preprocess_code(self):
         if "include" not in self._code.lower():
@@ -37,6 +38,7 @@ class RendererQuantumQasm3(RendererQuantumQcircuit):
     DEFAULT_TOOL_CONFIGS = {
         "qiskit": {},
     }
+    FILE_EXT = "qasm"
 
     # https://docs.quantum.ibm.com/guides/interoperate-qiskit-qasm3
     def _render_qiskit(self):

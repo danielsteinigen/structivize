@@ -13,6 +13,7 @@ class RendererNnKeras(Renderer):
         "netron": {},
         "keras": {},
     }
+    FILE_EXT = "json"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

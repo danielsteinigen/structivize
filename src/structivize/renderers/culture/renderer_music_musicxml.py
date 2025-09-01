@@ -9,6 +9,7 @@ class RendererMusicXml(RendererMusic):
         "lilypond": {},
         "musescore": {},
     }
+    FILE_EXT = "xml"
 
     def preprocess_code(self):
         self._clean_code_lines("<")
@@ -32,7 +33,7 @@ class RendererMusicXml(RendererMusic):
     def _render_lilypond(self):
         self._conv_xml2ly(self._filepath_code, self.filepath_image)
         insert_line(f"{self.filepath_image}.ly", '\\header {tagline = ""}\n')
-        self._conv_ly2pdf(f"{self.filepath_image}.ly", self.filepath_image)
+        self._conv_ly2svg(f"{self.filepath_image}.ly", self.filepath_image)
         remove_files(self.filepath_image, ["ly"])
 
     def _render_musescore(self):

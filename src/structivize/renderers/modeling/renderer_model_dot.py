@@ -11,6 +11,7 @@ class RendererModelDot(Renderer):
         "graphviz": {},
         "pydot": {},
     }
+    FILE_EXT = "dot"
 
     def preprocess_code(self):
         self._clean_code_lines("{")

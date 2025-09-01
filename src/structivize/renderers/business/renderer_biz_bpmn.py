@@ -12,6 +12,7 @@ class RendererBizBpmn(Renderer):
         "bpmnpython": {},
         "pm4py": {},
     }
+    FILE_EXT = "xml"
 
     def preprocess_code(self):
         self._clean_code_lines("<")

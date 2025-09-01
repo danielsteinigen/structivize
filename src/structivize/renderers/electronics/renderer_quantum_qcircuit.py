@@ -9,6 +9,7 @@ class RendererQuantumQcircuit(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "qcircuit": {},
     }
+    FILE_EXT = "tex"
 
     def _create_latex(self, tex, filepath):
         pdf_kwargs = {"compiler": "latexmk", "compiler_args": ["-pdfps"]}

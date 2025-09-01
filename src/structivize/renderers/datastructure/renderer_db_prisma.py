@@ -13,6 +13,7 @@ class RendererDbPrisma(RendererDbDbml):
     DEFAULT_TOOL_CONFIGS = {
         "prisma": {},
     }
+    FILE_EXT = "prisma"
 
     def preprocess_code(self):
         pattern = r"(generator client\s*\{[^}]*\}|datasource db\s*\{[^}]*\}|generator dbml\s*\{[^}]*\})"

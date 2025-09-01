@@ -11,6 +11,7 @@ class RendererQuantumCirq(RendererQuantumQcircuit):
     DEFAULT_TOOL_CONFIGS = {
         "cirq": {},
     }
+    FILE_EXT = "json"
 
     # https://quantumai.google/cirq/build/interop
     def _render_cirq(self):

@@ -12,6 +12,7 @@ class RendererHdlVerilog(RendererHdlYosys):
         "graphviz": {},
         "graphviz_detail": {},
     }
+    FILE_EXT = "v"
 
     def preprocess_code(self):
         self._code = self._code.strip()

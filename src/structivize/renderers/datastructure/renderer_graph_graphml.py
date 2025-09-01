@@ -12,6 +12,7 @@ class RendererGraphMl(Renderer):
         "networkx": {},
         "graphviz": {},
     }
+    FILE_EXT = "xml"
 
     def preprocess_code(self):
         self._clean_code_lines("<")

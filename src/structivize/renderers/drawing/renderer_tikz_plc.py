@@ -10,6 +10,7 @@ class RendererTikzPlc(RendererTikz):
     DEFAULT_TOOL_CONFIGS = {
         "pylatex": {},
     }
+    FILE_EXT = "tikz"
 
     def preprocess_code(self):
         self._clean_code_lines("\\")

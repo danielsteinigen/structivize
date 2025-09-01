@@ -10,6 +10,7 @@ class RendererChemMol(Renderer):
         "obabel": {},
         "rdkit": {"size": (500, 500)},
     }
+    FILE_EXT = "mol"
 
     def preprocess_code(self):
         pass

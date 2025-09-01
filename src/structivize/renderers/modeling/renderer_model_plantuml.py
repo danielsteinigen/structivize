@@ -8,6 +8,7 @@ class RendererModelPlantuml(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "plantuml": {},
     }
+    FILE_EXT = "puml"
 
     def preprocess_code(self):
         self._clean_code_lines("@")

@@ -11,6 +11,7 @@ class RendererMusicAbc(RendererMusic):
         "lilypond": {},
         "abcm2ps": {},
     }
+    FILE_EXT = "abc"
 
     def preprocess_code(self):
         self._clean_code_lines(":")
@@ -27,7 +28,7 @@ class RendererMusicAbc(RendererMusic):
     def _render_lilypond(self):
         self._conv_abc2ly(self._filepath_code, self.filepath_image)
         self._replace_tagline(f"{self.filepath_image}.ly")
-        self._conv_ly2pdf(f"{self.filepath_image}.ly", self.filepath_image)
+        self._conv_ly2svg(f"{self.filepath_image}.ly", self.filepath_image)
         remove_files(self.filepath_image, ["ly", "midi"])
 
     def _render_abcm2ps(self):

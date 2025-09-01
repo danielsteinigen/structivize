@@ -6,6 +6,7 @@ class RendererChemCt(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "obabel": {},
     }
+    FILE_EXT = "ct"
 
     def _render_obabel(self):
         self._execute_process(commands=["obabel", "-ict", self._filepath_code, "-O", f"{self.filepath_image}.svg", "-xb", "none", "-xd"])

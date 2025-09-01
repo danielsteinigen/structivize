@@ -8,6 +8,7 @@ class RendererChartsPlotly(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "plotly": {},
     }
+    FILE_EXT = "json"
 
     def preprocess_code(self) -> str:
         self._clean_code_lines("{")
