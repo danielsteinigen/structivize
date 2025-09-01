@@ -12,7 +12,7 @@ class RendererBioSbml(Renderer):
     }
 
     def preprocess_code(self):
-        self.clean_code_lines("<")
+        self._clean_code_lines("<")
         self._code = self._code.strip()
         if not self._code.startswith("<?xml"):
             self._code = f'<?xml version="1.0" encoding="UTF-8"?>\n{self._code}'
@@ -38,3 +38,4 @@ class RendererBioSbml(Renderer):
         # network.setStyle("escher")
         # network.setSpeciesFillColor('Orange')
         network.draw(f"{self.filepath_image}.pdf")
+        self._pdf_save(self.filepath_image)

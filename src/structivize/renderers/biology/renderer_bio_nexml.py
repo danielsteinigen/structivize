@@ -19,8 +19,8 @@ class RendererBioNexml(Renderer):
         plt.close()
 
     def _render_ete3(self):
-        nexml_project = Nexml()  # TODO: not working
-        nexml_project.build_from_file("trees.xml")
+        nexml_project = Nexml()
+        nexml_project.build_from_file(self._filepath_code)
         tree_collections = nexml_project.get_trees()
         collection_1 = tree_collections[0]
         tree = collection_1.get_tree()[0]

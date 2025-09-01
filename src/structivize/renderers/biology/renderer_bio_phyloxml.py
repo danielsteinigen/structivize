@@ -22,7 +22,7 @@ class RendererBioPhyloxml(Renderer):
         plt.close()
 
     def _render_ete3(self):
-        pxm = Phyloxml()  # TODO: not working
+        pxm = Phyloxml()
         pxm.build_from_file(self._filepath_code)
         tree = pxm.get_phylogeny()[0]  # Get the first phylogenetic tree in the file
         # tree = Tree(self._filepath_code, format=1)

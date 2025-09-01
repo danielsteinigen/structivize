@@ -28,9 +28,6 @@
                             <ci> Fe_intestine </ci>
                         </apply>
                     </math>
-                    <listOfLocalParameters>
-                        <localParameter id="k_absorption" value="0.1"/>
-                    </listOfLocalParameters>
                 </kineticLaw>
             </reaction>
             <reaction id="storage" reversible="false">
@@ -49,9 +46,6 @@
                             <ci> hepcidin </ci>
                         </apply>
                     </math>
-                    <listOfLocalParameters>
-                        <localParameter id="k_storage" value="0.05"/>
-                    </listOfLocalParameters>
                 </kineticLaw>
             </reaction>
         </listOfReactions>
