@@ -1,5 +1,5 @@
 
-from collections import defaultdict
+from collections import defaultdict, Counter
 import re
 from ...renderer import Renderer, StatisticResponse
 
@@ -18,13 +18,13 @@ class RendererModelMermaid(Renderer):
         # Theme of the chart (choices: "default", "forest", "dark", "neutral", default: "default")
 
     def statistics(self) -> StatisticResponse:
-        def parse_gantt(code):
+        if self._category and self._category == "gantt":
             return StatisticResponse(node_types={"sections": self._code.count("section"), "time bars": self._code.count(":")}) # "tasks": code.count(":")
 
-        def parse_mind(code):
+        elif self._category and self._category == "mind":
             return StatisticResponse(node_types={"nodes": len(self._code.splitlines())-2})
 
-        def parse_flowchart(code):
+        elif self._category and self._category in ["bpmn", "activity"]:
             counts = defaultdict(int)
             # Count square bracket nodes
             counts['nodes'] = len(re.findall(r'\[[^\[\]]+\]', self._code))
@@ -32,6 +32,49 @@ class RendererModelMermaid(Renderer):
             counts['decisions'] = len(re.findall(r'\{[^\{\}]+\}', self._code))
             return StatisticResponse(node_types=dict(counts))
 
+        elif self._category and self._category == "sequence":
+            lines = self._code.strip().splitlines()
+            stats = Counter()
+            message_pattern = re.compile(r'^\w+\s*[-]{1,2}>>?\s*\w+')
+            for line in lines:
+                line = line.strip()
+                if message_pattern.match(line):
+                    stats['messages'] += 1
+                elif line.startswith('participant ') or line.startswith('actor '):
+                    stats['participants'] += 1
+                elif line.startswith('activate '):
+                    stats['activations'] += 1
+                elif line.startswith('deactivate '):
+                    stats['deactivations'] += 1
+            return StatisticResponse(node_types=dict(stats))
+        
+        elif self._category and self._category == "state":
+            lines = self._code.strip().splitlines()
+            stats = Counter()
+            states = set()
+            transition_pattern = re.compile(r'^\s*(.+?)\s*-->\s*(.+?)(?:\s*:\s*(.+))?$')
+            for line in lines:
+                match = transition_pattern.match(line)
+                if match:
+                    src, dst, label = match.groups()
+                    stats['transitions'] += 1
+                    if src.strip() == '[*]':
+                        stats['start_transitions'] += 1
+                    else:
+                        states.add(src.strip())
+                    if dst.strip() == '[*]':
+                        stats['end_transitions'] += 1
+                    else:
+                        states.add(dst.strip())
+                    if label:
+                        stats['labeled_transitions'] += 1
+
+            stats['states'] = len(states)
+            return StatisticResponse(node_types=dict(stats))
+        
+        else:
+            return StatisticResponse()
+        
     # def _render_api(self):
     #     graphbytes = self._code.encode("utf8")
     #     base64_bytes = base64.urlsafe_b64encode(graphbytes)

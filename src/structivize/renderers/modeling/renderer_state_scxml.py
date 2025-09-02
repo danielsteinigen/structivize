@@ -1,7 +1,7 @@
 from ...renderer import Renderer
 
 
-@Renderer.register("renderer_state_scxml")
+@Renderer.register("state_scxml")
 class RendererStateScxml(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "smcat": {},

@@ -5,7 +5,7 @@ from ...renderer import Renderer
 from .renderer_model_plantuml import RendererModelPlantuml
 
 
-@Renderer.register("renderer_state_sismic")
+@Renderer.register("state_sismic")
 class RendererStateSismic(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "sismic": {},

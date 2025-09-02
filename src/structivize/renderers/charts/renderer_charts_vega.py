@@ -5,7 +5,7 @@ import altair as alt
 from ...renderer import Renderer
 
 
-@Renderer.register("renderer_charts_vega")
+@Renderer.register("charts_vega")
 class RendererChartsVega(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "vega": {},

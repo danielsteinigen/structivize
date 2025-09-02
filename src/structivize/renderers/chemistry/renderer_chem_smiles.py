@@ -4,7 +4,7 @@ from rdkit.Chem import Draw
 from ...renderer import Renderer
 
 
-@Renderer.register("renderer_chem_smiles")
+@Renderer.register("chem_smiles")
 class RendererChemSmiles(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "rdkit": {"size": (500, 500)},

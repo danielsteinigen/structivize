@@ -2,9 +2,11 @@ from pathlib import Path
 
 import schemdraw
 from schemdraw.parsing import logicparse
+from schemdraw.parsing.logic_parser import parse_string, to_tree
+from schemdraw.parsing.buchheim import buchheim
 
 from ...image_utils import images_are_similar
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 from ...utils import extract_part, remove_files
 
 
@@ -46,3 +48,24 @@ class RendererLogic(Renderer):
         if result:
             print("Remove Logic image")
             remove_files(self.filepath_image, ["png", "pdf", "svg"])
+
+
+    def statistics(self) -> StatisticResponse:
+        parsed = parse_string(self._code)
+        tree = to_tree(parsed)
+        dtree = buchheim(tree)
+        elmdefs = {'and': 0,
+                   'or': 0,
+                   'xor': 0,
+                   'nand': 0,
+                   'xnor': 0,
+                   'nor': 0,
+                   'not': 0}
+        if dtree.node not in elmdefs:
+            elmdefs["and"] += 1
+        else:
+            elmdefs[dtree.node] += 1
+        for child in dtree.children:
+            if child.node in elmdefs:
+                elmdefs[child.node] += 1
+        return StatisticResponse(node_types=elmdefs)

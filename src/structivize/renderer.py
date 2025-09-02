@@ -45,11 +45,31 @@ class Renderer(ABC):
         return decorator
 
     @classmethod
-    def from_dict(cls, renderer: str, code: str, code_path: str, output_base_path: str):
+    def from_dict(
+        cls,
+        renderer: str,
+        code: str = None,
+        code_path: str = None,
+        output_base_path: str = None,
+        output_format: Literal["svg", "pdf", "png", "jpg"] = "png",
+        category: str = None,
+        max_width: int = 1024,
+        max_height: int = 768,
+        tool_configs: dict = None,
+    ):
         renderer_cls = cls.registry.get(renderer)
         if renderer_cls is None:
             raise ValueError(f"Unknown renderer: {renderer}")
-        return renderer_cls(code=code, code_path=code_path, output_base_path=output_base_path)
+        return renderer_cls(
+            code=code,
+            code_path=code_path,
+            output_base_path=output_base_path,
+            output_format=output_format,
+            category=category,
+            max_width=max_width,
+            max_height=max_height,
+            tool_configs=tool_configs
+        )
 
     def __init__(
         self,
@@ -57,6 +77,7 @@ class Renderer(ABC):
         code_path: str = None,
         output_base_path: str = None,
         output_format: Literal["svg", "pdf", "png", "jpg"] = "png",
+        category: str = None,
         max_width: int = 1024,
         max_height: int = 768,
         tool_configs: dict = None,
@@ -84,6 +105,7 @@ class Renderer(ABC):
         self.preprocess_code()
         save_text(filename=self._filepath_code, data=self._code)
 
+        self._category = category
         self.output_format = output_format
         self._max_width = max_width  # 1024 # 2048
         self._max_height = max_height  # 768 # 1536
