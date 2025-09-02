@@ -2,8 +2,8 @@ from pathlib import Path
 
 import schemdraw
 from schemdraw.parsing import logicparse
-from schemdraw.parsing.logic_parser import parse_string, to_tree
 from schemdraw.parsing.buchheim import buchheim
+from schemdraw.parsing.logic_parser import parse_string, to_tree
 
 from ...image_utils import images_are_similar
 from ...renderer import Renderer, StatisticResponse
@@ -49,7 +49,6 @@ class RendererLogic(Renderer):
             print("Remove Logic image")
             remove_files(self.filepath_image, ["png", "pdf", "svg"])
 
-
     def _countit(self, root, elmdefs, depth=0):
         if root.node not in elmdefs:
             elmdefs["and"] += 1
@@ -57,12 +56,12 @@ class RendererLogic(Renderer):
             elmdefs[root.node] += 1
         for child in root.children:
             if child.node in elmdefs:
-                self._countit(child, elmdefs, depth+1)  # recursive
+                self._countit(child, elmdefs, depth + 1)  # recursive
 
     def statistics(self) -> StatisticResponse:
         parsed = parse_string(self._code)
         tree = to_tree(parsed)
         dtree = buchheim(tree)
-        elmdefs = { 'and': 0, 'or': 0, 'xor': 0, 'nand': 0, 'xnor': 0, 'nor': 0, 'not': 0 }
+        elmdefs = {"and": 0, "or": 0, "xor": 0, "nand": 0, "xnor": 0, "nor": 0, "not": 0}
         self._countit(dtree, elmdefs)
         return StatisticResponse(node_types=elmdefs)

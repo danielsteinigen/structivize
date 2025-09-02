@@ -120,7 +120,7 @@ class RendererBioFasta(Renderer):
     def statistics(self) -> StatisticResponse:
         counts = defaultdict(int)
         counts["sequences"] = self._cnt_sequences(self._code)
-        sequence = ''
+        sequence = ""
         lines = self._code.strip().splitlines()
         for line in lines:
             if line.startswith(">"):

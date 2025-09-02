@@ -77,7 +77,6 @@ class RendererKgXml(RendererKg):
     def _render_networkx(self):
         graph = self._parse_kg("xml")
         self._create_graph_networkx(graph)
-    
 
     def statistics(self) -> StatisticResponse:
         g = self._parse_kg("xml")
@@ -94,7 +93,6 @@ class RendererKgXml(RendererKg):
         # return {"nodes": len(nodes), "resources": len(resources), "triples": len(g)}
 
         return StatisticResponse(node_types={"nodes": len(resources)})
-
 
 
 @Renderer.register("kg_turtle")

@@ -8,18 +8,18 @@ from pathlib import Path
 from typing import List, Literal, Optional, Union
 
 import matplotlib.pyplot as plt
-
 from pydantic import BaseModel
 
 from .image_utils import is_image_mainly_black, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
 
-TIMEOUT = 60
+TIMEOUT = 10
 
 
 class StatisticResponse(BaseModel):
     node_types: dict = {}
     edges: List[dict] = None
+
 
 class RenderResponse(BaseModel):
     tool: str
@@ -68,7 +68,7 @@ class Renderer(ABC):
             category=category,
             max_width=max_width,
             max_height=max_height,
-            tool_configs=tool_configs
+            tool_configs=tool_configs,
         )
 
     def __init__(
@@ -101,7 +101,6 @@ class Renderer(ABC):
             self._code = code
 
         self._filepath_code = f"{self._output_base_path}_code.{self.FILE_EXT}"
-        check_dirs(self._filepath_code)
         self.preprocess_code()
         save_text(filename=self._filepath_code, data=self._code)
 
@@ -145,12 +144,22 @@ class Renderer(ABC):
             self.log["cli"] += "<<<<<< RENDERING STEP END >>>>>>\n"
 
     def _execute_process(self, commands: list, input_data: Optional[Union[str, bytes]] = None, text: bool = True):
-        prog = subprocess.Popen(
-            commands, stdin=subprocess.PIPE if input_data is not None else None, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=text
-        )
-        out, err = prog.communicate(input=input_data, timeout=TIMEOUT)
-        # status = prog.wait()
-        status = prog.returncode
+        try:
+            prog = subprocess.Popen(
+                commands,
+                stdin=subprocess.PIPE if input_data is not None else None,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=text,
+            )
+            out, err = prog.communicate(input=input_data, timeout=TIMEOUT)
+            # status = prog.wait()
+            status = prog.returncode
+        except subprocess.TimeoutExpired as e:
+            prog.kill()
+            out, err = prog.communicate()
+            status = -1
+            err = f"Process timed out: {e}\n{err}"
         self.__write_log(commands, status, out, err)
         return status, out, err
 
@@ -220,17 +229,17 @@ class Renderer(ABC):
         path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
         statistics = self.statistics()
-        
+
         log_output = f"** CLI OUTPUT **\n{self._logs[self._current_tool]['cli']}\n\n** PYTHON OUTPUT **\n{self._logs[self._current_tool]['py'].getvalue()}"
         save_text(filename=self._log_files[self._current_tool], data=log_output)
         return RenderResponse(
             tool=self._current_tool,
-            success=success if path_img != '' else False,
+            success=success if path_img != "" else False,
             debug_message=message,
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",
             path_log=f"{self._filepath_images[self._current_tool]}.log",
-            statistics=statistics
+            statistics=statistics,
         )
 
     def preprocess_code(self):

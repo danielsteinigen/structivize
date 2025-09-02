@@ -1,6 +1,6 @@
-
-from collections import defaultdict, Counter
 import re
+from collections import Counter, defaultdict
+
 from ...renderer import Renderer, StatisticResponse
 
 
@@ -19,62 +19,64 @@ class RendererModelMermaid(Renderer):
 
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "gantt":
-            return StatisticResponse(node_types={"sections": self._code.count("section"), "time bars": self._code.count(":")}) # "tasks": code.count(":")
+            return StatisticResponse(
+                node_types={"sections": self._code.count("section"), "time bars": self._code.count(":")}
+            )  # "tasks": code.count(":")
 
         elif self._category and self._category == "mind":
-            return StatisticResponse(node_types={"nodes": len(self._code.splitlines())-2})
+            return StatisticResponse(node_types={"nodes": len(self._code.splitlines()) - 2})
 
         elif self._category and self._category in ["bpmn", "activity"]:
             counts = defaultdict(int)
             # Count square bracket nodes
-            counts['nodes'] = len(re.findall(r'\[[^\[\]]+\]', self._code))
+            counts["nodes"] = len(re.findall(r"\[[^\[\]]+\]", self._code))
             # Count decision (curly bracket) nodes
-            counts['decisions'] = len(re.findall(r'\{[^\{\}]+\}', self._code))
+            counts["decisions"] = len(re.findall(r"\{[^\{\}]+\}", self._code))
             return StatisticResponse(node_types=dict(counts))
 
         elif self._category and self._category == "sequence":
             lines = self._code.strip().splitlines()
             stats = Counter()
-            message_pattern = re.compile(r'^\w+\s*[-]{1,2}>>?\s*\w+')
+            message_pattern = re.compile(r"^\w+\s*[-]{1,2}>>?\s*\w+")
             for line in lines:
                 line = line.strip()
                 if message_pattern.match(line):
-                    stats['messages'] += 1
-                elif line.startswith('participant ') or line.startswith('actor '):
-                    stats['participants'] += 1
-                elif line.startswith('activate '):
-                    stats['activations'] += 1
-                elif line.startswith('deactivate '):
-                    stats['deactivations'] += 1
+                    stats["messages"] += 1
+                elif line.startswith("participant ") or line.startswith("actor "):
+                    stats["participants"] += 1
+                elif line.startswith("activate "):
+                    stats["activations"] += 1
+                elif line.startswith("deactivate "):
+                    stats["deactivations"] += 1
             return StatisticResponse(node_types=dict(stats))
-        
+
         elif self._category and self._category == "state":
             lines = self._code.strip().splitlines()
             stats = Counter()
             states = set()
-            transition_pattern = re.compile(r'^\s*(.+?)\s*-->\s*(.+?)(?:\s*:\s*(.+))?$')
+            transition_pattern = re.compile(r"^\s*(.+?)\s*-->\s*(.+?)(?:\s*:\s*(.+))?$")
             for line in lines:
                 match = transition_pattern.match(line)
                 if match:
                     src, dst, label = match.groups()
-                    stats['transitions'] += 1
-                    if src.strip() == '[*]':
-                        stats['start_transitions'] += 1
+                    stats["transitions"] += 1
+                    if src.strip() == "[*]":
+                        stats["start_transitions"] += 1
                     else:
                         states.add(src.strip())
-                    if dst.strip() == '[*]':
-                        stats['end_transitions'] += 1
+                    if dst.strip() == "[*]":
+                        stats["end_transitions"] += 1
                     else:
                         states.add(dst.strip())
                     if label:
-                        stats['labeled_transitions'] += 1
+                        stats["labeled_transitions"] += 1
 
-            stats['states'] = len(states)
+            stats["states"] = len(states)
             return StatisticResponse(node_types=dict(stats))
-        
+
         else:
             return StatisticResponse()
-        
+
     # def _render_api(self):
     #     graphbytes = self._code.encode("utf8")
     #     base64_bytes = base64.urlsafe_b64encode(graphbytes)

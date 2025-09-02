@@ -57,7 +57,6 @@ class RendererNnKeras(Renderer):
                 dpi=200,
             )
 
-
     def statistics(self) -> StatisticResponse:
         counts = defaultdict(int)
         try:

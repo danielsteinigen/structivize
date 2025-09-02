@@ -1,9 +1,10 @@
+import xml.etree.ElementTree as ET
+from collections import Counter
+
 import bpmn_python.bpmn_diagram_rep as diagram
 import bpmn_python.bpmn_diagram_visualizer as visualizer
 import pm4py
 from graphviz import Source
-import xml.etree.ElementTree as ET
-from collections import Counter
 
 from ...renderer import Renderer, StatisticResponse
 
@@ -37,20 +38,18 @@ class RendererBizBpmn(Renderer):
         self._pdf_save(self.filepath_image)
 
     def statistics(self) -> StatisticResponse:
-        ns = {'bpmn': 'http://www.omg.org/spec/BPMN/20100524/MODEL'}
+        ns = {"bpmn": "http://www.omg.org/spec/BPMN/20100524/MODEL"}
         tree = ET.ElementTree(ET.fromstring(self._code))
         root = tree.getroot()
         stats = Counter()
-        for process in root.findall('bpmn:process', ns):
-            stats['start_events'] += len(process.findall('bpmn:startEvent', ns))
-            stats['end_events'] += len(process.findall('bpmn:endEvent', ns))
-            stats['tasks'] += len(process.findall('bpmn:task', ns))
-            stats['exclusive_gateways'] += len(process.findall('bpmn:exclusiveGateway', ns))
-            stats['parallel_gateways'] += len(process.findall('bpmn:parallelGateway', ns))
-            
-            sequence_flows = process.findall('bpmn:sequenceFlow', ns)
-            stats['sequence_flows'] = len(sequence_flows)
-            stats['conditional_flows'] = sum(
-                1 for flow in sequence_flows if flow.find('bpmn:conditionExpression', ns) is not None
-            )
+        for process in root.findall("bpmn:process", ns):
+            stats["start_events"] += len(process.findall("bpmn:startEvent", ns))
+            stats["end_events"] += len(process.findall("bpmn:endEvent", ns))
+            stats["tasks"] += len(process.findall("bpmn:task", ns))
+            stats["exclusive_gateways"] += len(process.findall("bpmn:exclusiveGateway", ns))
+            stats["parallel_gateways"] += len(process.findall("bpmn:parallelGateway", ns))
+
+            sequence_flows = process.findall("bpmn:sequenceFlow", ns)
+            stats["sequence_flows"] = len(sequence_flows)
+            stats["conditional_flows"] = sum(1 for flow in sequence_flows if flow.find("bpmn:conditionExpression", ns) is not None)
         return StatisticResponse(node_types=dict(stats))

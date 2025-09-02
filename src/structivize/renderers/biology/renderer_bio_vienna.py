@@ -1,7 +1,7 @@
 import glob
 import os
-import shutil
 import re
+import shutil
 from collections import defaultdict
 
 import forgi
@@ -105,10 +105,10 @@ class RendererBioVienna(Renderer):
         self._svg_save(path=self.filepath_image)
 
     def _has_second_gt(self, s):
-        first_index = s.find('>')
+        first_index = s.find(">")
         if first_index == -1:
             return False
-        second_index = s.find('>', first_index + 1)
+        second_index = s.find(">", first_index + 1)
         if second_index == -1:
             return False
         return True
@@ -117,7 +117,7 @@ class RendererBioVienna(Renderer):
         if self._has_second_gt(self._code):
             return StatisticResponse()
         counts = defaultdict(int)
-        sequence = ''
+        sequence = ""
         lines = self._code.strip().splitlines()
         for line in lines:
             if line.startswith(">"):

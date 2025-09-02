@@ -1,6 +1,7 @@
+from collections import defaultdict
+
 import chess
 import chess.svg
-from collections import defaultdict
 
 from ...renderer import Renderer, StatisticResponse
 
@@ -24,10 +25,7 @@ class RendererChessFen(Renderer):
         self._svg_save(path=self.filepath_image, svg_code=svg_code)
 
     def statistics(self) -> StatisticResponse:
-        piece_map = {
-            'p': 'pawns', 'r': 'rooks', 'n': 'knights',
-            'b': 'bishops', 'q': 'queens', 'k': 'kings'
-        }
+        piece_map = {"p": "pawns", "r": "rooks", "n": "knights", "b": "bishops", "q": "queens", "k": "kings"}
         piece_counts = defaultdict(int)
         board = self._code.strip().split()[0]
         for char in board:

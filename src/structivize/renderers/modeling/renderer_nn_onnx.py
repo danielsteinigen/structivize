@@ -1,6 +1,7 @@
-from ...renderer import Renderer, StatisticResponse
 import re
 from collections import Counter
+
+from ...renderer import Renderer, StatisticResponse
 
 
 @Renderer.register("nn_onnx")
@@ -14,9 +15,8 @@ class RendererNnOnnx(Renderer):
         self._execute_process(commands=["netron_export", "--output", f"{self.filepath_image}.svg", self._filepath_code])
         self._svg_save(self.filepath_image)
 
-
     def statistics(self) -> StatisticResponse:
-        node_blocks = re.findall(r'\bnode\s*{(.*?)}', self._code, flags=re.DOTALL)
+        node_blocks = re.findall(r"\bnode\s*{(.*?)}", self._code, flags=re.DOTALL)
         op_types = Counter()
 
         for block in node_blocks:
@@ -25,8 +25,4 @@ class RendererNnOnnx(Renderer):
                 op_type = match.group(1)
                 op_types[op_type] += 1
 
-        return StatisticResponse(node_types={
-            'num_nodes': len(node_blocks),
-            'op_types': dict(op_types)
-        })
-
+        return StatisticResponse(node_types={"num_nodes": len(node_blocks), "op_types": dict(op_types)})

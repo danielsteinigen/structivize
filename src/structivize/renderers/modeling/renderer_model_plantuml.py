@@ -1,6 +1,6 @@
 import os
 import re
-from collections import defaultdict, Counter
+from collections import Counter, defaultdict
 
 from ...renderer import Renderer, StatisticResponse
 
@@ -40,10 +40,10 @@ class RendererModelPlantuml(Renderer):
 
             for line in lines:
                 line = line.strip()
-                if re.match(r'^(abstract\s+)?class\s+', line) or line.startswith('interface'):
-                    counts['classes'] += 1
+                if re.match(r"^(abstract\s+)?class\s+", line) or line.startswith("interface"):
+                    counts["classes"] += 1
                     in_class_block = True
-                elif in_class_block and line.startswith('}'):
+                elif in_class_block and line.startswith("}"):
                     in_class_block = False
                 # elif in_class_block and re.match(r'^[+#-]?[A-Za-z_]+\s+[A-Za-z_<>]+', line):
                 #     counts['attributes'] += 1
@@ -54,56 +54,55 @@ class RendererModelPlantuml(Renderer):
             lines = self._code.strip().splitlines()
             for line in lines:
                 line = line.strip()
-                if '[' in line and ']' in line and '>' not in line:
-                    matches = re.findall(r'\[.*?\]', line)
-                    counts['components'] += len(matches)
+                if "[" in line and "]" in line and ">" not in line:
+                    matches = re.findall(r"\[.*?\]", line)
+                    counts["components"] += len(matches)
             return StatisticResponse(node_types=dict(counts))
-        
+
         elif self._category and self._category == "sequence":
             lines = self._code.strip().splitlines()
             stats = Counter()
-            message_pattern = re.compile(r'^\w+\s*[-]{1,2}>>?\s*\w+')
+            message_pattern = re.compile(r"^\w+\s*[-]{1,2}>>?\s*\w+")
             for line in lines:
                 line = line.strip()
                 if message_pattern.match(line):
-                    stats['messages'] += 1
-                elif line.startswith('participant ') or line.startswith('actor '):
-                    stats['participants'] += 1
-                elif line.startswith('activate '):
-                    stats['activations'] += 1
-                elif line.startswith('deactivate '):
-                    stats['deactivations'] += 1
+                    stats["messages"] += 1
+                elif line.startswith("participant ") or line.startswith("actor "):
+                    stats["participants"] += 1
+                elif line.startswith("activate "):
+                    stats["activations"] += 1
+                elif line.startswith("deactivate "):
+                    stats["deactivations"] += 1
             return StatisticResponse(node_types=dict(stats))
-        
+
         elif self._category and self._category == "state":
             lines = self._code.strip().splitlines()
             stats = Counter()
             states = set()
-            transition_pattern = re.compile(r'^\s*(.+?)\s*-->\s*(.+?)(?:\s*:\s*(.+))?$')
+            transition_pattern = re.compile(r"^\s*(.+?)\s*-->\s*(.+?)(?:\s*:\s*(.+))?$")
             for line in lines:
                 match = transition_pattern.match(line)
                 if match:
                     src, dst, label = match.groups()
-                    stats['transitions'] += 1
-                    if src.strip() == '[*]':
-                        stats['start_transitions'] += 1
+                    stats["transitions"] += 1
+                    if src.strip() == "[*]":
+                        stats["start_transitions"] += 1
                     else:
                         states.add(src.strip())
-                    if dst.strip() == '[*]':
-                        stats['end_transitions'] += 1
+                    if dst.strip() == "[*]":
+                        stats["end_transitions"] += 1
                     else:
                         states.add(dst.strip())
                     if label:
-                        stats['labeled_transitions'] += 1
+                        stats["labeled_transitions"] += 1
 
-            stats['states'] = len(states)
+            stats["states"] = len(states)
             return StatisticResponse(node_types=dict(stats))
 
         elif self._category and self._category == "mind":
-            return StatisticResponse(node_types={"nodes": sum(1 for line in self._code.splitlines() if line.strip().startswith("*"))-1})
+            return StatisticResponse(node_types={"nodes": sum(1 for line in self._code.splitlines() if line.strip().startswith("*")) - 1})
         else:
             return StatisticResponse()
-
 
     # def _render_api(self):
     #     output = render(

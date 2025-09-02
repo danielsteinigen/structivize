@@ -1,7 +1,8 @@
+import json
+from collections import defaultdict
+
 from ...renderer import Renderer, StatisticResponse
 from ...utils import load_text
-from collections import defaultdict
-import json
 
 
 @Renderer.register("hdl_yosys")
@@ -63,26 +64,37 @@ class RendererHdlYosys(Renderer):
 
         self._svg_save(self.filepath_image)
 
-
     def statistics(self) -> StatisticResponse:
-        gate_map = { # '$add': '', '$mul': '', '$eq': '', '$sub': '', '$mod': 'Modulo', '$gt': '', 
-            '$mux': 'Multiplexer', '$not': 'Negation Gates', '$xor': 'XOR Gates', '$or': 'OR gates', '$and': 'AND gates', '$dff': 'Flip-Flops',
-            '$adff': 'Flip-Flops', '$logic_and': 'AND gates', '$logic_or': 'OR gates', '$logic_xor': 'XOR gates', '$logic_not': 'Negation gates',
-            '$_NOT_': 'Negation Gates', '$_XOR_': 'XOR Gates', '$_OR_': 'OR gates', '$_AND_': 'AND gates',
+        gate_map = {  # '$add': '', '$mul': '', '$eq': '', '$sub': '', '$mod': 'Modulo', '$gt': '',
+            "$mux": "Multiplexer",
+            "$not": "Negation Gates",
+            "$xor": "XOR Gates",
+            "$or": "OR gates",
+            "$and": "AND gates",
+            "$dff": "Flip-Flops",
+            "$adff": "Flip-Flops",
+            "$logic_and": "AND gates",
+            "$logic_or": "OR gates",
+            "$logic_xor": "XOR gates",
+            "$logic_not": "Negation gates",
+            "$_NOT_": "Negation Gates",
+            "$_XOR_": "XOR Gates",
+            "$_OR_": "OR gates",
+            "$_AND_": "AND gates",
         }
-        text = load_text(self._log_files[self._current_tool])
-        start = text.find('{')
+        text = self._logs[self._current_tool]["cli"]
+        start = text.find("{")
         if start == -1:
             return StatisticResponse()
 
         brace_count = 0
         for i in range(start, len(text)):
-            if text[i] == '{':
+            if text[i] == "{":
                 brace_count += 1
-            elif text[i] == '}':
+            elif text[i] == "}":
                 brace_count -= 1
                 if brace_count == 0:
-                    json_str = text[start:i + 1]
+                    json_str = text[start : i + 1]
                     try:
                         counts = defaultdict(int)
                         json_stat = json.loads(json_str)
@@ -95,5 +107,5 @@ class RendererHdlYosys(Renderer):
                         return StatisticResponse(node_types=dict(counts))
                     except json.JSONDecodeError as e:
                         return StatisticResponse()
-        
+
         return StatisticResponse()
