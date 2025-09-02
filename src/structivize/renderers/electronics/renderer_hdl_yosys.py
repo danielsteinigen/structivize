@@ -67,7 +67,8 @@ class RendererHdlYosys(Renderer):
     def statistics(self) -> StatisticResponse:
         gate_map = { # '$add': '', '$mul': '', '$eq': '', '$sub': '', '$mod': 'Modulo', '$gt': '', 
             '$mux': 'Multiplexer', '$not': 'Negation Gates', '$xor': 'XOR Gates', '$or': 'OR gates', '$and': 'AND gates', '$dff': 'Flip-Flops',
-            '$adff': 'Flip-Flops', '$logic_and': 'AND gates', '$logic_or': 'OR gates', '$logic_xor': 'XOR gates', '$logic_not': 'Negation gates'
+            '$adff': 'Flip-Flops', '$logic_and': 'AND gates', '$logic_or': 'OR gates', '$logic_xor': 'XOR gates', '$logic_not': 'Negation gates',
+            '$_NOT_': 'Negation Gates', '$_XOR_': 'XOR Gates', '$_OR_': 'OR gates', '$_AND_': 'AND gates',
         }
         text = load_text(self._log_files[self._current_tool])
         start = text.find('{')

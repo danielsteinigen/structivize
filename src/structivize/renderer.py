@@ -219,7 +219,8 @@ class Renderer(ABC):
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
         path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
-
+        statistics = self.statistics()
+        
         log_output = f"** CLI OUTPUT **\n{self._logs[self._current_tool]['cli']}\n\n** PYTHON OUTPUT **\n{self._logs[self._current_tool]['py'].getvalue()}"
         save_text(filename=self._log_files[self._current_tool], data=log_output)
         return RenderResponse(
@@ -229,7 +230,7 @@ class Renderer(ABC):
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",
             path_log=f"{self._filepath_images[self._current_tool]}.log",
-            statistics=self.statistics()
+            statistics=statistics
         )
 
     def preprocess_code(self):

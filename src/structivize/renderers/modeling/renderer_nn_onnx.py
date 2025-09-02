@@ -20,7 +20,7 @@ class RendererNnOnnx(Renderer):
         op_types = Counter()
 
         for block in node_blocks:
-            match = re.search(r'op_type:\s*"(.*?)"', block)
+            match = re.search(r'op_type:\s*["\'](.*?)["\']', block)
             if match:
                 op_type = match.group(1)
                 op_types[op_type] += 1

@@ -50,22 +50,19 @@ class RendererLogic(Renderer):
             remove_files(self.filepath_image, ["png", "pdf", "svg"])
 
 
+    def _countit(self, root, elmdefs, depth=0):
+        if root.node not in elmdefs:
+            elmdefs["and"] += 1
+        else:
+            elmdefs[root.node] += 1
+        for child in root.children:
+            if child.node in elmdefs:
+                self._countit(child, elmdefs, depth+1)  # recursive
+
     def statistics(self) -> StatisticResponse:
         parsed = parse_string(self._code)
         tree = to_tree(parsed)
         dtree = buchheim(tree)
-        elmdefs = {'and': 0,
-                   'or': 0,
-                   'xor': 0,
-                   'nand': 0,
-                   'xnor': 0,
-                   'nor': 0,
-                   'not': 0}
-        if dtree.node not in elmdefs:
-            elmdefs["and"] += 1
-        else:
-            elmdefs[dtree.node] += 1
-        for child in dtree.children:
-            if child.node in elmdefs:
-                elmdefs[child.node] += 1
+        elmdefs = { 'and': 0, 'or': 0, 'xor': 0, 'nand': 0, 'xnor': 0, 'nor': 0, 'not': 0 }
+        self._countit(dtree, elmdefs)
         return StatisticResponse(node_types=elmdefs)
