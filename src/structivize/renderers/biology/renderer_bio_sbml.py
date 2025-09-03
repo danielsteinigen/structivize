@@ -32,6 +32,7 @@ class RendererBioSbml(Renderer):
         # df.autolayout()
         # df.setColorStyle(colors["simplicity"])
         df.draw(output_fileName=f"{self.filepath_image}.png", scale=2)  # , setImageSize=[600,300]
+        self._png_save(self.filepath_image)
 
     def _render_sbmlnetwork(self):
         network = sbmlnetwork.load(self._filepath_code)

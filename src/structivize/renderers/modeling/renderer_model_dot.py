@@ -21,8 +21,10 @@ class RendererModelDot(Renderer):
         src = Source(self._code)
         src.render(self.filepath_image, format="png", view=False)
         remove_files(self.filepath_image)
+        self._png_save(self.filepath_image)
 
     def _render_pydot(self):
         graphs = pydot.graph_from_dot_data(self._code)
         graph = graphs[0]
         graph.write_png(f"{self.filepath_image}.png")
+        self._png_save(self.filepath_image)

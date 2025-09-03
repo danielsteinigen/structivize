@@ -196,7 +196,7 @@ class Renderer(ABC):
                 if not self.__save_pdf:
                     remove_files(path, ["pdf"])
 
-    def _svg_save(self, path: str, svg_code: str = None, scale: float = 2.0):
+    def _svg_save(self, path: str, svg_code: str = None):
         svg_path = f"{path}.svg"
         if svg_code is not None:
             with open(svg_path, "w") as f:
@@ -229,13 +229,15 @@ class Renderer(ABC):
             if not self.__save_svg:
                 remove_files(svg_path)
 
+    def _png_save(self, path: str):
+        width, height = resize_png_preserve_aspect(f"{path}.png", self._max_width, self._max_height, keep_transparency=self._image_transparent)
+
     def _validate_image(self, path_img):
         if not os.path.isfile(path_img):
             return "", 0, 0
         elif not is_image_valid(path_img) or is_image_single_color(path_img):
             os.remove(path_img)
             return "", 0, 0
-        # width, height = resize_png_preserve_aspect(path_img, self._max_width, self._max_height, keep_transparency=self._image_transparent)
         width, height = get_png_size(path_img)
         return path_img, width, height
 

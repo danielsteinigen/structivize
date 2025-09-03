@@ -41,6 +41,7 @@ class RendererNnKeras(Renderer):
                 show_trainable=True,
                 dpi=200,
             )
+            self._png_save(self.filepath_image)
         except Exception as e:
             print("model_from_json failed, trying from_config")
             json_config = load_json(self._filepath_code)
@@ -56,6 +57,7 @@ class RendererNnKeras(Renderer):
                 show_trainable=True,
                 dpi=200,
             )
+            self._png_save(self.filepath_image)
 
     def statistics(self) -> StatisticResponse:
         counts = defaultdict(int)

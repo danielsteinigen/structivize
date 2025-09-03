@@ -26,9 +26,11 @@ class RendererGraphGml(Renderer):
         nx.draw(G, with_labels=True)
         plt.savefig(f"{self.filepath_image}.png", dpi=300, bbox_inches="tight")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_graphviz(self):
         self._execute_process(commands=["gml2gv", "-o", f"{self.filepath_image}.dot", self._filepath_code])
         src = Source(load_text(f"{self.filepath_image}.dot"))
         src.render(self.filepath_image, format="png", view=False)
+        self._png_save(self.filepath_image)
         remove_files(self.filepath_image, ["", "dot"])

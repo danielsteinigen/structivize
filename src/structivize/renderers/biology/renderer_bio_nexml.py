@@ -18,6 +18,7 @@ class RendererBioNexml(Renderer):
         Phylo.draw(tree)
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_ete3(self):
         nexml_project = Nexml()
@@ -27,3 +28,4 @@ class RendererBioNexml(Renderer):
         tree = collection_1.get_tree()[0]
         # tree = Tree(self._filepath_code, format=1)
         tree.render(f"{self.filepath_image}.png", w=800, dpi=300)
+        self._png_save(self.filepath_image)

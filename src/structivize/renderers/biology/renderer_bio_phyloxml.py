@@ -21,6 +21,7 @@ class RendererBioPhyloxml(Renderer):
         Phylo.draw(tree)  # TODO: also draw_graphviz, to_networkx
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_ete3(self):
         pxm = Phyloxml()
@@ -28,3 +29,4 @@ class RendererBioPhyloxml(Renderer):
         tree = pxm.get_phylogeny()[0]  # Get the first phylogenetic tree in the file
         # tree = Tree(self._filepath_code, format=1)
         tree.render(f"{self.filepath_image}.png", w=800, dpi=300)
+        self._png_save(self.filepath_image)

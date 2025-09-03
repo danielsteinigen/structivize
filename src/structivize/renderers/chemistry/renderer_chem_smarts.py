@@ -55,3 +55,4 @@ class RendererChemSmartsReaction(Renderer):
         d2d.DrawReaction(rxn)
         png = d2d.GetDrawingText()
         open(f"{self.filepath_image}.png", "wb+").write(png)
+        self._png_save(self.filepath_image)

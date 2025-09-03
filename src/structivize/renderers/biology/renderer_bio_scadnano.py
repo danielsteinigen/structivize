@@ -17,3 +17,4 @@ class RendererBioScadnano(Renderer):
         # design.add_strand(sc.Strand([sc.Domain(helix=0, start=0, end=16)]))
         # design.add_strand(sc.Strand([sc.Domain(helix=1, start=0, end=16)]))
         design.write_png_file(f"{self.filepath_image}.png")  # not possible
+        self._png_save(self.filepath_image)

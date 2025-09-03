@@ -25,10 +25,12 @@ class RendererBioNewick(Renderer):
         Phylo.draw(tree)
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_ete3(self):
         tree = Tree(self._filepath_code, format=1)
         tree.render(f"{self.filepath_image}.png", w=800, dpi=300)
+        self._png_save(self.filepath_image)
 
     def statistics(self) -> StatisticResponse:
         return StatisticResponse(node_types={"leaf nodes": len(self._code.split(","))})

@@ -31,3 +31,4 @@ class RendererBioCt(Renderer):
                 "radiate",
             ]
         )
+        self._png_save(self.filepath_image)

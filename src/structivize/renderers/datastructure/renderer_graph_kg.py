@@ -35,6 +35,7 @@ class RendererKg(Renderer):
             dot.edge(subj_, obj_, label=pred_)
         # Render graph
         dot.render(self.filepath_image, format="png", cleanup=True)
+        self._png_save(self.filepath_image)
 
     def _create_graph_networkx(self, graph):
         # Create a NetworkX graph
@@ -60,6 +61,7 @@ class RendererKg(Renderer):
 
         plt.savefig(f"{self.filepath_image}.png", dpi=300, bbox_inches="tight")
         plt.close()
+        self._png_save(self.filepath_image)
 
 
 @Renderer.register("kg_xml")

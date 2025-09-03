@@ -13,9 +13,11 @@ class RendererModelMermaid(Renderer):
 
     def _render_mermaid(self):
         self._execute_process(
-            commands=["mmdc", "-i", self._filepath_code, "-s", "4", "-o", f"{self.filepath_image}.png"]
+            commands=["mmdc", "-i", self._filepath_code, "-s", "3", "--backgroundColor", f"{'transparent' if self._image_transparent else 'white'}", "-o", f"{self.filepath_image}.png"]
+            # commands=["mmdc", "-i", self._filepath_code, "-o", f"{self.filepath_image}.svg"]
         )  # -t dark -b transparent
         # Theme of the chart (choices: "default", "forest", "dark", "neutral", default: "default")
+        self._png_save(self.filepath_image)
 
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "gantt":

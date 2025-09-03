@@ -11,3 +11,4 @@ class RendererDrawDitaa(Renderer):
         self._execute_process(
             commands=["java", "-jar", f"{self._tool_path}/ditaa/ditaa0_9.jar", self._filepath_code, f"{self.filepath_image}.png"]
         )
+        self._png_save(self.filepath_image)

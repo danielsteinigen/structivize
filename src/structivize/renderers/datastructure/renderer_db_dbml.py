@@ -14,7 +14,7 @@ class RendererDbDbml(Renderer):
 
     def _render_dbml(self, filepath_code, filepath_image):
         self._execute_process(commands=["dbml-renderer", "-i", filepath_code, "-o", f"{filepath_image}.svg"])
-        self._svg_save(path=filepath_image, scale=0.5)
+        self._svg_save(path=filepath_image)
 
     def _render_dbml_renderer(self):
         self._render_dbml(self._filepath_code, self.filepath_image)

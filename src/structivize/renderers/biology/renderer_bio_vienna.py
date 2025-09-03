@@ -72,6 +72,7 @@ class RendererBioVienna(Renderer):
                 "radiate",
             ]
         )  #  -algorithm naview
+        self._png_save(self.filepath_image)
         # os.system(f"java -cp {self._tool_path}/VARNAv3-93.jar fr.orsay.lri.varna.applications.VARNAcmd -i {self._filepath_code} -o {self.filepath_image}.png -titleSize 0 -resolution '2.0' -zoom 1.0 -border '20x30' -algorithm radiate")
         # TODO: split fasta into sequence and struvture and render pdf
         # os.system(f"java -cp {self._tool_path}/VARNAv3-93.jar fr.orsay.lri.varna.applications.VARNAcmd -sequenceDBN '{sequence} -structureDBN '{structure}' -o {self.filepath_image}1.eps -titleSize 0 -resolution '2.0' -zoom 1.0 -border '20x30' -algorithm radiate")
@@ -84,6 +85,7 @@ class RendererBioVienna(Renderer):
         fvm.plot_rna(cg, text_kwargs={"fontweight": "black"}, lighten=0.7, backbone_kwargs={"linewidth": 2})
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_r2dt(self):
         # https://docs.r2dt.bio/en/latest/usage.html

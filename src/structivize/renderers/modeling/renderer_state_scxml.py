@@ -20,7 +20,7 @@ class RendererStateScxml(Renderer):
         self._execute_process(
             commands=["smcat", "-T", "svg", "-I", "scxml", "-E", "circo", self._filepath_code, "-o", f"{self.filepath_image}.svg"]
         )
-        self._svg_save(path=self.filepath_image, scale=0.5)
+        self._svg_save(path=self.filepath_image)
 
     def _render_smcat_dot(self):
         self._execute_process(

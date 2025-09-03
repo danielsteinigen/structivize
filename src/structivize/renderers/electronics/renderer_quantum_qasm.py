@@ -29,6 +29,7 @@ class RendererQuantumQasm2(RendererQuantumQcircuit):
     def _render_qiskit(self):
         qc = qiskit.qasm2.loads(self._code)
         qc.draw(output="mpl", filename=f"{self.filepath_image}.png")
+        self._png_save(self.filepath_image)
 
     def _render_cirq(self):
         qc = circuit_from_qasm(self._code)
@@ -74,3 +75,4 @@ class RendererQuantumQasm3(RendererQuantumQcircuit):
     def _render_qiskit(self):
         qc = qiskit.qasm3.loads(self._code)
         qc.draw(output="mpl", filename=f"{self.filepath_image}.png")
+        self._png_save(self.filepath_image)

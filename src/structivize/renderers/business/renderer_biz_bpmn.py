@@ -29,6 +29,7 @@ class RendererBizBpmn(Renderer):
 
         visualizer.bpmn_diagram_to_png(bpmn_graph, self.filepath_image)
         visualizer.bpmn_diagram_to_dot_file(bpmn_graph, self.filepath_image)
+        self._png_save(self.filepath_image)
         # src = Source.from_file(f"{self.filepath_image}.dot") # .dot file seems to be not saved correctly
         # src.render(self.filepath_image, format="pdf", view=False)
 

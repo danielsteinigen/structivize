@@ -97,6 +97,7 @@ class RendererBioFasta(Renderer):
         )  # , color_scheme="base_pairing", show_spines=False), color_scheme='NajafabadiEtAl2017', stack_order="small_on_top’"
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
+        self._png_save(self.filepath_image)
 
     def _render_weblogo(self):
         # BioPython Motifs:
