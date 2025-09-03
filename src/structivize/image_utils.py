@@ -76,6 +76,11 @@ def is_image_valid(img_path):
         return False
 
 
+def get_png_size(image_path):
+    img = Image.open(image_path).convert("RGBA")
+    return img.size
+
+
 def resize_png_preserve_aspect(image_path, max_width, max_height, keep_transparency=True):
     """
     Resize a PNG image while preserving the aspect ratio.
@@ -98,3 +103,5 @@ def resize_png_preserve_aspect(image_path, max_width, max_height, keep_transpare
         background = Image.new("RGB", img.size, (255, 255, 255))
         background.paste(img, mask=img.split()[3])  # Paste using alpha channel as mask
         background.save(image_path, format="PNG")
+
+    return img.size

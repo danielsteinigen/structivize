@@ -43,6 +43,7 @@ def build_sample(sample_process):
         "tool_1": "",
         "tool_2": "",
         "debug_message": "",
+        "size": {},
         "statistics": {},
     }
     exception = None
@@ -57,6 +58,7 @@ def build_sample(sample_process):
         dataset_sample["path_log"] = result.path_log
         dataset_sample["tool_1"] = result.tool
         dataset_sample["debug_message"] = result.debug_message
+        dataset_sample["size"] = result.size.model_dump()
         dataset_sample["statistics"] = result.statistics.model_dump()
         if lang_key == "fasta":
             result_2 = renderer.render(tool="logomaker")
@@ -69,6 +71,7 @@ def build_sample(sample_process):
         print(exception)
         path_code = f"{save_dir}/code/{category_key}_{lang_key}/{id}.txt"
         save_text(filename=path_code, data=sample["code"])
+        dataset_sample["path_code"] = path_code
 
     return dataset_sample, exception
 

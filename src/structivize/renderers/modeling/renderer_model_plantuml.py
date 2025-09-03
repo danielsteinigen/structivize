@@ -3,6 +3,7 @@ import re
 from collections import Counter, defaultdict
 
 from ...renderer import Renderer, StatisticResponse
+from ...utils import remove_files
 
 
 @Renderer.register("model_plantuml")
@@ -14,11 +15,20 @@ class RendererModelPlantuml(Renderer):
 
     def preprocess_code(self):
         self._clean_code_lines("@")
-        for x in ["@startuml", "@startmindmap", "@startchen", "@startgantt"]:
-            self._code = self._code.strip().replace(x, f"{x} {str(self._output_base_path).split('/')[-1]}\nskinparam dpi 300")
+        lines = self._code.strip().splitlines()
+
+        if lines:
+            for keyword in ["@startuml", "@startmindmap", "@startchen", "@startgantt"]:
+                if lines[0].startswith(keyword):
+                    lines = lines[1:]
+                    new_start = f"{keyword} {str(self._output_base_path).split('/')[-1]}_plantuml\nskinparam svgDimensionStyle false\n"  # skinparam dpi 300\n
+                    lines.insert(0, new_start)
+                    break
+
+        self._code = "\n".join(lines)
 
     def _render_plantuml(self):
-        self._execute_process(
+        status, out, err = self._execute_process(
             commands=[
                 "java",
                 "-jar",
@@ -27,10 +37,15 @@ class RendererModelPlantuml(Renderer):
                 "-o",
                 os.path.dirname(os.path.abspath(self.filepath_image)),
                 self._filepath_code,
+                "-tsvg",
             ]
         )
-        # -theme xxx "-xmlstats", "-tsvg",
-        # self._svg_save(path=self.filepath_image)
+        # -theme xxx "-xmlstats"
+
+        self._svg_save(path=self.filepath_image)
+        if status != 0:  # == 200:
+            print("Remove Plantuml image")
+            remove_files(self.filepath_image, ["png", "pdf", "svg"])
 
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "class":

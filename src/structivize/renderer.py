@@ -10,10 +10,15 @@ from typing import List, Literal, Optional, Union
 import matplotlib.pyplot as plt
 from pydantic import BaseModel
 
-from .image_utils import is_image_mainly_black, is_image_single_color, is_image_valid, resize_png_preserve_aspect
+from .image_utils import get_png_size, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
 
 TIMEOUT = 10
+
+
+class ImageSize(BaseModel):
+    width: int
+    height: int
 
 
 class StatisticResponse(BaseModel):
@@ -28,6 +33,7 @@ class RenderResponse(BaseModel):
     path_code: str
     path_image: str
     path_log: str
+    size: ImageSize
     statistics: StatisticResponse
 
 
@@ -179,7 +185,8 @@ class Renderer(ABC):
                         "--pdf-page=1",
                         "--export-type=png",
                         f"--export-filename={path}.png",
-                        "--export-dpi=300",
+                        f"--export-width={self._max_width}",
+                        f"--export-background-opacity={'0' if self._image_transparent else '1'}",
                     ]
                 )
                 if self.__save_svg:
@@ -206,8 +213,17 @@ class Renderer(ABC):
                 commands=["inkscape", svg_path, "--export-area-drawing", "--export-margin=8", f"--export-filename={svg_path}"]
             )
             self._execute_process(
-                commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"]
-            )  # , "--export-background=red", "--export-background-opacity=0"])
+                commands=[
+                    "inkscape",
+                    svg_path,
+                    "--export-type=png",
+                    f"--export-filename={path}.png",
+                    f"--export-width={self._max_width}",
+                    f"--export-background-opacity={'0' if self._image_transparent else '1'}",
+                ]
+                # inkscape --query-width --query-height svg_path
+                # commands=["inkscape", svg_path, "--export-type=png", f"--export-filename={path}.png", "--export-dpi=300"] , "--export-background=red", f"--export-height={self._max_height}"
+            )
             if self.__save_pdf:
                 self._execute_process(commands=["inkscape", svg_path, "--export-type=pdf", f"--export-filename={path}.pdf"])
             if not self.__save_svg:
@@ -215,18 +231,16 @@ class Renderer(ABC):
 
     def _validate_image(self, path_img):
         if not os.path.isfile(path_img):
-            return ""
+            return "", 0, 0
         elif not is_image_valid(path_img) or is_image_single_color(path_img):
             os.remove(path_img)
-            return ""
-        elif type(self).__name__ == "RendererModelPlantuml" and is_image_mainly_black(path_img):
-            os.remove(path_img)
-            return ""
-        resize_png_preserve_aspect(path_img, self._max_width, self._max_height, keep_transparency=self._image_transparent)
-        return path_img
+            return "", 0, 0
+        # width, height = resize_png_preserve_aspect(path_img, self._max_width, self._max_height, keep_transparency=self._image_transparent)
+        width, height = get_png_size(path_img)
+        return path_img, width, height
 
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
-        path_img = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
+        path_img, width, height = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
         statistics = self.statistics()
 
@@ -239,6 +253,7 @@ class Renderer(ABC):
             path_code=f"{self._filepath_code}",
             path_image=f"{path_img}",
             path_log=f"{self._filepath_images[self._current_tool]}.log",
+            size=ImageSize(width=width, height=height),
             statistics=statistics,
         )
 
