@@ -196,7 +196,7 @@ class Renderer(ABC):
                 if not self.__save_pdf:
                     remove_files(path, ["pdf"])
 
-    def _svg_save(self, path: str, svg_code: str = None):
+    def _svg_save(self, path: str, svg_code: str = None, cropping: bool = True):
         svg_path = f"{path}.svg"
         if svg_code is not None:
             with open(svg_path, "w") as f:
@@ -209,9 +209,10 @@ class Renderer(ABC):
         if path is None or not os.path.isfile(svg_path):
             self.__write_log(["converting SVG"], "failed", "", "SVG was not generated\n")
         else:
-            self._execute_process(
-                commands=["inkscape", svg_path, "--export-area-drawing", "--export-margin=8", f"--export-filename={svg_path}"]
-            )
+            if cropping:
+                self._execute_process(
+                    commands=["inkscape", svg_path, "--export-area-drawing", "--export-margin=8", f"--export-filename={svg_path}"]
+                )
             self._execute_process(
                 commands=[
                     "inkscape",
@@ -288,7 +289,7 @@ class Renderer(ABC):
             try:
                 if self._code.strip() == "":
                     return self._write_response(success=False, message="No Code provided.")
-                elif not self.verify_code:
+                elif not self.verify_code():
                     return self._write_response(success=False, message="Provided code is not valid.")
                 else:
                     self._tool_handlers[tool]()

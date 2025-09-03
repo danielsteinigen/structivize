@@ -64,6 +64,10 @@ def build_sample(sample_process):
             result_2 = renderer.render(tool="logomaker")
             dataset_sample["path_img_2"] = result_2.path_image
             dataset_sample["tool_2"] = result_2.tool
+        elif lang_key == "smiles":
+            result_2 = renderer.render(tool="obabel")
+            dataset_sample["path_img_2"] = result_2.path_image
+            dataset_sample["tool_2"] = result_2.tool
         del renderer
 
     except Exception as e:

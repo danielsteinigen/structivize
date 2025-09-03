@@ -48,5 +48,5 @@ class RendererModelMarkmap(Renderer):
             ]
         )
         asyncio.run(export_markmap(self.filepath_image, self._max_width, self._max_height))
-        self._svg_save(path=f"{self.filepath_image}_2")
+        # self._svg_save(path=f"{self.filepath_image}_2")
         self._png_save(self.filepath_image)

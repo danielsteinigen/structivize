@@ -125,7 +125,13 @@ class RendererPlcIl(Renderer):
 
         # Validate variable declarations
         var_lines = lines[1:end_var_index]
-        var_pattern = re.compile(r"^%?[a-zA-Z_][\w]*\s*:\s*[A-Z]+")
+        # var_pattern = re.compile(r"^%?[a-zA-Z_][\w]*\s*:\s*[A-Z]+")
+        var_pattern = re.compile(
+            r"^%?[a-zA-Z_][\w.]*"      # optional leading %, then variable name (letters, digits, _, .)
+            r"(?:\s+AT\s+%[\w.]+)?"    # optional 'AT %...' port assignment
+            r"\s*:\s*"                 # colon with optional spaces
+            r"[A-Z]+\s*;?"             # type in uppercase, optional spaces, optional semicolon
+        )
 
         for line in var_lines:
             if not var_pattern.match(line):

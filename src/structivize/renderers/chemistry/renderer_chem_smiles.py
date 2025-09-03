@@ -26,4 +26,4 @@ class RendererChemSmiles(Renderer):
         self._execute_process(
             commands=["obabel", "-ismiles", self._filepath_code, "-O", f"{self.filepath_image}.svg", "-xb", "none", "-xd"]
         )  # -xa draw all carbon atoms
-        self._svg_save(path=self.filepath_image)
+        self._svg_save(path=self.filepath_image, cropping=False)

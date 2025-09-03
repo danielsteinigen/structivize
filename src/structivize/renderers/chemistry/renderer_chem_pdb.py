@@ -18,4 +18,4 @@ class RendererChemPdb(Renderer):
 
     def _render_obabel(self):
         self._execute_process(commands=["obabel", "-ipdb", self._filepath_code, "-O", f"{self.filepath_image}.svg", "-xb", "none", "-xd"])
-        self._svg_save(path=self.filepath_image)
+        self._svg_save(path=self.filepath_image, cropping=False)
