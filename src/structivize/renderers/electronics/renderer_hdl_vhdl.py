@@ -1,4 +1,5 @@
 import os
+import shutil
 
 from graphviz import Source
 
@@ -47,39 +48,42 @@ class RendererHdlVhdl(RendererHdlYosys):
 
     def _render_yosys(self):
         entity_name = self._get_entity_name()
+        temp_dir = f"{self.filepath_image}_temp"
+        os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", self._filepath_code]
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
             command_1 = [
                 "yosys",
                 "-m",
                 "ghdl",
                 "-p",
-                f"ghdl --std={std} --ieee=standard -fsynopsys {entity_name}; prep -top {entity_name}; write_json -compat-int {self.filepath_image}.json; stat -json",
+                f"ghdl --std={std} --ieee=standard -fsynopsys --workdir={temp_dir} {entity_name}; prep -top {entity_name}; write_json -compat-int {self.filepath_image}.json; stat -json",
             ]
             self._execute_process(commands=command_0)
             self._run_command(command=command_1)
             break
-        remove_files_dir(os.getcwd(), ["o", "cf"])
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _render_yosys_2(self):
         entity_name = self._get_entity_name()
+        temp_dir = f"{self.filepath_image}_temp"
+        os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            # command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", self._filepath_code]
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
             command_1 = [
                 "yosys",
                 "-m",
                 "ghdl",
                 "-p",
-                f"ghdl --std={std} --ieee=standard -fsynopsys {entity_name}; prep -top {entity_name} -flatten; write_json -compat-int {self.filepath_image}.json; stat -json",
+                f"ghdl --std={std} --ieee=standard -fsynopsys --workdir={temp_dir} {entity_name}; prep -top {entity_name} -flatten; write_json -compat-int {self.filepath_image}.json; stat -json",
             ]
-            # self._execute_process(commands=command_0)
+            self._execute_process(commands=command_0)
             self._run_command(command=command_1)
             break
-        remove_files_dir(os.getcwd(), ["o", "cf"])
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _render_yosys_all(self):
         for std in ["08", "19", "93", "87"]:
-            # command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", self._filepath_code]
             command_1 = [
                 "yosys",
                 "-m",
@@ -87,25 +91,25 @@ class RendererHdlVhdl(RendererHdlYosys):
                 "-p",
                 f"ghdl --std={std} --ieee=standard -fsynopsys {self._filepath_code} -e; proc; opt; write_json -compat-int {self.filepath_image}.json; stat -json",
             ]
-            # self._execute_process(commands=command_0)
             self._run_command(command=command_1)
             break
-        remove_files_dir(os.getcwd(), ["o", "cf"])
 
     def _render_yosys_detail(self):
         entity_name = self._get_entity_name()
+        temp_dir = f"{self.filepath_image}_temp"
+        os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", self._filepath_code]
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
             command_1 = [
                 "yosys",
                 "-m",
                 "ghdl",
                 "-p",
-                f"ghdl --std={std} --ieee=standard -fsynopsys {entity_name}; prep -top {entity_name}; aigmap; write_json -compat-int {self.filepath_image}.json; stat -json",
+                f"ghdl --std={std} --ieee=standard -fsynopsys --workdir={temp_dir} {entity_name}; prep -top {entity_name}; aigmap; write_json -compat-int {self.filepath_image}.json; stat -json",
             ]
             self._execute_process(commands=command_0)
             self._run_command(command=command_1)
-        remove_files_dir(os.getcwd(), ["o", "cf"])
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     def _render_graphviz(self):
         for std in ["08", "19", "93", "87"]:
@@ -136,11 +140,15 @@ class RendererHdlVhdl(RendererHdlYosys):
     def _render_graphviz_ast(self):
         # AST - Abstract Syntax Tree
         entity_name = self._get_entity_name()
+        temp_dir = f"{self.filepath_image}_temp"
+        os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            command = ["ghdl", "--synth", f"--std={std}", "--ieee=standard", "-fsynopsys", "--out=dot", entity_name]
-            _, out, _ = self._execute_process(commands=command)
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
+            command_1 = ["ghdl", "--synth", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", "--out=dot", entity_name]
+            self._execute_process(commands=command_0)
+            _, out, _ = self._execute_process(commands=command_1)
             # save_text(filename=f"{self.filepath_image}.dot", data=out)
             src = Source(out)
             src.render(self.filepath_image, format="png", view=False)
             break
-        remove_files_dir(os.getcwd(), ["o", "cf"])
+        shutil.rmtree(temp_dir, ignore_errors=True)

@@ -39,7 +39,7 @@ class RendererHdlVerilog(RendererHdlYosys):
         command = [
             "yosys",
             "-p",
-            f"read_verilog -sv {self._filepath_code}; hierarchy -top {entity_name}; proc; opt_clean; write_json -compat-int {self.filepath_image}9.json; stat -json",
+            f"read_verilog -sv {self._filepath_code}; hierarchy -top {entity_name}; proc; opt_clean; write_json -compat-int {self.filepath_image}.json; stat -json",
         ]
         self._run_command(command=command)
 
