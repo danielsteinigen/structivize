@@ -18,7 +18,7 @@ class RendererBioNewick(Renderer):
         self._code = self._code.strip()
 
     def verify_code(self):
-        return self._code[0] == "(" and (self._is_single_line() or self._code.split("\n")[-1].strip()[0] == ")")
+        return self._code and self._code[0] == "(" and (self._is_single_line() or self._code.split("\n")[-1].strip()[0] == ")")
 
     def _render_biopython(self):
         tree = Phylo.read(self._filepath_code, "newick")

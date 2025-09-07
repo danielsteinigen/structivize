@@ -60,7 +60,7 @@ class Renderer(ABC):
         output_format: Literal["svg", "pdf", "png", "jpg"] = "png",
         category: str = None,
         max_width: int = 1024,
-        max_height: int = 768,
+        max_height: int = 1024,
         tool_configs: dict = None,
     ):
         renderer_cls = cls.registry.get(renderer)
@@ -85,7 +85,7 @@ class Renderer(ABC):
         output_format: Literal["svg", "pdf", "png", "jpg"] = "png",
         category: str = None,
         max_width: int = 1024,
-        max_height: int = 768,
+        max_height: int = 1024,
         tool_configs: dict = None,
     ):
         self._tool_path = os.getenv("TOOL_PATH", ".")
@@ -98,7 +98,7 @@ class Renderer(ABC):
             self._output_base_path = Path(output_base_path)
         check_dirs(self._output_base_path)
 
-        if code is None:
+        if code is None or not code.strip():
             if code_path is None or not os.path.isfile(code_path):
                 raise ValueError("Either 'code' or valid 'code_path' must be provided.")
             else:
@@ -293,6 +293,7 @@ class Renderer(ABC):
                     return self._write_response(success=False, message="Provided code is not valid.")
                 else:
                     self._tool_handlers[tool]()
+                    plt.close()
                     return self._write_response()
 
             except Exception as e:

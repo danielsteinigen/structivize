@@ -34,7 +34,8 @@ class RendererBioVienna(Renderer):
                 code += f"{line}\n"
         self._code = code.strip()
         if (
-            ">" == self._code[0]
+            len(self._code) > 1
+            and ">" == self._code[0]
             and len(self._code.splitlines()) == 2
             and "(" in self._code.splitlines()[1]
             and "A" in self._code.splitlines()[0]

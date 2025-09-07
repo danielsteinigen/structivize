@@ -36,6 +36,7 @@ def build_sample(sample_process):
         "problem": sample["problem"] if "problem" in sample else "",
         "description": sample["description"] if "description" in sample else "",
         "answer": sample["answer"] if "answer" in sample else "",
+        "code": sample["code"],
         "path_code": "",
         "path_img_1": "",
         "path_img_2": "",
@@ -68,6 +69,14 @@ def build_sample(sample_process):
             result_2 = renderer.render(tool="obabel")
             dataset_sample["path_img_2"] = result_2.path_image
             dataset_sample["tool_2"] = result_2.tool
+        elif lang_key == "vienna":
+            result_2 = renderer.render(tool="forgi")
+            dataset_sample["path_img_2"] = result_2.path_image
+            dataset_sample["tool_2"] = result_2.tool
+        elif lang_key == "nn_keras":
+            result_2 = renderer.render(tool="keras")
+            dataset_sample["path_img_2"] = result_2.path_image
+            dataset_sample["tool_2"] = result_2.tool
         del renderer
 
     except Exception as e:
@@ -76,6 +85,7 @@ def build_sample(sample_process):
         path_code = f"{save_dir}/code/{category_key}_{lang_key}/{id}.txt"
         save_text(filename=path_code, data=sample["code"])
         dataset_sample["path_code"] = path_code
+        if "renderer" in vars(): del renderer
 
     return dataset_sample, exception
 
@@ -88,13 +98,15 @@ if __name__ == "__main__":
     ]
     save_dirs = [
     ]
+    ids_pre = [
+    ]
 
-    for data_file, save_dir in zip(data_files, save_dirs):
+    for data_file, save_dir, id_pre in zip(data_files, save_dirs, ids_pre):
         start = time.time()
         data = load_jsonl(filename=data_file)
         save_dir = save_dir
 
-        code_categories = load_json(filename="categories.json")
+        code_categories = load_json(filename="categories_all.json")
 
         os.makedirs(save_dir, exist_ok=True)
         os.makedirs(f"{save_dir}/code/", exist_ok=True)
@@ -111,7 +123,7 @@ if __name__ == "__main__":
             idx += 1
             samples_prepared.append(
                 {
-                    "id": f"{sample['input']['category_key']}_{idx}",
+                    "id": f"{id_pre}_{sample['input']['category_key']}_{idx}",
                     "sample": sample,
                     "save_dir": save_dir,
                     "renderer": code_categories[sample["input"]["category_key"]]["language"][sample["input"]["lang_key"]]["renderer"],

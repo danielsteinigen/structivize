@@ -27,10 +27,11 @@ class RendererBioFasta(Renderer):
             cleaned_lines.append(stripped)
         self._code = "\n".join(cleaned_lines)
         self._code = self._code.strip()
-        if ">" == self._code[0] and len(self._code.splitlines()) == 1:
-            self._code = self._code[1:]
-        if len(self._code) > 1 and ">" not in self._code.splitlines()[0]:
-            self._code = f">Sequence0\n{self._code}"
+        if len(self._code) > 1:
+            if ">" == self._code[0] and len(self._code.splitlines()) == 1:
+                self._code = self._code[1:]
+            if len(self._code) > 1 and ">" not in self._code.splitlines()[0]:
+                self._code = f">Sequence0\n{self._code}"
 
     def _is_fasta(self):
         lines = self._code.strip().splitlines()
