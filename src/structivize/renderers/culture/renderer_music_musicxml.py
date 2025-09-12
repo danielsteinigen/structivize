@@ -26,6 +26,7 @@ class RendererMusicXml(RendererMusic):
                 and not line_str.startswith("<creator")
                 and not line_str.startswith("<work-title")
                 and not line_str.startswith("<movement-title")
+                and not line_str.startswith("<rights")
             ):
                 code += f"{line}\n"
         self._code = code.strip()

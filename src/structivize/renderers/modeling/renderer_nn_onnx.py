@@ -25,4 +25,4 @@ class RendererNnOnnx(Renderer):
                 op_type = match.group(1)
                 op_types[op_type] += 1
 
-        return StatisticResponse(node_types={"num_nodes": len(node_blocks), "op_types": dict(op_types)})
+        return StatisticResponse(node_types={dict(op_types)}) # "num_nodes": len(node_blocks)
