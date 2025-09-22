@@ -12,8 +12,8 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("bio_fasta")
 class RendererBioFasta(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "weblogo": {},
         "logomaker": {"color_scheme": "base_pairing", "show_spines": False, "stack_order": "small_on_top"},
+        "weblogo": {},
     }
 
     def preprocess_code(self) -> str:

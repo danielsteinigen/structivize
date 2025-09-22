@@ -13,6 +13,7 @@ class RendererChartsPlotly(Renderer):
     def preprocess_code(self) -> str:
         self._clean_code_lines("{")
         self._code = self._code.replace(": False", ": false").replace(": True", ": true")
+        # TODO: add "margin": {"l": 10, "r": 10, "t": 40, "b": 10}
 
     def _render_plotly(self):
         fig = pio.from_json(self._code)

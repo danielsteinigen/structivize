@@ -35,3 +35,6 @@ netron~=8.5.3
 keras~=3.11.3
 tensorflow-cpu~=2.20.0
 PyQt5~=5.15.11
+geopandas~=1.1.1
+geoplot~=0.5.1
+osmnx~=2.0.6

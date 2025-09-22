@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from .image_utils import get_png_size, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
 
-TIMEOUT = 10
+TIMEOUT = 20
 
 
 class ImageSize(BaseModel):
@@ -245,7 +245,10 @@ class Renderer(ABC):
     def _write_response(self, success: bool = True, message: str = "") -> RenderResponse:
         path_img, width, height = self._validate_image(f"{self._filepath_images[self._current_tool]}.png")
         print(f"{self._filepath_images[self._current_tool]} - {'success' if path_img != '' else 'fail'}")
-        statistics = self.statistics()
+        try:
+            statistics = self.statistics()
+        except Exception as e:
+            statistics = StatisticResponse()
 
         log_output = f"** CLI OUTPUT **\n{self._logs[self._current_tool]['cli']}\n\n** PYTHON OUTPUT **\n{self._logs[self._current_tool]['py'].getvalue()}"
         save_text(filename=self._log_files[self._current_tool], data=log_output)

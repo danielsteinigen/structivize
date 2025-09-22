@@ -1,8 +1,8 @@
 from rdkit import Chem
-from rdkit.Chem import Draw
+from rdkit.Chem import Draw, Descriptors, rdMolDescriptors
 from collections import Counter
 
-from ...renderer import Renderer
+from ...renderer import Renderer, StatisticResponse
 
 
 @Renderer.register("chem_smiles")
