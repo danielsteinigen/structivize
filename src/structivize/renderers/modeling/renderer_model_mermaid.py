@@ -63,15 +63,15 @@ class RendererModelMermaid(Renderer):
                     src, dst, label = match.groups()
                     stats["transitions"] += 1
                     if src.strip() == "[*]":
-                        stats["start_transitions"] += 1
+                        stats["start transitions"] += 1
                     else:
                         states.add(src.strip())
                     if dst.strip() == "[*]":
-                        stats["end_transitions"] += 1
+                        stats["end transitions"] += 1
                     else:
                         states.add(dst.strip())
                     if label:
-                        stats["labeled_transitions"] += 1
+                        stats["labeled transitions"] += 1
 
             stats["states"] = len(states)
             return StatisticResponse(node_types=dict(stats))
