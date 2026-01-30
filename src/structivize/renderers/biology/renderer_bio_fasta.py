@@ -12,8 +12,8 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("bio_fasta")
 class RendererBioFasta(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "logomaker": {"color_scheme": "base_pairing", "show_spines": False, "stack_order": "small_on_top"},
-        "weblogo": {},
+        "logomaker": {"color_scheme": "classic", "show_spines": True, "stack_order": "big_on_top"}, # "flip_below": True, "shade_below": True}, 
+        "weblogo": {"color_scheme": "base pairing", "show_axis": "YES", "error_bars": "YES"}, 
     }
 
     def preprocess_code(self) -> str:
@@ -94,8 +94,11 @@ class RendererBioFasta(Renderer):
         # https://logomaker.readthedocs.io/en/latest/implementation.html
         mat_df = logomaker.alignment_to_matrix(self._read_fasta())
         logo = logomaker.Logo(
-            mat_df
-        )  # , color_scheme="base_pairing", show_spines=False), color_scheme='NajafabadiEtAl2017', stack_order="small_on_top’"
+            mat_df,
+            color_scheme=self.tool_config["color_scheme"],
+            show_spines=self.tool_config["show_spines"],
+            stack_order=self.tool_config["stack_order"],
+        )
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()
         self._png_save(self.filepath_image)
@@ -107,7 +110,7 @@ class RendererBioFasta(Renderer):
         # motif.weblogo(f"{self.filepath_image}.png") # uses Berkeley weblogo service
 
         self._execute_process(
-            commands=["weblogo", "--format", "PDF", "-s", "large", "-P", "", "-f", self._filepath_code, "-o", f"{self.filepath_image}.pdf"]
+            commands=["weblogo", "--color-scheme", self.tool_config["color_scheme"], "--show-yaxis", self.tool_config["show_axis"], "--show-xaxis", self.tool_config["show_axis"], "--errorbars", self.tool_config["error_bars"], "--format", "PDF", "-s", "large", "-P", "", "-f", self._filepath_code, "-o", f"{self.filepath_image}.pdf"]
         )  # https://weblogo.threeplusone.com/manual.html
         self._pdf_save(self.filepath_image)
 
