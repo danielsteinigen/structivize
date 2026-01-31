@@ -14,7 +14,7 @@ from .renderer_quantum_qcircuit import RendererQuantumQcircuit
 @Renderer.register("quantum_qasm2")
 class RendererQuantumQasm2(RendererQuantumQcircuit):
     DEFAULT_TOOL_CONFIGS = {
-        "qiskit": {},
+        "qiskit": {"style": "iqp", "initial_state": True, "justify": "left"},
         "cirq": {},
     }
     FILE_EXT = "qasm"
@@ -32,7 +32,14 @@ class RendererQuantumQasm2(RendererQuantumQcircuit):
     # https://docs.quantum.ibm.com/guides/interoperate-qiskit-qasm2
     def _render_qiskit(self):
         qc = qiskit.qasm2.loads(self._code)
-        qc.draw(output="mpl", filename=f"{self.filepath_image}.png")
+        qc.draw(
+            output="mpl", 
+            style=self.tool_config["style"],
+            # plot_barriers=True,
+            justify=self.tool_config["justify"],
+            initial_state=self.tool_config["initial_state"],
+            filename=f"{self.filepath_image}.png"
+        )
         # fig = qc.draw(output="mpl")
         # fig.savefig(f"{self.filepath_image}.png", dpi=300, bbox_inches="tight")
         # plt.close(fig)
