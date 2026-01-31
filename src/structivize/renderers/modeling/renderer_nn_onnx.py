@@ -7,12 +7,17 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("nn_onnx")
 class RendererNnOnnx(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "netron": {},
+        "netron": {"horizontal": False},
     }
     FILE_EXT = "onnx"
 
     def _render_netron(self):
-        self._execute_process(commands=["netron_export", "--output", f"{self.filepath_image}.svg", self._filepath_code])
+        cmd = ["netron_export"]
+        if "horizontal" in self.tool_config and self.tool_config["horizontal"]:
+            cmd.extend(["--horizontal"])
+        
+        cmd.extend(["--output", f"{self.filepath_image}.svg", self._filepath_code])
+        self._execute_process(commands=cmd)
         self._svg_save(self.filepath_image)
 
     def statistics(self) -> StatisticResponse:

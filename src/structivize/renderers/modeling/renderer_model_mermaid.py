@@ -7,13 +7,13 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("model_mermaid")
 class RendererModelMermaid(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "mermaid": {},
+        "mermaid": {"theme": "default", "background": "white"}
     }
     FILE_EXT = "mmd"
 
     def _render_mermaid(self):
         self._execute_process(
-            commands=["mmdc", "-i", self._filepath_code, "-s", "3", "--backgroundColor", f"{'transparent' if self._image_transparent else 'white'}", "-o", f"{self.filepath_image}.png"]
+            commands=["mmdc", "-i", self._filepath_code, "-s", "3", "--theme", self.tool_config.get("theme", "default"), "--backgroundColor", f"{'transparent' if self._image_transparent else self.tool_config.get('background', 'white')}", "-o", f"{self.filepath_image}.png"]
             # commands=["mmdc", "-i", self._filepath_code, "-o", f"{self.filepath_image}.svg"]
         )  # -t dark -b transparent
         # Theme of the chart (choices: "default", "forest", "dark", "neutral", default: "default")

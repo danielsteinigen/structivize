@@ -9,7 +9,7 @@ from ...utils import remove_files
 @Renderer.register("model_plantuml")
 class RendererModelPlantuml(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "plantuml": {},
+        "plantuml": {"theme": "vibrant"}
     }
     FILE_EXT = "puml"
 
@@ -33,6 +33,8 @@ class RendererModelPlantuml(Renderer):
                 "java",
                 "-jar",
                 f"{self._tool_path}/plantuml-mit-1.2025.2.jar",
+                "-theme",
+                self.tool_config.get("theme", "_none_"),
                 "-failfast",
                 "-o",
                 os.path.dirname(os.path.abspath(self.filepath_image)),
@@ -42,7 +44,7 @@ class RendererModelPlantuml(Renderer):
         )
         # -theme xxx "-xmlstats"
 
-        self._svg_save(path=self.filepath_image)
+        self._svg_save(path=self.filepath_image, cropping=False)
         if status != 0:  # == 200:
             print("Remove Plantuml image")
             remove_files(self.filepath_image, ["png", "pdf", "svg"])
