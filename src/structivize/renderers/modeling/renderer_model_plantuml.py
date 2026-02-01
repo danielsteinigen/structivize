@@ -9,7 +9,7 @@ from ...utils import remove_files
 @Renderer.register("model_plantuml")
 class RendererModelPlantuml(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "plantuml": {"theme": "vibrant"}
+        "plantuml": {"theme": "_none_"},
     }
     FILE_EXT = "puml"
 
@@ -28,26 +28,54 @@ class RendererModelPlantuml(Renderer):
         self._code = "\n".join(lines)
 
     def _render_plantuml(self):
-        status, out, err = self._execute_process(
-            commands=[
-                "java",
-                "-jar",
-                f"{self._tool_path}/plantuml-mit-1.2025.2.jar",
-                "-theme",
-                self.tool_config.get("theme", "_none_"),
-                "-failfast",
-                "-o",
-                os.path.dirname(os.path.abspath(self.filepath_image)),
-                self._filepath_code,
-                "-tsvg",
-            ]
-        )
-        # -theme xxx "-xmlstats"
+        cmd = [
+            "java",
+            "-jar",
+            f"{self._tool_path}/plantuml-mit-1.2025.2.jar",
+            "-failfast",
+            "-tsvg"
+        ]
+        theme = self.tool_config.get("theme", "_none_")
+        if theme != "_none_":
+            cmd.extend(["-theme", theme])
+        
+        cmd.extend(["-o", os.path.dirname(os.path.abspath(self.filepath_image)), self._filepath_code])
+        status, out, err = self._execute_process(commands=cmd)
 
-        self._svg_save(path=self.filepath_image, cropping=False)
-        if status != 0:  # == 200:
+        if status != 0:
             print("Remove Plantuml image")
-            remove_files(self.filepath_image, ["png", "pdf", "svg"])
+            remove_files(self.filepath_image, ["png", "pdf"])
+        else:
+            bg_color = self.tool_config.get("bg_color", "#FFFFFF")
+
+            with open(f"{self.filepath_image}.svg", "r") as f:
+                content = f.read()
+
+            bg_rect = f'<rect id="bg-canvas" width="100%" height="100%" fill="{bg_color}" x="0" y="0"/>'
+            
+            if 'id="bg-canvas"' not in content:
+                content = re.sub(r'(<svg[^>]*>)', lambda m: f"{m.group(1)}\n{bg_rect}", content, count=1)
+
+            css_rules = f"""
+            <style>
+                #bg-canvas {{
+                    stroke: none !important;
+                    fill: {bg_color} !important;
+                    fill-opacity: 1 !important;
+                }}
+            </style>
+            """
+            
+            if "</svg>" in content and "style>" not in content:
+                content = content.replace("</svg>", f"{css_rules}\n</svg>")
+            elif "</style>" in content:
+                content = content.replace("</style>", f"#bg-canvas {{ stroke: none !important; fill: {bg_color} !important; }}\n</style>")
+
+            with open(f"{self.filepath_image}.svg", "w") as f:
+                f.write(content)
+
+            self._svg_save(path=self.filepath_image, cropping=False)
+
 
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "class":
