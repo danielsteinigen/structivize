@@ -127,10 +127,10 @@ class RendererPlcIl(Renderer):
         var_lines = lines[1:end_var_index]
         # var_pattern = re.compile(r"^%?[a-zA-Z_][\w]*\s*:\s*[A-Z]+")
         var_pattern = re.compile(
-            r"^%?[a-zA-Z_][\w.]*"      # optional leading %, then variable name (letters, digits, _, .)
-            r"(?:\s+AT\s+%[\w.]+)?"    # optional 'AT %...' port assignment
-            r"\s*:\s*"                 # colon with optional spaces
-            r"[A-Z]+\s*;?"             # type in uppercase, optional spaces, optional semicolon
+            r"^%?[a-zA-Z_][\w.]*"  # optional leading %, then variable name (letters, digits, _, .)
+            r"(?:\s+AT\s+%[\w.]+)?"  # optional 'AT %...' port assignment
+            r"\s*:\s*"  # colon with optional spaces
+            r"[A-Z]+\s*;?"  # type in uppercase, optional spaces, optional semicolon
         )
 
         for line in var_lines:
@@ -154,5 +154,4 @@ class RendererPlcIl(Renderer):
 
     def _render_plc(self):
         # TODO: implement rendering
-        reference_path = Path(__file__).parent.parent.parent.parent.parent / "examples/reference/sample_ladder.png"
-        shutil.copyfile(f"{reference_path}", f"{self.filepath_image}.png")
+

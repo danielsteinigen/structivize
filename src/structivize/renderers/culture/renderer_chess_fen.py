@@ -9,7 +9,14 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("chess_fen")
 class RendererChessFen(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "chess": {},
+        "chess": {
+            "flipped": False,
+            "coordinates": True,
+            "square_light": "#ffce9e",
+            "square_dark": "#d18b47",
+            "margin_color": "#212121",
+            "coord_color": "#e5e5e5",
+        }
     }
 
     def preprocess_code(self):
@@ -21,7 +28,18 @@ class RendererChessFen(Renderer):
 
     def _render_chess(self):
         board = chess.Board(self._code)
-        svg_code = chess.svg.board(board)
+        custom_colors = {
+            "square light": self.tool_config["square_light"],
+            "square dark": self.tool_config["square_dark"],
+            "margin": self.tool_config.get("margin_color", "#FFFFFF"),
+            "coord": self.tool_config.get("coord_color", "#000000"),
+        }
+        svg_code = chess.svg.board(
+            board,
+            colors=custom_colors,
+            coordinates=self.tool_config.get("coordinates", True),
+            flipped=self.tool_config.get("flipped", False),
+        )
         self._svg_save(path=self.filepath_image, svg_code=svg_code)
 
     def statistics(self) -> StatisticResponse:

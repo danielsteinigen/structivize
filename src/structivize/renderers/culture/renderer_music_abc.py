@@ -10,8 +10,15 @@ from .renderer_music import RendererMusic
 @Renderer.register("music_abc")
 class RendererMusicAbc(RendererMusic):
     DEFAULT_TOOL_CONFIGS = {
-        "lilypond": {},
-        "abcm2ps": {},
+        "lilypond": {
+            "note_color": "#000000",
+            "staff_color": "#000000",
+            "time_color": "#000000",
+            "note_shape": "default",
+            "thickness": 1.0,
+            "staff_size": 20,
+        },
+        # "abcm2ps": {},
     }
     FILE_EXT = "abc"
 
@@ -30,6 +37,7 @@ class RendererMusicAbc(RendererMusic):
     def _render_lilypond(self):
         self._conv_abc2ly(self._filepath_code, self.filepath_image)
         self._replace_tagline(f"{self.filepath_image}.ly")
+        self._apply_styling(self.filepath_image, self.tool_config)
         self._conv_ly2svg(f"{self.filepath_image}.ly", self.filepath_image)
         remove_files(self.filepath_image, ["ly", "midi"])
 

@@ -69,28 +69,36 @@ def remove_files_dir(path: str, endings: list):
                 os.remove(os.path.join(path, f))
 
 
-def extract_part(text, term_1, term_2, return_empty, remove_first_line=False):
+def extract_part(text, term_1, term_2, return_empty, remove_first_line=False, reverse=False):
     text_result = "" if return_empty else text
     offset = len(term_1)
-    start_code = text.find(term_1)
+    start_code = text.find(term_1) if not reverse else text.rfind(term_1)
 
     if start_code != -1:
         if term_2 != "":
-            end_code = text.find(term_2, start_code + offset)
+            end_code = text.find(term_2, start_code + offset)  # if not reverse else text.rfind(term_2, start_code+offset)
             if end_code != -1:
+                text_result = text[start_code + offset : end_code]
                 if remove_first_line:
-                    text_result = text[start_code:end_code]
-                    text_result = "\n".join(text_result.split("\n")[1:])
-                else:
-                    text_result = text[start_code + offset : end_code]
+                    first_line = text_result.split("\n")[0].strip()
+                    if "{" not in first_line and len(first_line) < 10:
+                        text_result = "\n".join(text_result.split("\n")[1:])
             else:
                 if remove_first_line:
-                    text_result = ""  # if code is incomplete, return empty string
-                    # text_result = text[start_code:]
-                    # text_result = "\n".join(text_result.split("\n")[1:])
+                    text_result = text[start_code + offset :]
+                    first_line = text_result.split("\n")[0].strip()
+                    if "{" not in first_line and len(first_line) < 10:
+                        text_result = "\n".join(text_result.split("\n")[1:])
                 else:
                     text_result = text[start_code + offset :]
         else:
             text_result = text[start_code + offset :]
 
     return text_result.strip()
+
+
+def check_reasoning(text):
+    if len(text.split("</think>")) > 1:
+        return text.split("</think>")[1].strip()
+    else:
+        return text

@@ -1,5 +1,6 @@
 from .renderer_circuit_kicad import RendererCircuitKicad
 from .renderer_circuit_lcapy import RendererCircuitLcapy
+from .renderer_circuit_spice import RendererCircuitSpice
 from .renderer_hdl_verilog import RendererHdlVerilog
 from .renderer_hdl_vhdl import RendererHdlVhdl
 from .renderer_hdl_yosys import RendererHdlYosys
@@ -13,6 +14,7 @@ from .renderer_quantum_quirk import RendererQuantumQuirk
 __all__ = [
     "RendererCircuitKicad",
     "RendererCircuitLcapy",
+    "RendererCircuitSpice",
     "RendererHdlVerilog",
     "RendererHdlVhdl",
     "RendererHdlYosys",

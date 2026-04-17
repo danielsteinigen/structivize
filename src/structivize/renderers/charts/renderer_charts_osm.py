@@ -1,5 +1,5 @@
-import osmnx as ox
 import matplotlib.pyplot as plt
+import osmnx as ox
 
 from ...renderer import Renderer
 
@@ -14,7 +14,7 @@ class RendererChartsOsm(Renderer):
     def preprocess_code(self) -> str:
         self._clean_code_lines("<")
 
-    def _render_osmnx(self):        
+    def _render_osmnx(self):
         gdf = ox.features_from_xml(self._filepath_code)
         ax = gdf.plot()
         ax.set_axis_off()

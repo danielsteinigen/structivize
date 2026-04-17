@@ -9,12 +9,12 @@ from src.structivize.renderers.electronics import *
 from src.structivize.renderers.modeling import *
 
 RENDERER_REGISTRY = [
-    {
-        "renderer_cls": RendererBioCt,
-        "domain": "biology",
-        "renderer_name": "bio_ct",
-        "sample_filename": "sample_bio_ct.ct",
-    },
+    # {
+    #     "renderer_cls": RendererBioCt,
+    #     "domain": "biology",
+    #     "renderer_name": "bio_ct",
+    #     "sample_filename": "sample_bio_ct.ct",
+    # },
     {
         "renderer_cls": RendererBioFasta,
         "domain": "biology",
@@ -45,12 +45,12 @@ RENDERER_REGISTRY = [
         "renderer_name": "bio_sbml",
         "sample_filename": "sample_bio_sbml.xml",
     },
-    {
-        "renderer_cls": RendererBioScadnano,
-        "domain": "biology",
-        "renderer_name": "bio_scadnano",
-        "sample_filename": "sample_bio_scadnano.json",
-    },
+    # {
+    #     "renderer_cls": RendererBioScadnano,
+    #     "domain": "biology",
+    #     "renderer_name": "bio_scadnano",
+    #     "sample_filename": "sample_bio_scadnano.json",
+    # },
     {
         "renderer_cls": RendererBioVienna,
         "domain": "biology",
@@ -80,6 +80,12 @@ RENDERER_REGISTRY = [
         "domain": "charts",
         "renderer_name": "charts_vega",
         "sample_filename": "sample_charts_vega.json",
+    },
+    {
+        "renderer_cls": RendererChartsGeojson,
+        "domain": "charts",
+        "renderer_name": "charts_geojson",
+        "sample_filename": "sample_charts_geojson.json",
     },
     {
         "renderer_cls": RendererChemCml,
@@ -143,19 +149,19 @@ RENDERER_REGISTRY = [
     },
     {
         "renderer_cls": RendererMusicAbc,
-        "domain": "music",
+        "domain": "culture",
         "renderer_name": "music_abc",
         "sample_filename": "sample_music_abc.abc",
     },
     {
         "renderer_cls": RendererMusicLy,
-        "domain": "music",
+        "domain": "culture",
         "renderer_name": "music_lilypond",
         "sample_filename": "sample_music_lilypond.ly",
     },
     {
         "renderer_cls": RendererMusicXml,
-        "domain": "music",
+        "domain": "culture",
         "renderer_name": "music_musicxml",
         "sample_filename": "sample_music_musicxml.xml",
     },
@@ -187,7 +193,7 @@ RENDERER_REGISTRY = [
         "renderer_cls": RendererGraphGml,
         "domain": "datastructure",
         "renderer_name": "graph_gml",
-        "sample_filename": "sample_graph_gml.xml",
+        "sample_filename": "sample_graph_gml.gml",
     },
     {
         "renderer_cls": RendererGraphMl,
@@ -211,7 +217,7 @@ RENDERER_REGISTRY = [
         "renderer_cls": RendererKgXml,
         "domain": "datastructure",
         "renderer_name": "graph_kg",
-        "sample_filename": "sample_kg_owl_xml.xml",
+        "sample_filename": "sample_kg_owl_xml.owl",
     },
     {
         "renderer_cls": RendererKgXml,
@@ -225,36 +231,36 @@ RENDERER_REGISTRY = [
         "renderer_name": "draw_ditaa",
         "sample_filename": "sample_draw_ditaa.txt",
     },
-    {
-        "renderer_cls": RendererAsymptote,
-        "domain": "drawing",
-        "renderer_name": "draw_asymptote",
-        "sample_filename": "sample_draw_asymptote.asy",
-    },
+    # {
+    #     "renderer_cls": RendererAsymptote,
+    #     "domain": "drawing",
+    #     "renderer_name": "draw_asymptote",
+    #     "sample_filename": "sample_draw_asymptote.asy",
+    # },
     {
         "renderer_cls": RendererTikzCircuit,
         "domain": "drawing",
         "renderer_name": "tikz",
         "sample_filename": "sample_tikz_circuit.tikz",
     },
-    {
-        "renderer_cls": RendererTikzPidCircuit,
-        "domain": "drawing",
-        "renderer_name": "tikz",
-        "sample_filename": "sample_tikz_pid.tikz",
-    },
-    {
-        "renderer_cls": RendererTikzChemplants,
-        "domain": "drawing",
-        "renderer_name": "tikz",
-        "sample_filename": "sample_tikz_chemplants.tikz",
-    },
-    {
-        "renderer_cls": RendererTikzPlc,
-        "domain": "drawing",
-        "renderer_name": "tikz",
-        "sample_filename": "sample_tikz_plc.tikz",
-    },
+    # {
+    #     "renderer_cls": RendererTikzPidCircuit,
+    #     "domain": "drawing",
+    #     "renderer_name": "tikz",
+    #     "sample_filename": "sample_tikz_pid.tikz",
+    # },
+    # {
+    #     "renderer_cls": RendererTikzChemplants,
+    #     "domain": "drawing",
+    #     "renderer_name": "tikz",
+    #     "sample_filename": "sample_tikz_chemplants.tikz",
+    # },
+    # {
+    #     "renderer_cls": RendererTikzPlc,
+    #     "domain": "drawing",
+    #     "renderer_name": "tikz",
+    #     "sample_filename": "sample_tikz_plc.tikz",
+    # },
     {
         "renderer_cls": RendererCircuitKicad,
         "domain": "electronics",
@@ -266,6 +272,12 @@ RENDERER_REGISTRY = [
         "domain": "electronics",
         "renderer_name": "circuit_lcapy",
         "sample_filename": "sample_circuit_lcapy.net",
+    },
+    {
+        "renderer_cls": RendererCircuitSpice,
+        "domain": "electronics",
+        "renderer_name": "circuit_spice",
+        "sample_filename": "sample_circuit_spice.net",
     },
     {
         "renderer_cls": RendererHdlVerilog,
@@ -297,12 +309,12 @@ RENDERER_REGISTRY = [
         "renderer_name": "logic",
         "sample_filename": "sample_logic_symb.txt",
     },
-    {
-        "renderer_cls": RendererPlcIl,
-        "domain": "electronics",
-        "renderer_name": "plc_il",
-        "sample_filename": "sample_plc_il.txt",
-    },
+    # {
+    #     "renderer_cls": RendererPlcIl,
+    #     "domain": "electronics",
+    #     "renderer_name": "plc_il",
+    #     "sample_filename": "sample_plc_il.txt",
+    # },
     {
         "renderer_cls": RendererQuantumCirq,
         "domain": "electronics",
