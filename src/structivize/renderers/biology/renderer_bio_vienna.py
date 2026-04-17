@@ -15,8 +15,27 @@ from ...renderer import Renderer, StatisticResponse
 @Renderer.register("bio_vienna")
 class RendererBioVienna(Renderer):
     DEFAULT_TOOL_CONFIGS = {
-        "varna": {"algorithm": "radiate", "show_labels": "False", "draw_backbone": "True", "theme": "default", "color_backbone": "", "color_base_pair": "", "color_base_inner": "", "color_base_outer": "", "color_base_name": "", "color_base_number": "" },
-        "forgi": { "backbone_color": "#000000", "backbone_width": 2, "bp_color": "#FF0000", "bp_width": 1, "label_color": "#000000", "label_weight": "normal", "label_size": 10 },
+        "varna": {
+            "algorithm": "radiate",
+            "show_labels": "False",
+            "draw_backbone": "True",
+            "theme": "default",
+            "color_backbone": "",
+            "color_base_pair": "",
+            "color_base_inner": "",
+            "color_base_outer": "",
+            "color_base_name": "",
+            "color_base_number": "",
+        },
+        "forgi": {
+            "backbone_color": "#000000",
+            "backbone_width": 2,
+            "bp_color": "#FF0000",
+            "bp_width": 1,
+            "label_color": "#000000",
+            "label_weight": "normal",
+            "label_size": 10,
+        },
         "r2dt": {},
     }
 
@@ -96,7 +115,7 @@ class RendererBioVienna(Renderer):
                 "-backbone",
                 self.tool_config["color_backbone"],
             ]
-        )  # 
+        )  #
         self._png_save(self.filepath_image)
         # os.system(f"java -cp {self._tool_path}/VARNAv3-93.jar fr.orsay.lri.varna.applications.VARNAcmd -i {self._filepath_code} -o {self.filepath_image}.png -titleSize 0 -resolution '2.0' -zoom 1.0 -border '20x30' -algorithm radiate")
         # TODO: split fasta into sequence and struvture and render pdf
@@ -107,32 +126,34 @@ class RendererBioVienna(Renderer):
     def _render_forgi(self):
         # https://viennarna.github.io/forgi/graph_tutorial.html
         cg = forgi.load_rna(self._filepath_code, allow_many=False)
-        
+
         bb_kwargs = {
             "color": self.tool_config["backbone_color"],
             "linewidth": self.tool_config["backbone_width"],
             "linestyle": self.tool_config.get("backbone_style", "-"),
-            "alpha": self.tool_config.get("alpha", 1.0)
+            "alpha": self.tool_config.get("alpha", 1.0),
         }
-        
+
         bp_kwargs = {
             "color": self.tool_config["bp_color"],
             "linewidth": self.tool_config["bp_width"],
             "linestyle": self.tool_config.get("bp_style", "-"),
-            "alpha": self.tool_config.get("alpha", 1.0)
+            "alpha": self.tool_config.get("alpha", 1.0),
         }
-        
+
         txt_kwargs = {
             "color": self.tool_config["label_color"],
             "fontweight": self.tool_config["label_weight"],
-            "fontsize": self.tool_config["label_size"]
+            "fontsize": self.tool_config["label_size"],
         }
-        fvm.plot_rna(cg, 
-            offset=(0,0),
+        fvm.plot_rna(
+            cg,
+            offset=(0, 0),
             backbone_kwargs=bb_kwargs,
             basepair_kwargs=bp_kwargs,
             text_kwargs=txt_kwargs,
-            lighten=self.tool_config.get("lighten", 0.7))
+            lighten=self.tool_config.get("lighten", 0.7),
+        )
         # fvm.plot_rna(cg, text_kwargs={"fontweight": "black"}, lighten=0.7, backbone_kwargs={"linewidth": 2})
         plt.savefig(f"{self.filepath_image}.png")
         plt.close()

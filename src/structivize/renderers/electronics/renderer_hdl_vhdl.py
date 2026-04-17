@@ -69,7 +69,7 @@ class RendererHdlVhdl(RendererHdlYosys):
         temp_dir = f"{self.filepath_image}_temp"
         os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
             command_1 = [
                 "yosys",
                 "-m",
@@ -143,8 +143,17 @@ class RendererHdlVhdl(RendererHdlYosys):
         temp_dir = f"{self.filepath_image}_temp"
         os.makedirs(temp_dir, exist_ok=True)
         for std in ["08", "19", "93", "87"]:
-            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard" ,"-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
-            command_1 = ["ghdl", "--synth", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", "--out=dot", entity_name]
+            command_0 = ["ghdl", "-a", f"--std={std}", "--ieee=standard", "-fsynopsys", f"--workdir={temp_dir}", self._filepath_code]
+            command_1 = [
+                "ghdl",
+                "--synth",
+                f"--std={std}",
+                "--ieee=standard",
+                "-fsynopsys",
+                f"--workdir={temp_dir}",
+                "--out=dot",
+                entity_name,
+            ]
             self._execute_process(commands=command_0)
             _, out, _ = self._execute_process(commands=command_1)
             # save_text(filename=f"{self.filepath_image}.dot", data=out)

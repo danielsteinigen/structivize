@@ -1,5 +1,6 @@
-import plotly.io as pio
 import json
+
+import plotly.io as pio
 
 from ...renderer import Renderer, StatisticResponse
 
@@ -23,12 +24,10 @@ class RendererChartsPlotly(Renderer):
                 code.setdefault("layout", {})["margin"] = {"l": 10, "r": 10, "t": 40, "b": 10}
                 self._code = json.dumps(code, indent=4, ensure_ascii=False)
 
-        
     def _render_plotly(self):
         fig = pio.from_json(self._code)
         fig.write_image(f"{self.filepath_image}.svg")
         self._svg_save(self.filepath_image)
-
 
     def statistics(self) -> StatisticResponse:
         node_types = {}
@@ -50,6 +49,6 @@ class RendererChartsPlotly(Renderer):
             if all("lines" in item.get("mode", "") for item in data):
                 node_types["series"] = len(data)
         elif data and len(data) == 1 and data[0].get("type", "").lower() == "treemap":
-            node_types["fields"] = len(data[0].get("labels", [])) # nodes (root, leaf)
+            node_types["fields"] = len(data[0].get("labels", []))  # nodes (root, leaf)
 
-        return StatisticResponse(node_types = node_types if node_types else None)
+        return StatisticResponse(node_types=node_types if node_types else None)

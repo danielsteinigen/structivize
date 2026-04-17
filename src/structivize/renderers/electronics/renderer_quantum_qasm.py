@@ -3,9 +3,9 @@ from collections import defaultdict
 
 import qiskit.qasm2
 import qiskit.qasm3
-from matplotlib import pyplot as plt
 from cirq.contrib.qasm_import import circuit_from_qasm
 from cirq.contrib.qcircuit import circuit_to_latex_using_qcircuit
+from matplotlib import pyplot as plt
 
 from ...renderer import Renderer, StatisticResponse
 from .renderer_quantum_qcircuit import RendererQuantumQcircuit
@@ -33,12 +33,12 @@ class RendererQuantumQasm2(RendererQuantumQcircuit):
     def _render_qiskit(self):
         qc = qiskit.qasm2.loads(self._code)
         qc.draw(
-            output="mpl", 
+            output="mpl",
             style=self.tool_config["style"],
             # plot_barriers=True,
             justify=self.tool_config["justify"],
             initial_state=self.tool_config["initial_state"],
-            filename=f"{self.filepath_image}.png"
+            filename=f"{self.filepath_image}.png",
         )
         # fig = qc.draw(output="mpl")
         # fig.savefig(f"{self.filepath_image}.png", dpi=300, bbox_inches="tight")

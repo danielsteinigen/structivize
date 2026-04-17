@@ -28,17 +28,11 @@ class RendererModelPlantuml(Renderer):
         self._code = "\n".join(lines)
 
     def _render_plantuml(self):
-        cmd = [
-            "java",
-            "-jar",
-            f"{self._tool_path}/plantuml-mit-1.2025.2.jar",
-            "-failfast",
-            "-tsvg"
-        ]
+        cmd = ["java", "-jar", f"{self._tool_path}/plantuml-mit-1.2025.2.jar", "-failfast", "-tsvg"]
         theme = self.tool_config.get("theme", "_none_")
         if theme != "_none_":
             cmd.extend(["-theme", theme])
-        
+
         cmd.extend(["-o", os.path.dirname(os.path.abspath(self.filepath_image)), self._filepath_code])
         status, out, err = self._execute_process(commands=cmd)
 
@@ -52,9 +46,9 @@ class RendererModelPlantuml(Renderer):
                 content = f.read()
 
             bg_rect = f'<rect id="bg-canvas" width="100%" height="100%" fill="{bg_color}" x="0" y="0"/>'
-            
+
             if 'id="bg-canvas"' not in content:
-                content = re.sub(r'(<svg[^>]*>)', lambda m: f"{m.group(1)}\n{bg_rect}", content, count=1)
+                content = re.sub(r"(<svg[^>]*>)", lambda m: f"{m.group(1)}\n{bg_rect}", content, count=1)
 
             css_rules = f"""
             <style>
@@ -65,7 +59,7 @@ class RendererModelPlantuml(Renderer):
                 }}
             </style>
             """
-            
+
             if "</svg>" in content and "style>" not in content:
                 content = content.replace("</svg>", f"{css_rules}\n</svg>")
             elif "</style>" in content:
@@ -75,7 +69,6 @@ class RendererModelPlantuml(Renderer):
                 f.write(content)
 
             self._svg_save(path=self.filepath_image, cropping=False)
-
 
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "class":

@@ -10,7 +10,14 @@ from .renderer_music import RendererMusic
 @Renderer.register("music_abc")
 class RendererMusicAbc(RendererMusic):
     DEFAULT_TOOL_CONFIGS = {
-        "lilypond": { "note_color": "#000000", "staff_color": "#000000", "time_color": "#000000", "note_shape": "default", "thickness": 1.0, "staff_size": 20 },
+        "lilypond": {
+            "note_color": "#000000",
+            "staff_color": "#000000",
+            "time_color": "#000000",
+            "note_shape": "default",
+            "thickness": 1.0,
+            "staff_size": 20,
+        },
         # "abcm2ps": {},
     }
     FILE_EXT = "abc"

@@ -5,7 +5,16 @@ from .renderer_hdl_yosys import RendererHdlYosys
 @Renderer.register("hdl_verilog")
 class RendererHdlVerilog(RendererHdlYosys):
     DEFAULT_TOOL_CONFIGS = {
-        "yosys": { "bg_color": "#FFFFFF", "line_color": "#000000", "dff_fill": "#eeaaff", "mux_fill": "#e6e6e6", "gate_fill": "#ffd474", "arith_fill": "#ffc1c1", "io_fill": "#87decd", "text_color": "#000000" },
+        "yosys": {
+            "bg_color": "#FFFFFF",
+            "line_color": "#000000",
+            "dff_fill": "#eeaaff",
+            "mux_fill": "#e6e6e6",
+            "gate_fill": "#ffd474",
+            "arith_fill": "#ffc1c1",
+            "io_fill": "#87decd",
+            "text_color": "#000000",
+        },
         "yosys_2": {},
         "yosys_all": {},
         "yosys_detail": {},

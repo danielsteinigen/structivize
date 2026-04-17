@@ -15,7 +15,7 @@ class RendererNnOnnx(Renderer):
         cmd = ["netron_export"]
         if "horizontal" in self.tool_config and self.tool_config["horizontal"]:
             cmd.extend(["--horizontal"])
-        
+
         cmd.extend(["--output", f"{self.filepath_image}.svg", self._filepath_code])
         self._execute_process(commands=cmd)
         self._svg_save(self.filepath_image)
@@ -30,4 +30,4 @@ class RendererNnOnnx(Renderer):
                 op_type = match.group(1)
                 op_types[op_type] += 1
 
-        return StatisticResponse(node_types=dict(op_types)) # "num_nodes": len(node_blocks) 
+        return StatisticResponse(node_types=dict(op_types))  # "num_nodes": len(node_blocks)

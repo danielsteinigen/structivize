@@ -13,9 +13,7 @@ from ...utils import extract_part, remove_files
 
 @Renderer.register("logic")
 class RendererLogic(Renderer):
-    DEFAULT_TOOL_CONFIGS = {
-        "schemdraw": { "bg_color": "white", "line_color": "black", "unit": 3, "out_label": "$U$" }
-    }
+    DEFAULT_TOOL_CONFIGS = {"schemdraw": {"bg_color": "white", "line_color": "black", "unit": 3, "out_label": "$U$"}}
 
     def preprocess_code(self) -> str:
         self._code = self._code.strip()
@@ -53,7 +51,7 @@ class RendererLogic(Renderer):
                 ls=self.tool_config.get("line_style", "-"),  # '-', ':', '--', '-.'
                 fill=self.tool_config.get("fill_color", None),
                 bgcolor=self.tool_config.get("bg_color", "white"),
-                margin = 0.4
+                margin=0.4,
             )
             with schemdraw.Drawing(file=f"{self.filepath_image}.svg", show=False):
                 logicparse(self._code, outlabel=self.tool_config.get("out_label", "$Y$"))
