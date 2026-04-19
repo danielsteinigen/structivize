@@ -2,9 +2,19 @@
 
 A modular Python rendering toolkit for generating structured visualizations from code in specific formal representation languages (FRL), comprising several tools in multiple domains.
 
-# Installation
+## Features
+- 🧩 Multiple domain renderers (biology, chemistry, electronics, business, and more)
+- 🌐 Structured diagrams from domain-specific code in 40+ formal representation languages (FRLs)
+- 🧰 Large toolset with 50+ rendering backends and utilities
+- 🛠️ Pluggable tools per renderer with configurable settings
+- 📊 Node/component statistics per rendered diagram
+- 🖼️ Output formats: PNG, SVG, and PDF
+- 🚀 CLI for single-file rendering and quick experimentation
+- 🧪 Python API for programmatic rendering and integration
 
-## Installation with Setup Script
+## Installation
+
+### Installation with Setup Script
 ℹ️ **Note: Please review the setup script before running** 
 
 This script will install system packages, configure tools, and modify your environment. It's recommended to examine setup scripts before executing them, particularly when working in sensitive or production setups. Use responsibly and adjust commands as needed for your system.
@@ -13,15 +23,15 @@ This script will install system packages, configure tools, and modify your envir
 chmod +x setup.sh && ./setup.sh
 ```
 
-## Manual installation
-### Create virtual Python environment e.g. using uv
+### Manual installation
+#### Create virtual Python environment e.g. using uv
 ```
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv venv --python 3.11
 source .venv/bin/activate
 ```
 
-### Install NVM and Node.js (v22.14.0)
+#### Install NVM and Node.js (v22.14.0)
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
@@ -29,7 +39,7 @@ source "$NVM_DIR/nvm.sh"
 nvm install 22
 ```
 
-### Run make script
+#### Run make script
 ℹ️ **Note: Please review the Makefile before running** 
 
 This script will install system packages, configure tools, and modify your environment. It's recommended to examine setup scripts before executing them, particularly when working in sensitive or production setups. Use responsibly and adjust commands as needed for your system.
@@ -38,7 +48,7 @@ This script will install system packages, configure tools, and modify your envir
 make setup
 ```
 
-## Install structivize package only (not recommended)
+### Install structivize package only (not recommended)
 
 This will install the package with all additional Python libraries. Please note that many renderers require additional JavaScript or CLI-Tools, that are only installed when executing the Makefile (see above).
 
@@ -51,21 +61,21 @@ Install from local repo:
 uv pip install -r requirements.txt
 ```
 
-## using docker
-### install docker
+### using docker
+#### install docker
 ```
 sudo apt-get install docker.io
 sudo usermod -aG docker ${USER}
 ```
-### build docker image
+#### build docker image
 ```bash
 docker build -t myproject:latest .
 docker run -it --rm -v $(pwd):/workspace myproject:latest
 ```
 
-# Usage
+## Usage
 
-## CLI
+### CLI
 Render a single file with a specific renderer:
 ```bash
 structivize --renderer bio_fasta --code examples/biology/bio_fasta/sample_bio_fasta.txt
@@ -89,7 +99,7 @@ structivize --renderer bio_fasta --code examples/biology/bio_fasta/sample_bio_fa
   --tool-config logomaker.show_spines=true
 ```
 
-## Python API
+### Python API
 Import a renderer directly:
 ```python
 from structivize.renderers.biology.renderer_bio_fasta import RendererBioFasta
@@ -115,7 +125,7 @@ print(result.success, result.path_image)
 ```
 
 
-# Licensing and Third-Party Tools
+## Licensing and Third-Party Tools
 
 This repository and toolkit are licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
