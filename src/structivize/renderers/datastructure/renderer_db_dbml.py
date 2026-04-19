@@ -1,4 +1,4 @@
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("db_dbml")
@@ -22,4 +22,9 @@ class RendererDbDbml(Renderer):
     def statistics(self) -> StatisticResponse:
         table_count = self._code.lower().count("table")
         ref_count = self._code.lower().count("ref:")
-        return StatisticResponse(node_types={"tables": table_count, "references": ref_count})
+        return StatisticResponse(
+            node_types=[
+                NodeType(type="tables", count=table_count),
+                NodeType(type="references", count=ref_count),
+            ]
+        )

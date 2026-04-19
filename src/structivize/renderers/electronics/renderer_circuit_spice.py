@@ -1,7 +1,7 @@
 import re
 from collections import defaultdict
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from .utils.spice2yosys import convert_spice_to_yosys_json
 
 
@@ -110,4 +110,4 @@ class RendererCircuitSpice(Renderer):
                 if component_type in component_map:
                     component = component_map[component_type]
                     counts[component] += 1
-        return StatisticResponse(node_types=dict(counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])

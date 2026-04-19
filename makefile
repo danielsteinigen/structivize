@@ -128,8 +128,7 @@ python-package:
 	@echo "🔧 Installing local Python package via uv"
 	uv venv --python 3.11
 	uv pip install --python .venv/bin/python --upgrade pip
-	uv pip install --python .venv/bin/python -r requirements.txt
-# 	uv pip install --python .venv/bin/python structivize
+	uv pip install --python .venv/bin/python structivize[all]
 	plotly_get_chrome
 	playwright install	
 

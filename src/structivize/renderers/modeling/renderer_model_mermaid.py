@@ -1,7 +1,7 @@
 import re
 from collections import Counter, defaultdict
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("model_mermaid")
@@ -32,11 +32,14 @@ class RendererModelMermaid(Renderer):
     def statistics(self) -> StatisticResponse:
         if self._category and self._category == "gantt":
             return StatisticResponse(
-                node_types={"sections": self._code.count("section"), "time bars": self._code.count(":")}
+                node_types=[
+                    NodeType(type="sections", count=self._code.count("section")),
+                    NodeType(type="time bars", count=self._code.count(":")),
+                ]
             )  # "tasks": code.count(":")
 
         elif self._category and self._category == "mind":
-            return StatisticResponse(node_types={"nodes": len(self._code.splitlines()) - 2})
+            return StatisticResponse(node_types=[NodeType(type="nodes", count=len(self._code.splitlines()) - 2)])
 
         elif self._category and self._category in ["bpmn", "activity"]:
             counts = defaultdict(int)
@@ -44,7 +47,7 @@ class RendererModelMermaid(Renderer):
             counts["nodes"] = len(re.findall(r"\[[^\[\]]+\]", self._code))
             # Count decision (curly bracket) nodes
             counts["decisions"] = len(re.findall(r"\{[^\{\}]+\}", self._code))
-            return StatisticResponse(node_types=dict(counts))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])
 
         elif self._category and self._category == "sequence":
             lines = self._code.strip().splitlines()
@@ -60,7 +63,7 @@ class RendererModelMermaid(Renderer):
                     stats["activations"] += 1
                 elif line.startswith("deactivate "):
                     stats["deactivations"] += 1
-            return StatisticResponse(node_types=dict(stats))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in stats.items()])
 
         elif self._category and self._category == "state":
             lines = self._code.strip().splitlines()
@@ -84,7 +87,7 @@ class RendererModelMermaid(Renderer):
                         stats["labeled transitions"] += 1
 
             stats["states"] = len(states)
-            return StatisticResponse(node_types=dict(stats))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in stats.items()])
 
         else:
             return StatisticResponse()

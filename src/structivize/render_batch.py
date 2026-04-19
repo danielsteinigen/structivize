@@ -7,17 +7,17 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 from tqdm import tqdm
 
-from src.structivize.renderer import Renderer
-from src.structivize.renderers.biology import *
-from src.structivize.renderers.business import *
-from src.structivize.renderers.charts import *
-from src.structivize.renderers.chemistry import *
-from src.structivize.renderers.culture import *
-from src.structivize.renderers.datastructure import *
-from src.structivize.renderers.drawing import *
-from src.structivize.renderers.electronics import *
-from src.structivize.renderers.modeling import *
-from src.structivize.utils import check_dirs, load_json, load_jsonl, save_json, save_jsonl, save_text
+from structivize.renderer import Renderer
+from structivize.renderers.biology import *
+from structivize.renderers.business import *
+from structivize.renderers.charts import *
+from structivize.renderers.chemistry import *
+from structivize.renderers.culture import *
+from structivize.renderers.datastructure import *
+from structivize.renderers.drawing import *
+from structivize.renderers.electronics import *
+from structivize.renderers.modeling import *
+from structivize.utils import load_json, load_jsonl, save_json, save_text
 
 
 def build_sample(sample_process):
@@ -61,22 +61,6 @@ def build_sample(sample_process):
         dataset_sample["debug_message"] = result.debug_message
         dataset_sample["size"] = result.size.model_dump()
         dataset_sample["statistics"] = result.statistics.model_dump()
-        if lang_key == "fasta":
-            result_2 = renderer.render(tool="logomaker")
-            dataset_sample["path_img_2"] = result_2.path_image
-            dataset_sample["tool_2"] = result_2.tool
-        elif lang_key == "smiles":
-            result_2 = renderer.render(tool="obabel")
-            dataset_sample["path_img_2"] = result_2.path_image
-            dataset_sample["tool_2"] = result_2.tool
-        elif lang_key == "vienna":
-            result_2 = renderer.render(tool="forgi")
-            dataset_sample["path_img_2"] = result_2.path_image
-            dataset_sample["tool_2"] = result_2.tool
-        elif lang_key == "nn_keras":
-            result_2 = renderer.render(tool="keras")
-            dataset_sample["path_img_2"] = result_2.path_image
-            dataset_sample["tool_2"] = result_2.tool
         del renderer
 
     except Exception as e:
@@ -98,10 +82,8 @@ if __name__ == "__main__":
     ]
     save_dirs = [
     ]
-    ids_pre = [
-    ]
 
-    for data_file, save_dir, id_pre in zip(data_files, save_dirs, ids_pre):
+    for data_file, save_dir in zip(data_files, save_dirs):
         start = time.time()
         data = load_jsonl(filename=data_file)
         save_dir = save_dir
@@ -123,7 +105,7 @@ if __name__ == "__main__":
             idx += 1
             samples_prepared.append(
                 {
-                    "id": f"{id_pre}_{sample['input']['category_key']}_{idx}",
+                    "id": f"{sample['input']['category_key']}_{idx}",
                     "sample": sample,
                     "save_dir": save_dir,
                     "renderer": code_categories[sample["input"]["category_key"]]["language"][sample["input"]["lang_key"]]["renderer"],

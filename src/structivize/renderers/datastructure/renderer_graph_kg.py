@@ -7,7 +7,7 @@ import rdflib
 from graphviz import Digraph
 from rdflib.namespace import OWL, RDF, RDFS
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 class RendererKg(Renderer):
@@ -257,7 +257,7 @@ class RendererKgXml(RendererKg):
         # nodes_nx = G.number_of_nodes()
         # return {"nodes": len(nodes), "resources": len(resources), "triples": len(g)}
 
-        return StatisticResponse(node_types={"nodes": len(resources)})
+        return StatisticResponse(node_types=[NodeType(type="nodes", count=len(resources))])
 
 
 @Renderer.register("kg_turtle")

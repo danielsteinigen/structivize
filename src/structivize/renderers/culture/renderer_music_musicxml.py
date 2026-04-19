@@ -17,19 +17,19 @@ class RendererMusicXml(RendererMusic):
         if not self._code.startswith("<?xml"):
             self._code = f'<?xml version="1.0" encoding="UTF-8"?>\n{self._code}'
 
-        code = ""
-        for line in self._code.split("\n"):
-            line_str = line.strip()
-            if (
-                not line_str.startswith("<part-name")
-                and not line_str.startswith("<words")
-                and not line_str.startswith("<creator")
-                and not line_str.startswith("<work-title")
-                and not line_str.startswith("<movement-title")
-                and not line_str.startswith("<rights")
-            ):
-                code += f"{line}\n"
-        self._code = code.strip()
+        # code = ""
+        # for line in self._code.split("\n"):
+        #     line_str = line.strip()
+        #     if (
+        #         not line_str.startswith("<part-name")
+        #         and not line_str.startswith("<words")
+        #         and not line_str.startswith("<creator")
+        #         and not line_str.startswith("<work-title")
+        #         and not line_str.startswith("<movement-title")
+        #         and not line_str.startswith("<rights")
+        #     ):
+        #         code += f"{line}\n"
+        # self._code = code.strip()
 
     def _render_lilypond(self):
         self._conv_xml2ly(self._filepath_code, self.filepath_image)

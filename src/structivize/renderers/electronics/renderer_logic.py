@@ -7,7 +7,7 @@ from schemdraw.parsing.buchheim import buchheim
 from schemdraw.parsing.logic_parser import parse_string, to_tree
 
 from ...image_utils import images_are_similar
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from ...utils import extract_part, remove_files
 
 
@@ -38,8 +38,8 @@ class RendererLogic(Renderer):
         return self._is_single_line()
 
     def _render_schemdraw(self):
-        stat = self.statistics().node_types
-        if not (stat["and"] == 1 and all(v == 0 for k, v in stat.items() if k != "and")):
+        stat = {item.type: item.count for item in self.statistics().node_types}
+        if not (stat.get("and") == 1 and all(v == 0 for k, v in stat.items() if k != "and")):
             # schemdraw.theme(theme='solarizedd') # default, solarizedd, solarizedl, onedork, gruvboxl, grade3, chesterish
 
             schemdraw.config(
@@ -72,4 +72,4 @@ class RendererLogic(Renderer):
         dtree = buchheim(tree)
         elmdefs = {"and": 0, "or": 0, "xor": 0, "nand": 0, "xnor": 0, "nor": 0, "not": 0}
         self._countit(dtree, elmdefs)
-        return StatisticResponse(node_types=elmdefs)
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in elmdefs.items()])

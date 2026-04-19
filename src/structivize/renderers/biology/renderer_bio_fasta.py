@@ -5,7 +5,7 @@ import logomaker
 import matplotlib.pyplot as plt
 from Bio import SeqIO, motifs
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 # Sequence Logo
@@ -160,4 +160,4 @@ class RendererBioFasta(Renderer):
         for char in sequence:
             if char.isalpha():
                 counts[char.upper()] += 1
-        return StatisticResponse(node_types=dict(counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])

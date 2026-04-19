@@ -1,7 +1,7 @@
 import re
 from collections import Counter
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("nn_onnx")
@@ -30,4 +30,6 @@ class RendererNnOnnx(Renderer):
                 op_type = match.group(1)
                 op_types[op_type] += 1
 
-        return StatisticResponse(node_types=dict(op_types))  # "num_nodes": len(node_blocks)
+        return StatisticResponse(
+            node_types=[NodeType(type=name, count=count) for name, count in op_types.items()]
+        )  # "num_nodes": len(node_blocks)

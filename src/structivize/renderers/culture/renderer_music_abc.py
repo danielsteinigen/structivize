@@ -2,7 +2,7 @@ import os
 import re
 from collections import defaultdict
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from ...utils import remove_files
 from .renderer_music import RendererMusic
 
@@ -24,12 +24,12 @@ class RendererMusicAbc(RendererMusic):
 
     def preprocess_code(self):
         self._clean_code_lines(":")
-        code = ""
-        for line in self._code.split("\n"):
-            line_str = line.strip()
-            if not line_str.startswith("T:") and not line_str.startswith("C:") and not line_str.startswith("W:"):
-                code += f"{line}\n"
-        self._code = code.strip()
+        # code = ""
+        # for line in self._code.split("\n"):
+        #     line_str = line.strip()
+        #     if not line_str.startswith("T:") and not line_str.startswith("C:") and not line_str.startswith("W:"):
+        #         code += f"{line}\n"
+        # self._code = code.strip()
 
     def verify_code(self):
         return self._code.startswith("X:") or self._code.startswith("X :")
@@ -61,4 +61,4 @@ class RendererMusicAbc(RendererMusic):
             notes = re.findall(r"[A-Ga-g]", line)
             for note in notes:
                 counts[note.upper()] += 1
-        return StatisticResponse(node_types=dict(counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])

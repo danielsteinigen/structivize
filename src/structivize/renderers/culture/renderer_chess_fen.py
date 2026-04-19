@@ -3,7 +3,7 @@ from collections import defaultdict
 import chess
 import chess.svg
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("chess_fen")
@@ -50,4 +50,4 @@ class RendererChessFen(Renderer):
             if char.lower() in piece_map:
                 piece = piece_map[char.lower()]
                 piece_counts[piece] += 1
-        return StatisticResponse(node_types=dict(piece_counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in piece_counts.items()])

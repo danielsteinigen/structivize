@@ -4,7 +4,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, Descriptors, Draw, rdMolDescriptors
 from rdkit.Chem.Draw import rdMolDraw2D
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("chem_smiles")
@@ -118,4 +118,4 @@ class RendererChemSmiles(Renderer):
         renamed_counts = {f"{el} atoms": count for el, count in atom_counts.items()}
         renamed_counts["rings"] = rdMolDescriptors.CalcNumRings(mol)  # Number of rings 3
 
-        return StatisticResponse(node_types=dict(renamed_counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in renamed_counts.items()])

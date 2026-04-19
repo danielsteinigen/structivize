@@ -2,7 +2,7 @@ import os
 import re
 from collections import Counter, defaultdict
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from ...utils import remove_files
 
 
@@ -85,7 +85,7 @@ class RendererModelPlantuml(Renderer):
                     in_class_block = False
                 # elif in_class_block and re.match(r'^[+#-]?[A-Za-z_]+\s+[A-Za-z_<>]+', line):
                 #     counts['attributes'] += 1
-            return StatisticResponse(node_types=dict(counts))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])
 
         elif self._category and self._category == "component":
             counts = defaultdict(int)
@@ -95,7 +95,7 @@ class RendererModelPlantuml(Renderer):
                 if "[" in line and "]" in line and ">" not in line:
                     matches = re.findall(r"\[.*?\]", line)
                     counts["components"] += len(matches)
-            return StatisticResponse(node_types=dict(counts))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])
 
         elif self._category and self._category == "sequence":
             lines = self._code.strip().splitlines()
@@ -111,7 +111,7 @@ class RendererModelPlantuml(Renderer):
                     stats["activations"] += 1
                 elif line.startswith("deactivate "):
                     stats["deactivations"] += 1
-            return StatisticResponse(node_types=dict(stats))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in stats.items()])
 
         elif self._category and self._category == "state":
             lines = self._code.strip().splitlines()
@@ -135,10 +135,17 @@ class RendererModelPlantuml(Renderer):
                         stats["labeled transitions"] += 1
 
             stats["states"] = len(states)
-            return StatisticResponse(node_types=dict(stats))
+            return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in stats.items()])
 
         elif self._category and self._category == "mind":
-            return StatisticResponse(node_types={"nodes": sum(1 for line in self._code.splitlines() if line.strip().startswith("*")) - 1})
+            return StatisticResponse(
+                node_types=[
+                    NodeType(
+                        type="nodes",
+                        count=sum(1 for line in self._code.splitlines() if line.strip().startswith("*")) - 1,
+                    )
+                ]
+            )
         else:
             return StatisticResponse()
 

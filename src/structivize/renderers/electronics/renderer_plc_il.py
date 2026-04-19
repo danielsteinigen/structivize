@@ -153,5 +153,5 @@ class RendererPlcIl(Renderer):
         return True
 
     def _render_plc(self):
-        # TODO: implement rendering
+        raise NotImplementedError("PLC IL rendering is not implemented yet.")
 

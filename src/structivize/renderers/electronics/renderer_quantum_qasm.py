@@ -7,7 +7,7 @@ from cirq.contrib.qasm_import import circuit_from_qasm
 from cirq.contrib.qcircuit import circuit_to_latex_using_qcircuit
 from matplotlib import pyplot as plt
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from .renderer_quantum_qcircuit import RendererQuantumQcircuit
 
 
@@ -76,7 +76,7 @@ class RendererQuantumQasm2(RendererQuantumQcircuit):
                 if gate in gate_map:
                     gate_ = gate_map[gate]
                     counts[gate_] += 1
-        return StatisticResponse(node_types=dict(counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])
 
 
 @Renderer.register("quantum_qasm3")

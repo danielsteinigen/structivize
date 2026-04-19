@@ -8,7 +8,7 @@ import forgi
 import forgi.visual.mplotlib as fvm
 import matplotlib.pyplot as plt
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 # Vienna format generates RNA secondary structure diagrams
@@ -202,4 +202,4 @@ class RendererBioVienna(Renderer):
         for char in sequence:
             if char.isalpha():
                 counts[char.upper()] += 1
-        return StatisticResponse(node_types=dict(counts))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])

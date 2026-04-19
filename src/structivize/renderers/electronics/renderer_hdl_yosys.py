@@ -2,7 +2,7 @@ import json
 import re
 from collections import defaultdict
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from ...utils import load_text
 
 
@@ -238,7 +238,7 @@ class RendererHdlYosys(Renderer):
                             if gate in gate_map:
                                 gate_ = gate_map[gate]
                                 counts[gate_] = cnt
-                        return StatisticResponse(node_types=dict(counts))
+                        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in counts.items()])
                     except json.JSONDecodeError as e:
                         return StatisticResponse()
 

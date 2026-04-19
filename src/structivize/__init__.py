@@ -1,3 +1,3 @@
-from .renderers import biology, business, charts, chemistry, culture, datastructure, drawing, electronics, modeling
+from . import renderers
 
-__all__ = ["biology", "business", "charts", "chemistry", "culture", "datastructure", "drawing", "electronics", "modeling"]
+__all__ = ["renderers"]

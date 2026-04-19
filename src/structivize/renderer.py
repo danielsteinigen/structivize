@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import List, Literal, Optional, Union
 
 import matplotlib.pyplot as plt
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .image_utils import get_png_size, is_image_single_color, is_image_valid, resize_png_preserve_aspect
 from .utils import check_dirs, load_text, remove_files, save_text
@@ -21,9 +21,14 @@ class ImageSize(BaseModel):
     height: int
 
 
+class NodeType(BaseModel):
+    type: str
+    count: int
+
+
 class StatisticResponse(BaseModel):
-    node_types: dict = {}
-    edges: List[dict] = None
+    node_types: List[NodeType] = Field(default_factory=list)
+    edges: Optional[List[dict]] = None
 
 
 class RenderResponse(BaseModel):
@@ -82,7 +87,7 @@ class Renderer(ABC):
         code: str = None,
         code_path: str = None,
         output_base_path: str = None,
-        output_format: Literal["svg", "pdf", "png", "jpg"] = "png",
+        output_format: Literal["svg", "pdf", "png"] = "png",
         category: str = None,
         max_width: int = 1024,
         max_height: int = 1024,
@@ -112,10 +117,10 @@ class Renderer(ABC):
 
         self._category = category
         self.output_format = output_format
-        self._max_width = max_width  # 1024 # 2048
-        self._max_height = max_height  # 768 # 1536
-        self.__save_svg = True
-        self.__save_pdf = False
+        self._max_width = max_width
+        self._max_height = max_height
+        self.__save_svg = self.output_format == "svg"
+        self.__save_pdf = self.output_format == "pdf"
         self._image_transparent = False
 
         self.tools = list(self.DEFAULT_TOOL_CONFIGS.keys())
@@ -341,3 +346,4 @@ class Renderer(ABC):
                 lines.pop(0)
 
         self._code = "\n".join(lines)
+

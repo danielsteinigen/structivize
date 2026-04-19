@@ -4,7 +4,7 @@ from collections import defaultdict
 import keras
 from keras.utils import plot_model
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 from ...utils import load_json
 
 
@@ -70,4 +70,5 @@ class RendererNnKeras(Renderer):
                 counts[layer_type] += 1
         except Exception as e:
             return StatisticResponse()
-        return StatisticResponse(node_types={k: v for k, v in dict(counts).items() if "input" not in k.lower()})
+        filtered = {k: v for k, v in dict(counts).items() if "input" not in k.lower()}
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in filtered.items()])

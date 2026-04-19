@@ -6,7 +6,7 @@ import bpmn_python.bpmn_diagram_visualizer as visualizer
 import pm4py
 from graphviz import Source
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("biz_bpmn")
@@ -53,4 +53,4 @@ class RendererBizBpmn(Renderer):
             sequence_flows = process.findall("bpmn:sequenceFlow", ns)
             stats["flow lines"] = len(sequence_flows)
             stats["conditional flow lines"] = sum(1 for flow in sequence_flows if flow.find("bpmn:conditionExpression", ns) is not None)
-        return StatisticResponse(node_types=dict(stats))
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in stats.items()])

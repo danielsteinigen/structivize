@@ -2,7 +2,7 @@ import json
 
 import plotly.io as pio
 
-from ...renderer import Renderer, StatisticResponse
+from ...renderer import NodeType, Renderer, StatisticResponse
 
 
 @Renderer.register("charts_plotly")
@@ -51,4 +51,4 @@ class RendererChartsPlotly(Renderer):
         elif data and len(data) == 1 and data[0].get("type", "").lower() == "treemap":
             node_types["fields"] = len(data[0].get("labels", []))  # nodes (root, leaf)
 
-        return StatisticResponse(node_types=node_types if node_types else None)
+        return StatisticResponse(node_types=[NodeType(type=name, count=count) for name, count in node_types.items()])
