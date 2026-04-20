@@ -13,14 +13,12 @@ async def export_markmap(path: str, width: int, height: int):
         # await page.goto(Path(f"{path}.html").resolve())
         path_abs = os.path.abspath(path)
         await page.goto(f"file://{path_abs}.html")
-        await page.add_style_tag(
-            content="""
+        await page.add_style_tag(content="""
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 svg * {
     font-family: 'Roboto', sans-serif !important;
 }
-"""
-        )
+""")
 
         # Wait for the SVG to load
         await page.wait_for_selector("svg")
@@ -42,4 +40,3 @@ svg * {
         await page.screenshot(path=f"{path_abs}.png", clip=box)
 
         await browser.close()
-

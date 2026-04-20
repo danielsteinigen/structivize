@@ -128,17 +128,9 @@ python-package:
 	@echo "🔧 Installing local Python package via uv"
 	uv venv --python 3.11
 	uv pip install --python .venv/bin/python --upgrade pip
-	uv pip install --python .venv/bin/python structivize[all]
+	uv pip install --python .venv/bin/python -e ".[all]"
 	plotly_get_chrome
 	playwright install	
-
-	@echo "🔧 Installing BPMN Python"
-	cd $(TOOLS_DIR) && \
-	git clone https://github.com/soniaradon/bpmn-python.git && \
-	cd bpmn-python && \
-	sed -i 's/-SNAPSHOT//g' setup.py && \
-	sed -i 's/\.node\[/.nodes\[/' bpmn_python/bpmn_diagram_import.py && \
-	uv pip install --python ../../.venv/bin/python -e .
 
 clean:
 	rm -rf $(TOOLS_DIR)

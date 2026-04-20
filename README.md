@@ -53,7 +53,7 @@ make setup
 This will install the package with all additional Python libraries. Please note that many renderers require additional JavaScript or CLI-Tools, that are only installed when executing the Makefile (see above).
 
 ```bash
-uv pip install structivize[all]
+uv pip install -e ".[all]"
 ```
 
 Install from local repo:
@@ -63,15 +63,20 @@ uv pip install -r requirements.txt
 
 ### using docker
 #### install docker
+Official install docs: https://docs.docker.com/get-docker/
+
+Ubuntu/Debian quick install:
 ```
 sudo apt-get install docker.io
 sudo usermod -aG docker ${USER}
 ```
 #### build docker image
 ```bash
-docker build -t myproject:latest .
-docker run -it --rm -v $(pwd):/workspace myproject:latest
+docker build -t structivize:latest -f dockerfile .
+docker run -it --rm -v $(pwd):/workspace structivize:latest
 ```
+
+The image includes the system and rendering tool dependencies from the setup script and Makefile, so you do not need to run `setup.sh` or `make setup` inside the container.
 
 ## Usage
 

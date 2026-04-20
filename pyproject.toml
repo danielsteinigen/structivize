@@ -2,7 +2,7 @@
 name = "structivize"
 version = "0.1.0"
 description = "Rendering toolkit for generating structured visualizations from code in specific formal representation languages (FRL), comprising several tools in multiple domains."
-keywords = ["rendering", "structure", "visualization", "formal language", "code2image", "image", "diagram]
+keywords = ["rendering", "structure", "visualization", "formal language", "code2image", "image", "diagram"]
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [
@@ -10,7 +10,7 @@ authors = [
 ]
 requires-python = ">=3.11,<3.12"
 dependencies = [
-    "matplotlib>=3.10.3",
+    "matplotlib>=3.10.5",
     "pydantic>=2.11.3",
 ]
 

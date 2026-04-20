@@ -1,8 +1,6 @@
 import xml.etree.ElementTree as ET
 from collections import Counter
 
-import bpmn_python.bpmn_diagram_rep as diagram
-import bpmn_python.bpmn_diagram_visualizer as visualizer
 import pm4py
 from graphviz import Digraph, Source
 
@@ -13,7 +11,6 @@ from ...renderer import NodeType, Renderer, StatisticResponse
 class RendererBizBpmn(Renderer):
     DEFAULT_TOOL_CONFIGS = {
         "graphviz": {},
-        "bpmnpython": {},
         "pm4py": {},
     }
     FILE_EXT = "xml"
@@ -181,16 +178,6 @@ class RendererBizBpmn(Renderer):
 
         dot.render(self.filepath_image, format="png", cleanup=True)
         self._png_save(self.filepath_image)
-
-    def _render_bpmnpython(self):
-        bpmn_graph = diagram.BpmnDiagramGraph()
-        bpmn_graph.load_diagram_from_xml_file(self._filepath_code)
-
-        visualizer.bpmn_diagram_to_png(bpmn_graph, self.filepath_image)
-        visualizer.bpmn_diagram_to_dot_file(bpmn_graph, self.filepath_image)
-        self._png_save(self.filepath_image)
-        # src = Source.from_file(f"{self.filepath_image}.dot") # .dot file seems to be not saved correctly
-        # src.render(self.filepath_image, format="pdf", view=False)
 
     def _render_pm4py(self):
         bpmn = pm4py.read_bpmn(self._filepath_code)

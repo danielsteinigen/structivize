@@ -236,7 +236,9 @@ class Renderer(ABC):
                 remove_files(svg_path)
 
     def _png_save(self, path: str):
-        width, height = resize_png_preserve_aspect(f"{path}.png", self._max_width, self._max_height, keep_transparency=self._image_transparent)
+        width, height = resize_png_preserve_aspect(
+            f"{path}.png", self._max_width, self._max_height, keep_transparency=self._image_transparent
+        )
 
     def _validate_image(self, path_img):
         if not os.path.isfile(path_img):
@@ -346,4 +348,3 @@ class Renderer(ABC):
                 lines.pop(0)
 
         self._code = "\n".join(lines)
-

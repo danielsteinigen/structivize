@@ -69,7 +69,8 @@ def build_sample(sample_process):
         path_code = f"{save_dir}/code/{category_key}_{lang_key}/{id}.txt"
         save_text(filename=path_code, data=sample["code"])
         dataset_sample["path_code"] = path_code
-        if "renderer" in vars(): del renderer
+        if "renderer" in vars():
+            del renderer
 
     return dataset_sample, exception
 
@@ -78,10 +79,8 @@ if __name__ == "__main__":
     max_workers = multiprocessing.cpu_count()
     print(f"Max workers: {max_workers}")
 
-    data_files = [
-    ]
-    save_dirs = [
-    ]
+    data_files = []
+    save_dirs = []
 
     for data_file, save_dir in zip(data_files, save_dirs):
         start = time.time()
