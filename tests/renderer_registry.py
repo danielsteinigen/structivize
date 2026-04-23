@@ -76,6 +76,12 @@ RENDERER_REGISTRY = [
         "sample_filename": "sample_charts_plotly.json",
     },
     {
+        "renderer_cls": RendererChartsPlotly,
+        "domain": "charts",
+        "renderer_name": "charts_plotly",
+        "sample_filename": "sample_charts_plotly_table.json",
+    },
+    {
         "renderer_cls": RendererChartsVega,
         "domain": "charts",
         "renderer_name": "charts_vega",

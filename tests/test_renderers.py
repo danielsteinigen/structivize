@@ -10,8 +10,7 @@ def generate_renderer_tool_cases():
     for renderer_info in RENDERER_REGISTRY:
         renderer_cls = renderer_info["renderer_cls"]
 
-        renderer_instance = renderer_cls(code="")
-        for tool in renderer_instance.tools:
+        for tool in renderer_cls.DEFAULT_TOOL_CONFIGS.keys():
             cases.append((renderer_info, tool))
             ids.append(f"{renderer_cls.__name__}-{tool}")
 

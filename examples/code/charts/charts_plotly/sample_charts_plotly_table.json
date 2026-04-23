@@ -1,0 +1,121 @@
+{
+  "data": [
+    {
+      "type": "table",
+      "header": {
+        "values": [
+          "Route ID",
+          "Vehicle Type",
+          "Distance (km)",
+          "Fuel Consumed (L)",
+          "Fuel Efficiency (km/L)",
+          "Driver Experience (years)",
+          "Traffic Conditions"
+        ],
+        "align": "center",
+        "line": {
+          "width": 1,
+          "color": "black"
+        },
+        "fill": {
+          "color": "lightgrey"
+        },
+        "font": {
+          "family": "Arial",
+          "size": 12,
+          "color": "black"
+        }
+      },
+      "cells": {
+        "values": [
+          [
+            "R001",
+            "R002",
+            "R003",
+            "R004",
+            "R005",
+            "R006",
+            "R007"
+          ],
+          [
+            "Truck",
+            "Van",
+            "Truck",
+            "Car",
+            "Truck",
+            "Van",
+            "Car"
+          ],
+          [
+            150,
+            85,
+            220,
+            65,
+            180,
+            95,
+            75
+          ],
+          [
+            120,
+            51,
+            198,
+            39,
+            162,
+            67,
+            45
+          ],
+          [
+            1.25,
+            1.67,
+            1.11,
+            1.67,
+            1.11,
+            1.42,
+            1.67
+          ],
+          [
+            3,
+            1,
+            5,
+            2,
+            7,
+            1,
+            4
+          ],
+          [
+            "Heavy",
+            "Light",
+            "Heavy",
+            "Moderate",
+            "Heavy",
+            "Moderate",
+            "Light"
+          ]
+        ],
+        "align": "center",
+        "line": {
+          "color": "black",
+          "width": 1
+        },
+        "font": {
+          "family": "Arial",
+          "size": 11,
+          "color": [
+            "black"
+          ]
+        }
+      }
+    }
+  ],
+  "layout": {
+    "title": {
+      "text": "Transportation Route Fuel Efficiency Analysis"
+    },
+    "margin": {
+      "l": 50,
+      "r": 50,
+      "b": 50,
+      "t": 50
+    }
+  }
+}

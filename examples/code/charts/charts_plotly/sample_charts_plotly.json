@@ -1,0 +1,102 @@
+{
+  "data": [
+    {
+      "type": "scatterpolar",
+      "r": [
+        75,
+        60,
+        45,
+        80,
+        65
+      ],
+      "theta": [
+        "Carbon Footprint",
+        "Water Usage",
+        "Biodiversity Impact",
+        "Waste Generation",
+        "Energy Efficiency"
+      ],
+      "fill": "toself",
+      "name": "Manufacturing",
+      "line": {
+        "color": "rgb(255, 0, 0)",
+        "width": 2
+      },
+      "marker": {
+        "size": 8
+      }
+    },
+    {
+      "type": "scatterpolar",
+      "r": [
+        45,
+        80,
+        70,
+        50,
+        90
+      ],
+      "theta": [
+        "Carbon Footprint",
+        "Water Usage",
+        "Biodiversity Impact",
+        "Waste Generation",
+        "Energy Efficiency"
+      ],
+      "fill": "toself",
+      "name": "Agriculture",
+      "line": {
+        "color": "rgb(0, 255, 0)",
+        "width": 2
+      },
+      "marker": {
+        "size": 8
+      }
+    },
+    {
+      "type": "scatterpolar",
+      "r": [
+        60,
+        70,
+        85,
+        65,
+        75
+      ],
+      "theta": [
+        "Carbon Footprint",
+        "Water Usage",
+        "Biodiversity Impact",
+        "Waste Generation",
+        "Energy Efficiency"
+      ],
+      "fill": "toself",
+      "name": "Technology",
+      "line": {
+        "color": "rgb(0, 0, 255)",
+        "width": 2
+      },
+      "marker": {
+        "size": 8
+      }
+    }
+  ],
+  "layout": {
+    "polar": {
+      "radialaxis": {
+        "visible": true,
+        "range": [
+          0,
+          100
+        ],
+        "tickmode": "linear",
+        "tick0": 0,
+        "dtick": 20
+      },
+      "angularaxis": {
+        "direction": "clockwise",
+        "period": 5
+      }
+    },
+    "showlegend": true,
+    "title": "Environmental Impact Assessment by Sector"
+  }
+}

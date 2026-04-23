@@ -1,0 +1,73 @@
+{
+  "data": [
+    {
+      "type": "bar",
+      "x": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June"
+      ],
+      "y": [
+        1200,
+        1900,
+        1500,
+        2200,
+        1800,
+        2500
+      ],
+      "name": "Bakery"
+    },
+    {
+      "type": "bar",
+      "x": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June"
+      ],
+      "y": [
+        800,
+        1200,
+        950,
+        1400,
+        1100,
+        1600
+      ],
+      "name": "Dairy"
+    },
+    {
+      "type": "bar",
+      "x": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June"
+      ],
+      "y": [
+        1500,
+        1800,
+        1700,
+        2100,
+        1900,
+        2300
+      ],
+      "name": "Produce"
+    }
+  ],
+  "layout": {
+    "title": "Monthly Food Sales by Category",
+    "xaxis": {
+      "title": "Month"
+    },
+    "yaxis": {
+      "title": "Sales ($)"
+    }
+  }
+}

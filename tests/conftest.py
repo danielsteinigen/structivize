@@ -7,7 +7,7 @@ import pytest
 @pytest.fixture(scope="session")
 def examples_dir() -> Path:
     """Path to the examples directory."""
-    return Path(__file__).parent.parent / "examples"
+    return Path(__file__).parent.parent / "examples" / "code"
 
 
 @pytest.fixture
