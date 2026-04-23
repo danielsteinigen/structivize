@@ -61,57 +61,57 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
   <tbody>
     <tr>
       <td>Molecular structure<br>FRL: SMILES (Open Babel)</td>
-      <td><img src="images/chemistry/sample_chem_smiles_obabel.png" width="320" /></td>
+      <td><img src="images/chemistry/sample_chem_smiles_obabel.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>CN1C=NC2=C1C(=O)N(C(=O)N2C)C</code></pre>
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>CN1C=NC2=C1C(=O)N(C(=O)N2C)C</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>RNA secondary structure<br>FRL: Vienna (forgi)</td>
-      <td><img src="images/biology/bio_vienna_forgi.png" width="320" /></td>
+      <td><img src="images/biology/bio_vienna_forgi.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&gt;synthetic_gene
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&gt;synthetic_gene
       ATGCGTACGTTGACGTTAGCGTACGTAGCTAGCTAGCGT
-      (((.....(((...))).....(((...))).....)))</code></pre>
+      (((.....(((...))).....(((...))).....)))</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Sequence logo<br>FRL: FASTA (logomaker)</td>
-      <td><img src="images/biology/bio_fasta_logomaker.png" width="320" /></td>
+      <td><img src="images/biology/bio_fasta_logomaker.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&gt;CRISPR_TARGET_0001
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&gt;CRISPR_TARGET_0001
       GAGTCCGAGCAGAAGAAGAAG
       &gt;CRISPR_TARGET_0002
       TGGCTCGTACGATCGAGGTTG
       &gt;CRISPR_TARGET_0003
       CTTCTTCTTCTGCTCGGACTC
       &gt;CRISPR_TARGET_0004
-      CAACCTCGATCGTACGAGCCA</code></pre>
+      CAACCTCGATCGTACGAGCCA</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Phylogenetic tree<br>FRL: Newick</td>
-      <td><img src="images/biology/sample_bio_newick_biopython.png" width="320" /></td>
+      <td><img src="images/biology/sample_bio_newick_biopython.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>((Theropoda:150,(Sauropodomorpha:135,((Stegosauria:100,Ankylosauria:95):80,(Ceratopsia:90,Hadrosauridae:85):75):70):120):160,((Pterosauria:200,((Crocodylomorpha:180,Ornithischia:140):110):100):170,((Ichthyosauria:250,Plesiosauria:245):220,Testudines:210):200):180):250;</code></pre>
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>((Theropoda:150,(Sauropodomorpha:135,((Stegosauria:100,Ankylosauria:95):80,(Ceratopsia:90,Hadrosauridae:85):75):70):120):160,((Pterosauria:200,((Crocodylomorpha:180,Ornithischia:140):110):100):170,((Ichthyosauria:250,Plesiosauria:245):220,Testudines:210):200):180):250;</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Circuit schematic<br>FRL: SPICE (netlistsvg)</td>
-      <td><img src="images/electronics/sample_circuit_spice_netlistsvg.png" width="320" /></td>
+      <td><img src="images/electronics/sample_circuit_spice_netlistsvg.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>* Bandpass Filter
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>* Bandpass Filter
       Vin 1 0 AC 1
       C1 1 2 0.0001m
       L1 2 3 1
-      R1 3 0 100</code></pre>
+      R1 3 0 100</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>HDL circuit<br>FRL: Verilog (Yosys)</td>
-      <td><img src="images/electronics/sample_hdl_verilog_yosys.png" width="320" /></td>
+      <td><img src="images/electronics/sample_hdl_verilog_yosys.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>module up_counter_4bit(
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>module up_counter_4bit(
       input clk,
       input rst,
       input en,
@@ -123,56 +123,56 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
         else if (en)
           count <= count + 1;
       end
-    endmodule</code></pre>
+    endmodule</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Quantum circuit<br>FRL: OpenQASM 2 (Qiskit)</td>
-      <td><img src="images/electronics/sample_quantum_qasm_2_qiskit.png" width="320" /></td>
+      <td><img src="images/electronics/sample_quantum_qasm_2_qiskit.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>OPENQASM 2.0;
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>OPENQASM 2.0;
       include "qelib1.inc";
       qreg q[2];
       creg c[2];
       h q[0];
       cx q[0],q[1];
       measure q[0] -> c[0];
-      measure q[1] -> c[1];</code></pre>
+      measure q[1] -> c[1];</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Logic expression<br>FRL: Boolean (schemdraw)</td>
-      <td><img src="images/electronics/sample_logic_bool_schemdraw.png" width="320" /></td>
+      <td><img src="images/electronics/sample_logic_bool_schemdraw.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>(((A and B) and (not C)) or (D xor E)) and (not F)</code></pre>
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>(((A and B) and (not C)) or (D xor E)) and (not F)</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Musical notation<br>FRL: ABC (LilyPond)</td>
-      <td><img src="images/culture/sample_music_abc_lilypond.png" width="320" /></td>
+      <td><img src="images/culture/sample_music_abc_lilypond.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>X:1
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>X:1
       T:12 Bar Blues in C
       M:4/4
       L:1/4
       K:C
       | C E G A | C E G A | C E G A | C E G A |
       | F A C D | F A C D | C E G A | C E G A |
-      | G B D E | F A C D | C E G A | G B D E |</code></pre>
+      | G B D E | F A C D | C E G A | G B D E |</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Chess position<br>FRL: FEN</td>
-      <td><img src="images/culture/sample_chess_fen_chess.png" width="320" /></td>
+      <td><img src="images/culture/sample_chess_fen_chess.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>2rq1rk1/1b2b1pp/p3p3/1p1pPp2/3P1P2/2NBB3/PPP3PP/2KR3R w - - 0 1</code></pre>
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>2rq1rk1/1b2b1pp/p3p3/1p1pPp2/3P1P2/2NBB3/PPP3PP/2KR3R w - - 0 1</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Activity diagram<br>FRL: Mermaid</td>
-      <td><img src="images/modeling/sample_mermaid_activity_mermaid.png" width="320" /></td>
+      <td><img src="images/modeling/sample_mermaid_activity_mermaid.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>flowchart TD
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>flowchart TD
       A[Receive Customer Order] --> B[Check Inventory]
       B -->|In Stock| C[Process Payment]
       B -->|Out of Stock| D[Notify Customer &amp; Backorder]
@@ -182,14 +182,14 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
       F -->|Yes| G[Prepare Order for Shipping]
       F -->|No| H[Notify Customer of Payment Failure]
       G --> I[Ship Order]
-      I --> J[Order Complete]</code></pre>
+      I --> J[Order Complete]</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Database schema<br>FRL: DBML</td>
-      <td><img src="images/datastructure/sample_db_dbml_dbml_renderer.png" width="320" /></td>
+      <td><img src="images/datastructure/sample_db_dbml_dbml_renderer.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>Table SensorType {
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>Table SensorType {
       id int [pk, increment]
       name varchar(100)
       unit varchar(50)
@@ -215,14 +215,14 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
       sensor_id int [ref: &gt; Sensor.id]
       measured_at datetime
       value decimal(12,4)
-    }</code></pre>
+    }</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Class diagram<br>FRL: PlantUML</td>
-      <td><img src="images/modeling/sample_plantuml_class.png" width="320" /></td>
+      <td><img src="images/modeling/sample_plantuml_class.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml class_44_4_1
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml class_44_4_1
     class Patient {
       +patientId: String
       +name: String
@@ -247,14 +247,14 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
     Patient "1" -- "0..*" Appointment : books >
     Appointment "1" -- "1" Doctor : with >
     Appointment "1" *-- "0..*" Prescription : results in >
-    @enduml</code></pre>
+    @enduml</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Sequence diagram<br>FRL: PlantUML</td>
-      <td><img src="images/modeling/sample_plantuml_sequence.png" width="320" /></td>
+      <td><img src="images/modeling/sample_plantuml_sequence.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml sequence_602_4_1
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml sequence_602_4_1
       skinparam dpi 300
       actor Ecologist
       participant SensorDevice
@@ -265,14 +265,14 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
       DataRepository --> MonitoringSystem: eventStored(confirmation)
       MonitoringSystem -> Ecologist: sendAlert(event)
       Ecologist --> MonitoringSystem: acknowledgeAlert()
-      @enduml</code></pre>
+      @enduml</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Mindmap<br>FRL: Mermaid</td>
-      <td><img src="images/modeling/sample_mermaid_mindmap_mermaid.png" width="320" /></td>
+      <td><img src="images/modeling/sample_mermaid_mindmap_mermaid.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>mindmap
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>mindmap
   root((Sustainable Ecosystems))
     Ecosystem Components
       Producers
@@ -298,14 +298,14 @@ Domains covered by the Dataset with image categories and the corresponding [FRLs
       Renewable Energy
       Sustainable Agriculture
       Waste Reduction
-      Water Conservation</code></pre>
+      Water Conservation</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Component diagram<br>FRL: PlantUML</td>
-      <td><img src="images/modeling/sample_plantuml_component.png" width="320" /></td>
+      <td><img src="images/modeling/sample_plantuml_component.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml component_1823_4_1
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@startuml component_1823_4_1
 skinparam dpi 300
 package "Healthcare Management System" {
   [Patient Management] as PM
@@ -322,14 +322,14 @@ package "Healthcare Management System" {
   MRS --> DB : "Read/Write Medical Records"
   Auth --> DB : "User Credentials"
 }
-@enduml</code></pre>
+@enduml</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>State machine<br>FRL: SCXML</td>
-      <td><img src="images/modeling/sample_state_scxml_smcat_dot.png" width="320" /></td>
+      <td><img src="images/modeling/sample_state_scxml_smcat_dot.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;scxml xmlns="http://www.w3.org/2005/07/scxml" version="1.0" initial="document_submission"&gt;
   &lt;state id="document_submission"&gt;
     &lt;transition event="submit_documents" target="verification"/&gt;
@@ -353,14 +353,14 @@ package "Healthcare Management System" {
   &lt;/state&gt;
   &lt;final id="onboarded"/&gt;
   &lt;final id="rejected"/&gt;
-&lt;/scxml&gt;</code></pre>
+&lt;/scxml&gt;</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Gantt chart<br>FRL: Mermaid</td>
-      <td><img src="images/modeling/sample_mermaid_gantt_mermaid.png" width="320" /></td>
+      <td><img src="images/modeling/sample_mermaid_gantt_mermaid.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>gantt
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>gantt
       title Resource Allocation Software Implementation Schedule
       dateFormat  YYYY-MM-DD
       section Planning
@@ -374,14 +374,14 @@ package "Healthcare Management System" {
       User Training               :         train, after dev, 4d
       section Testing &amp; Launch
       System Testing              :         test, after dev, 5d
-      Go-Live                     :         golive, after test, 2d</code></pre>
+      Go-Live                     :         golive, after test, 2d</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Knowledge graph<br>FRL: RDF/Turtle (Graphviz)</td>
-      <td><img src="images/datastructure/sample_kg_rdf_ttl_graphviz.png" width="320" /></td>
+      <td><img src="images/datastructure/sample_kg_rdf_ttl_graphviz.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@prefix ex: &lt;http://example.org/ecology#&gt; .
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>@prefix ex: &lt;http://example.org/ecology#&gt; .
     @prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
     @prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
     ex:Species a rdfs:Class .
@@ -391,14 +391,14 @@ package "Healthcare Management System" {
       rdfs:range ex:Habitat .
     ex:isEndangered a rdf:Property ;
       rdfs:domain ex:Species ;
-      rdfs:range rdf:boolean .</code></pre>
+      rdfs:range rdf:boolean .</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Charting<br>FRL: Plotly JSON</td>
-      <td><img src="images/charts/sample_charts_plotly_plotly.png" width="320" /></td>
+      <td><img src="images/charts/sample_charts_plotly_plotly.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
   "data": [
     {
       "type": "scatterpolar",
@@ -499,14 +499,14 @@ package "Healthcare Management System" {
     "showlegend": true,
     "title": "Environmental Impact Assessment by Sector"
   }
-}</code></pre>
+}</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Table chart<br>FRL: Plotly JSON (Table)</td>
-      <td><img src="images/charts/sample_charts_plotly_table_plotly.png" width="320" /></td>
+      <td><img src="images/charts/sample_charts_plotly_table_plotly.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
   "data": [
     {
       "type": "table",
@@ -626,14 +626,14 @@ package "Healthcare Management System" {
       "t": 50
     }
   }
-}</code></pre>
+}</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Neural network<br>FRL: Keras JSON</td>
-      <td><img src="images/modeling/sample_nn_keras_keras.png" width="320" /></td>
+      <td><img src="images/modeling/sample_nn_keras_keras.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{
       "module": "keras.src",
       "class_name": "Sequential",
       "config": {
@@ -1015,14 +1015,14 @@ package "Healthcare Management System" {
           1
         ]
       }
-    }</code></pre>
+    }</code></pre></details>
       </td>
     </tr>
     <tr>
       <td>Geospatial polygon<br>FRL: GeoJSON (GeoPandas)</td>
-      <td><img src="images/charts/sample_charts_geojson_geopandas.png" width="320" /></td>
+      <td><img src="images/charts/sample_charts_geojson_geopandas.png" width="360" /></td>
       <td>
-        <pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{ "type": "MultiPolygon", "coordinates": [ [ [ [ 7.194591, 53.245022 ], 
+        <details><summary>Code</summary><pre style="width: 100%; max-height: 220px; font-family: monospace; font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; margin: 0;"><code>{ "type": "MultiPolygon", "coordinates": [ [ [ [ 7.194591, 53.245022 ], 
       [ 7.197472, 53.216624 ], 
       [ 7.198506, 53.200578 ], 
       [ 7.195405, 53.184998 ], 
@@ -1042,6 +1042,6 @@ package "Healthcare Management System" {
       [ 7.061977, 52.824012 ], 
       [ 7.053295, 52.790577 ], 
       [ 7.043993, 52.682625 ] ] ] ] }
-      ...</code></pre>
+      ...</code></pre></details>
   </tbody>
 </table>
